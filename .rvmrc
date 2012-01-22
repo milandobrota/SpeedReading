@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+rvm use ruby-1.9.2-p290@speed-reading
