@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120129224739) do
+ActiveRecord::Schema.define(:version => 20120204214723) do
+
+  create_table "contents", :force => true do |t|
+    t.text     "body"
+    t.string   "source_name"
+    t.string   "source_link"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
