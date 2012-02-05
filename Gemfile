@@ -7,6 +7,7 @@ gem 'rails', '3.1.0'
 
 gem 'pg', '0.12.2'
 gem 'devise', '2.0.0'
+gem 'haml-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -18,6 +19,11 @@ group :assets do
   # gem 'therubyracer'
 
   gem 'uglifier'
+end
+
+group :development do
+  gem 'hpricot'
+  gem 'ruby_parser'
 end
 
 gem 'jquery-rails'

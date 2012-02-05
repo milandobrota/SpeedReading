@@ -1,5 +1,6 @@
 SpeedReading::Application.routes.draw do
   resources :contents
+  resources :reading_speed_tests, :only => [:new, :create, :show]
 
   devise_for :users
 

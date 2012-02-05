@@ -1,0 +1,12 @@
+%p
+  %b Body:
+  = @content.body
+%p
+  %b Source name:
+  = @content.source_name
+%p
+  %b Source link:
+  = @content.source_link
+= link_to 'Edit', edit_content_path(@content)
+|
+\#{link_to 'Back', contents_path}
