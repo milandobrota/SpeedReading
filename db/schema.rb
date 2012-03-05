@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120204234009) do
+ActiveRecord::Schema.define(:version => 20120205012958) do
 
   create_table "contents", :force => true do |t|
     t.text     "body"
@@ -20,6 +20,17 @@ ActiveRecord::Schema.define(:version => 20120204234009) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "questions", :force => true do |t|
+    t.text     "body"
+    t.text     "answers"
+    t.integer  "content_id"
+    t.integer  "correct_answer"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "questions", ["content_id"], :name => "index_questions_on_content_id"
 
   create_table "reading_speed_tests", :force => true do |t|
     t.integer  "content_id"

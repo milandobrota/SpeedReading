@@ -1,6 +1,9 @@
 SpeedReading::Application.routes.draw do
-  resources :contents
+  resources :contents do
+    resources :questions
+  end
   resources :reading_speed_tests, :only => [:new, :create, :show]
+  resources :comprehension_tests
 
   devise_for :users
 

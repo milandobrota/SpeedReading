@@ -2,16 +2,12 @@
 %table
   %tr
     %th Body
-    %th Source name
-    %th Source link
     %th
     %th
     %th
   - @contents.each do |content|
     %tr
-      %td= content.body
-      %td= content.source_name
-      %td= content.source_link
+      %td= content.body.first(100) + '...'
       %td= link_to 'Show', content
       %td= link_to 'Edit', edit_content_path(content)
       %td= link_to 'Destroy', content, confirm: 'Are you sure?', method: :delete

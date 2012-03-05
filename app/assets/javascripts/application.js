@@ -13,3 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+function count_words(text) {
+  return text.match(/\b/g).length / 2;
+}

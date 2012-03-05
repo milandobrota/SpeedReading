@@ -6,7 +6,19 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
   %body
-    %p= user_header
-    %p.notice= notice
-    %p.alert= alert
-    = yield
+    #user_header= user_header
+    #sidebar
+      Exercises:
+      %ul
+        %li= link_to 'Test Reading Speed', new_reading_speed_test_path
+        %li= link_to 'Flash Reading'
+        %li= link_to 'Flashing Numbers'
+        %li= link_to 'Flashing Dots'
+        %li= link_to 'Scrambled Words'
+        %li= link_to 'Find the Word'
+        %li= link_to 'Answer the Question'
+        %li= link_to 'Synonyms/Antonyms'
+    #content
+      %p.notice= notice
+      %p.alert= alert
+      = yield

@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Body:
+  = @question.body
+%p
+  %b Answers:
+  = @question.answers
+%p
+  %b Content:
+  = @question.content_id
+
+= link_to 'Edit', edit_content_question_path(@question.content, @question)
+\|
+= link_to 'Back', content_path(@question.content)

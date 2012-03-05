@@ -1,0 +1,10 @@
+%p
+  %b Questions:
+  %table
+    - @content.questions.each do |question|
+      %tr
+        %td= question.body
+        %td= link_to 'Edit', edit_content_question_path(@content, question)
+        %td= link_to 'Destroy', content_question_path(@content, question), :confirm => 'Are you sure?', :method => :delete
+
+= link_to 'Add questions', new_content_question_path(@content)
