@@ -1,0 +1,13 @@
+%b Comprehension Test
+= form_tag(reading_speed_test_comprehension_tests_path(@reading_speed_test)) do |f|
+  - @reading_speed_test.content.questions.each do |question|
+    %p
+      = question.body
+    %p
+      - letter = '@' # predecessor is A
+      - question.answers.each_with_index do |answer, i|
+        .user_answer
+          = radio_button_tag "user_answers[#{question.id}]", i
+          = "#{letter.next!}."
+          = answer
+  = submit_tag 'Finish'

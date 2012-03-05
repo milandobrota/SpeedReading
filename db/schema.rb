@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120205012958) do
+ActiveRecord::Schema.define(:version => 20120305013545) do
 
   create_table "contents", :force => true do |t|
     t.text     "body"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(:version => 20120205012958) do
     t.integer  "wpm"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "comprehension_rate"
   end
 
   add_index "reading_speed_tests", ["content_id"], :name => "index_reading_speed_tests_on_content_id"

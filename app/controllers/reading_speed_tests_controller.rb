@@ -13,5 +13,6 @@ class ReadingSpeedTestsController < ApplicationController
   end
 
   def show
+    @reading_speed_test = ReadingSpeedTest.find(params[:id])
   end
 end
