@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120305013545) do
+ActiveRecord::Schema.define(:version => 20120305231200) do
 
   create_table "contents", :force => true do |t|
     t.text     "body"
@@ -61,5 +61,16 @@ ActiveRecord::Schema.define(:version => 20120305013545) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "word_search_tests", :force => true do |t|
+    t.integer  "content_id"
+    t.integer  "user_id"
+    t.integer  "score"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "word_search_tests", ["content_id"], :name => "index_word_search_tests_on_content_id"
+  add_index "word_search_tests", ["user_id"], :name => "index_word_search_tests_on_user_id"
 
 end
