@@ -9,6 +9,7 @@ SpeedReading::Application.routes.draw do
   end
 
   resources :word_search_tests, :only => [:new, :create, :show]
+  resources :flashing_numbers_tests, :only => [:new, :create, :show]
 
   devise_for :users
 

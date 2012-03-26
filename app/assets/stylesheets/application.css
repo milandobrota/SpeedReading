@@ -53,3 +53,34 @@ body {
   border-width: 1px;
   border-color: red;
 }
+
+#flashing_numbers_container {
+  padding-top: 50px;
+  text-align: center;
+}
+
+#flashing_numbers_left {
+  float: left;
+  width: 47%;
+  text-align: right;
+}
+
+#flashing_numbers_center {
+  width: 6%;
+  float: left;
+}
+
+#flashing_numbers_right {
+  float: left;
+  width: 47%;
+  text-align: left;
+}
+
+#flashing_numbers_test_left_number, #flashing_numbers_test_right_number {
+  width: 50px;
+  display: none;
+}
+
+#submit_numbers {
+  display:none;
+}

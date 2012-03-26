@@ -17,3 +17,14 @@
 function count_words(text) {
   return text.match(/\b/g).length / 2;
 }
+
+function random_number_with_digits(number_of_digits) {
+  var min = Math.pow(10, number_of_digits - 1);
+  var max = Math.pow(10, number_of_digits) - 1;
+  return random_number_between(min, max);
+}
+
+function random_number_between(x, y) {
+  var rand = x + (Math.random() * (y - x));
+  return Math.round(rand);
+}
