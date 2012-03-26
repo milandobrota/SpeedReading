@@ -4,6 +4,6 @@ class FlashingNumbersTestsController < ApplicationController
   end
 
   def create
-    raise params.inspect
+    # TODO
   end
 end
