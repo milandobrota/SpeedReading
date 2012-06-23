@@ -26,6 +26,12 @@ group :development do
   gem 'ruby_parser'
 end
 
+# needs to be in the development group to expose generators and rake tasks without having to type RAILS_ENV=test
+group :test, :development do
+  gem 'capybara', :require => false
+  gem 'rspec-rails', :require => false
+end
+
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
