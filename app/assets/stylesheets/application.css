@@ -84,3 +84,8 @@ body {
 #submit_numbers {
   display:none;
 }
+
+#flash_reading_container {
+  font-size: 4em;
+  text-align: center;
+}

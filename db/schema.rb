@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120324183122) do
+ActiveRecord::Schema.define(:version => 20120326014317) do
 
   create_table "contents", :force => true do |t|
     t.text     "body"
@@ -21,15 +21,23 @@ ActiveRecord::Schema.define(:version => 20120324183122) do
     t.datetime "updated_at"
   end
 
-  create_table "flashing_numbers_tests", :force => true do |t|
+  create_table "flash_reading_tests", :force => true do |t|
     t.integer  "content_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "flash_reading_tests", ["content_id"], :name => "index_flash_reading_tests_on_content_id"
+  add_index "flash_reading_tests", ["user_id"], :name => "index_flash_reading_tests_on_user_id"
+
+  create_table "flashing_numbers_tests", :force => true do |t|
     t.integer  "user_id"
     t.integer  "distance"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "flashing_numbers_tests", ["content_id"], :name => "index_flashing_numbers_tests_on_content_id"
   add_index "flashing_numbers_tests", ["user_id"], :name => "index_flashing_numbers_tests_on_user_id"
 
   create_table "questions", :force => true do |t|

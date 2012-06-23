@@ -1,0 +1,35 @@
+%button#start_exercise Start
+#flash_reading_container
+  Ready?
+
+:javascript
+  $(function() {
+    window.words = #{@flash_reading_test.content.body.split(' ').reverse.to_json};
+  });
+
+  $('#start_exercise').click(function() {
+    if (window.running) return;
+    window.running = true;
+    window.delay = 500;
+    window.number_of_words = 2;
+    iterate();
+  });
+
+  function fetch_next_chunk() {
+    var chunk = [];
+    for(var i = 0; i < window.number_of_words; i++) {
+      chunk.push(window.words.pop());
+    }
+    return chunk.join(' ');
+  }
+
+  function iterate() {
+    var next_chunk = fetch_next_chunk();
+    if (next_chunk == undefined) {
+      window.running = false;
+      return;
+    }
+    if (window.delay > 200) window.delay -= 3;
+    $('#flash_reading_container').html(next_chunk);
+    setTimeout('iterate()', window.delay);
+  }
