@@ -1,9 +1,44 @@
-%button#start_exercise Start
 #slider
+#speed_container
+  Speed:
+  %span#speed_value
+    1
+%button#start_exercise Start
 #flash_reading_container
   Ready?
 
 :javascript
+
+  // instantiate the slider
+  $("#slider").slider({
+    min: 1,
+    max: 100,
+    value: 1,
+    slide: function(event, ui) {
+      $("#speed_value").html(ui.value);
+    }
+  });
+
+  $(document).keydown(function(e){
+    if (e.keyCode == $.ui.keyCode.LEFT) { 
+      // decrease the value
+      var slider = $("#slider");
+      var old_value = slider.slider("value");
+      slider.slider("value", old_value - 1); 
+
+      // show the speed
+      $("#speed_value").html(slider.slider("value"));
+    } else if (e.keyCode == $.ui.keyCode.RIGHT) {
+      // increase the value
+      var slider = $("#slider");
+      var old_value = slider.slider("value");
+      slider.slider("value", old_value + 1); 
+
+      // show the speed
+      $("#speed_value").html(slider.slider("value"));
+    }
+  });
+
   $(function() {
     window.words = #{@flash_reading_test.content.body.split(' ').reverse.to_json};
   });

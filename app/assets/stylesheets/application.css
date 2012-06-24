@@ -90,3 +90,11 @@ body {
   font-size: 4em;
   text-align: center;
 }
+
+#slider {
+  margin: 10px 60px;
+}
+
+#speed_container {
+  text-align: center;
+}
