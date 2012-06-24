@@ -1,4 +1,4 @@
-#slider
+#speed_slider
 #speed_container
   Speed:
   %span#speed_value
@@ -8,72 +8,22 @@
   Ready?
 
 :javascript
-  var FlashReadingTest = new Object();
-
-  $(function() {
-
+  var FlashReadingTest = new Object({
     // get the words
-    FlashReadingTest.words = #{@flash_reading_test.content.body.split(' ').reverse.to_json};
-
-    // instantiate the slider
-    $("#slider").slider({
-      min: 1,
-      max: 100,
-      value: 1,
-      slide: function(event, ui) {
-        $("#speed_value").html(ui.value);
-      }
-    });
-
-    // events for <- and ->
-    $(document).keydown(function(e){
-      if (e.keyCode == $.ui.keyCode.LEFT) { 
-        // decrease the value
-        var slider = $("#slider");
-        var old_value = slider.slider("value");
-        slider.slider("value", old_value - 1); 
-
-        // show the speed
-        $("#speed_value").html(slider.slider("value"));
-      } else if (e.keyCode == $.ui.keyCode.RIGHT) {
-        // increase the value
-        var slider = $("#slider");
-        var old_value = slider.slider("value");
-        slider.slider("value", old_value + 1); 
-
-        // show the speed
-        $("#speed_value").html(slider.slider("value"));
-      }
-    });
-
-    // handler for clicking on start button
-    $('#start_exercise').click(function() {
-      if (FlashReadingTest.running) return;
-      FlashReadingTest.running = true;
-      FlashReadingTest.number_of_words = 2;
-      FlashReadingTest.iterate();
-    });
+    words: #{@flash_reading_test.content.body.split(' ').reverse.to_json},
+    number_of_words: 2,
 
     // get words that need to be displayed
-    FlashReadingTest.fetch_next_chunk = function() {
+    fetch_next_chunk: function() {
       var chunk = [];
       for(var i = 0; i < FlashReadingTest.number_of_words; i++) {
         chunk.push(FlashReadingTest.words.pop());
       }
       return chunk.join(' ');
-    }
-
-    // calculate delay based on speed
-    FlashReadingTest.get_delay = function(){
-      // 1 - 100
-      var speed = parseInt($("#speed_value").html());
-
-      // 300 - 92.1
-      return 3 * ((101 - speed) * 0.7 + 30);
-    }
+    },
 
     // display words
-    FlashReadingTest.iterate = function() {
+    iterate: function() {
       var next_chunk = FlashReadingTest.fetch_next_chunk();
       if (next_chunk == undefined) {
         FlashReadingTest.running = false;
@@ -83,4 +33,58 @@
       $('#flash_reading_container').html(next_chunk);
       setTimeout('FlashReadingTest.iterate()', FlashReadingTest.get_delay());
     }
+
+  });
+
+  $(function() {
+
+    // instantiate the speed slider
+    $("#speed_slider").slider({
+      min: 1,
+      max: 100,
+      value: 1,
+      slide: function(event, ui) {
+        $("#speed_value").html(ui.value);
+      }
+    });
+
+    FlashReadingTest.speed_slider = $("#speed_slider");
+
+    // events for <- and ->
+    $(document).keydown(function(e){
+      var speed_slider = FlashReadingTest.speed_slider;
+
+      if (e.keyCode == $.ui.keyCode.LEFT) { 
+        // decrease the value
+        var old_value = speed_slider.slider("value");
+        speed_slider.slider("value", old_value - 1); 
+
+        // show the speed
+        $("#speed_value").html(speed_slider.slider("value"));
+      } else if (e.keyCode == $.ui.keyCode.RIGHT) {
+        // increase the value
+        var old_value = speed_slider.slider("value");
+        speed_slider.slider("value", old_value + 1); 
+
+        // show the speed
+        $("#speed_value").html(speed_slider.slider("value"));
+      }
+    });
+
+    // handler for clicking on start button
+    $('#start_exercise').click(function() {
+      if (FlashReadingTest.running) return;
+      FlashReadingTest.running = true;
+      FlashReadingTest.iterate();
+    });
+
+    // calculate delay based on speed
+    FlashReadingTest.get_delay = function(){
+      // (1..100)
+      var speed = parseInt($("#speed_value").html());
+
+      // (300..92.1) [ms]
+      return 3 * ((101 - speed) * 0.7 + 30);
+    }
+
   });
