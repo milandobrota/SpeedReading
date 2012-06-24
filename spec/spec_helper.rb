@@ -41,3 +41,11 @@ RSpec.configure do |config|
 end
 
 include Capybara::DSL
+
+def server_running?
+  !`lsof -i :3001`.blank?
+end
+
+def ensure_server_is_running
+  system 'rails s -e test -p 3001 -d' unless server_running?
+end

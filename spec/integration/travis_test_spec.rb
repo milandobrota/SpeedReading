@@ -2,7 +2,8 @@ require './spec/spec_helper.rb'
 
 describe 'Travis' do
   it 'should run the test' do
-    visit 'http://google.com'
-    page.body.should =~ /Documents/
+    ensure_server_is_running
+    visit '/'
+    page.body.should =~ /Sign in/
   end
 end
