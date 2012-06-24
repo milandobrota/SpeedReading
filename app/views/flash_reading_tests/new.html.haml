@@ -3,20 +3,27 @@
   Speed:
   %span#speed_value
     1
+
+#number_of_words_slider
+#number_of_words_container
+  Number of words:
+  %span#number_of_words_value
+    2
+
 %button#start_exercise Start
 #flash_reading_container
   Ready?
 
 :javascript
   var FlashReadingTest = new Object({
+
     // get the words
     words: #{@flash_reading_test.content.body.split(' ').reverse.to_json},
-    number_of_words: 2,
 
     // get words that need to be displayed
     fetch_next_chunk: function() {
       var chunk = [];
-      for(var i = 0; i < FlashReadingTest.number_of_words; i++) {
+      for(var i = 0; i < FlashReadingTest.get_number_of_words(); i++) {
         chunk.push(FlashReadingTest.words.pop());
       }
       return chunk.join(' ');
@@ -50,25 +57,54 @@
 
     FlashReadingTest.speed_slider = $("#speed_slider");
 
+    // instantiate the number of words slider
+    $("#number_of_words_slider").slider({
+      min: 1,
+      max: 5,
+      value: 2,
+      slide: function(event, ui) {
+        $("#number_of_words_value").html(ui.value);
+      }
+    });
+
+    FlashReadingTest.number_of_words_slider = $("#number_of_words_slider");
+
     // events for <- and ->
     $(document).keydown(function(e){
       var speed_slider = FlashReadingTest.speed_slider;
+      var number_of_words_slider = FlashReadingTest.number_of_words_slider;
 
       if (e.keyCode == $.ui.keyCode.LEFT) { 
-        // decrease the value
+        // decrease the speed value
         var old_value = speed_slider.slider("value");
         speed_slider.slider("value", old_value - 1); 
 
         // show the speed
         $("#speed_value").html(speed_slider.slider("value"));
       } else if (e.keyCode == $.ui.keyCode.RIGHT) {
-        // increase the value
+        // increase the speed value
         var old_value = speed_slider.slider("value");
         speed_slider.slider("value", old_value + 1); 
 
         // show the speed
         $("#speed_value").html(speed_slider.slider("value"));
+      } else if (e.keyCode == $.ui.keyCode.UP) { 
+        // increase the speed value
+        var old_value = number_of_words_slider.slider("value");
+        number_of_words_slider.slider("value", old_value + 1); 
+
+        // show the speed
+        $("#number_of_words_value").html(number_of_words_slider.slider("value"));
+      } else if (e.keyCode == $.ui.keyCode.DOWN) {
+        // decrease the number of words
+        var old_value = number_of_words_slider.slider("value");
+        number_of_words_slider.slider("value", old_value - 1); 
+
+        // show the speed
+        $("#number_of_words_value").html(number_of_words_slider.slider("value"));
       }
+      // prevent the scroll
+      return false;
     });
 
     // handler for clicking on start button
@@ -85,6 +121,10 @@
 
       // (300..92.1) [ms]
       return 3 * ((101 - speed) * 0.7 + 30);
+    }
+
+    FlashReadingTest.get_number_of_words = function() {
+      return parseInt($("#number_of_words_value").html());
     }
 
   });

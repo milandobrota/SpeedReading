@@ -91,10 +91,10 @@ body {
   text-align: center;
 }
 
-#slider {
+#speed_slider, #number_of_words_slider {
   margin: 10px 60px;
 }
 
-#speed_container {
+#speed_container, #number_of_words_container {
   text-align: center;
 }
