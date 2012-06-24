@@ -9,9 +9,9 @@ Capybara.default_driver = :selenium
 Capybara.run_server = false # run our own server
 Capybara.app_host = 'http://localhost:3001'
 
-Capybara.register_driver :selenium do |app|
-  Capybara::Selenium::Driver.new(app, :browser => :chrome)
-end
+# Capybara.register_driver :selenium do |app|
+#   Capybara::Selenium::Driver.new(app, :browser => :chrome)
+# end
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
