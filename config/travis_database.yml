@@ -1,0 +1,25 @@
+development:
+  adapter: postgresql
+  encoding: UTF8
+  database: speed_reading_development
+  host: localhost
+  username: postgres
+  password: 
+  min_messages: WARNING
+
+test:
+  adapter: postgresql
+  encoding: UTF8
+  database: speed_reading_test
+  host: localhost
+  username: postgres
+  password:
+  min_messages: WARNING
+
+production:
+  adapter: postgresql
+  encoding: UTF8
+  database: speed_reading_production
+  host: localhost
+  username: postgres
+  password: 

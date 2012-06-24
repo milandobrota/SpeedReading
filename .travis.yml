@@ -1,6 +1,7 @@
 language: ruby
 rvm:
   - 1.9.3
+before_script: "cp config/travis_database.yml config/database.yml"
 script: "rspec"
 notifications:
   email:
