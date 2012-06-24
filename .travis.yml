@@ -2,3 +2,6 @@ language: ruby
 rvm:
   - 1.9.3
 script: "rspec"
+notifications:
+  email:
+    - elitecoding@gmail.com
