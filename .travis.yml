@@ -6,6 +6,7 @@ before_script:
   - cp config/travis_database.yml config/database.yml
   - psql -c 'create database speed_reading_test' -U postgres
   - RAILS_ENV=test bundle exec rake --trace db:migrate
+  - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 script: "RAILS_ENV=test bundle exec rspec"
 notifications:
