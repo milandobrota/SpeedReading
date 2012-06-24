@@ -5,7 +5,8 @@ before_script: "cp config/travis_database.yml config/database.yml"
 before_script:
   - "cp config/travis_database.yml config/database.yml"
   - psql -c 'create database speed_reading_test' -U postgres
-script: "RAILS_ENV=test bundle exec rake --trace db:migrate test"
+  - "RAILS_ENV=test bundle exec rake --trace db:migrate"
+script: "RAILS_ENV=test bundle exec rspec"
 notifications:
   email:
     - elitecoding@gmail.com
