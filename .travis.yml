@@ -3,9 +3,10 @@ rvm:
   - 1.9.3
 before_script: "cp config/travis_database.yml config/database.yml"
 before_script:
-  - "cp config/travis_database.yml config/database.yml"
+  - cp config/travis_database.yml config/database.yml
   - psql -c 'create database speed_reading_test' -U postgres
-  - "RAILS_ENV=test bundle exec rake --trace db:migrate"
+  - RAILS_ENV=test bundle exec rake --trace db:migrate
+  - sh -e /etc/init.d/xvfb start
 script: "RAILS_ENV=test bundle exec rspec"
 notifications:
   email:
