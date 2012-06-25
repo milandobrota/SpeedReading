@@ -4,7 +4,15 @@ class FlashReadingTestsController < ApplicationController
   end
 
   def create
-    # TODO
+    @flash_reading_test = FlashReadingTest.new(params[:flash_reading_test])
+    @flash_reading_test.user = current_user
+    respond_to do |format|
+      if @flash_reading_test.save
+        format.json { render json: @flash_reading_test, status: :created, location: @flash_reading_test }
+      else
+        format.json { render json: @flash_reading_test.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def chart

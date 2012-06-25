@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120326014317) do
+ActiveRecord::Schema.define(:version => 20120625151950) do
 
   create_table "contents", :force => true do |t|
     t.text     "body"
@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(:version => 20120326014317) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "word_throughput"
+    t.integer  "reading_speed"
   end
 
   add_index "flash_reading_tests", ["content_id"], :name => "index_flash_reading_tests_on_content_id"

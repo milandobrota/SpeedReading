@@ -41,7 +41,7 @@
       if (next_chunk == undefined) {
         FlashReadingTest.running = false;
         FlashReadingTest.words = #{@flash_reading_test.content.body.split(' ').reverse.to_json};
-        FlashReadingTest.show_chart();
+        FlashReadingTest.save(FlashReadingTest.show_chart());
         return;
       }
       $('#flash_reading_container').html(next_chunk);
@@ -121,17 +121,35 @@
       FlashReadingTest.iterate();
     });
 
+    FlashReadingTest.get_number_of_words = function() {
+      return parseInt($("#number_of_words_value").html());
+    }
+
+    FlashReadingTest.attributes = function() {
+      return {
+        word_throughput: FlashReadingTest.get_number_of_words(),
+        reading_speed: FlashReadingTest.get_speed(),
+        content_id: #{@flash_reading_test.content_id}
+      }
+    }
+
+    FlashReadingTest.save = function(callback) {
+      $.post('/flash_reading_tests', {flash_reading_test: FlashReadingTest.attributes()}, function(data) {
+        if(callback) callback();
+      });
+    }
+
+    FlashReadingTest.get_speed = function() {
+      return parseInt($("#speed_value").html());
+    }
+
     // calculate delay based on speed
-    FlashReadingTest.get_delay = function(){
+    FlashReadingTest.get_delay = function() {
       // (1..100)
-      var speed = parseInt($("#speed_value").html());
+      var speed = FlashReadingTest.get_speed();
 
       // (300..92.1) [ms]
       return 3 * ((101 - speed) * 0.7 + 30);
-    }
-
-    FlashReadingTest.get_number_of_words = function() {
-      return parseInt($("#number_of_words_value").html());
     }
 
   });
