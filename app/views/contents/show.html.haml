@@ -1,6 +1,6 @@
 %p
   %b Body:
-  = @content.body
+  %span#content_body= @content.body
 %p
   %b Source name:
   = @content.source_name
@@ -12,3 +12,12 @@
 \#{link_to 'Back', contents_path}
 
 = render 'questions'
+
+:javascript
+
+  $(function() {
+    var formatter = new TextFormatter({
+      container: $("#content_body")
+    });
+    formatter.shorten();
+  });

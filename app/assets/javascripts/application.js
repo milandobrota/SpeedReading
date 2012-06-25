@@ -29,3 +29,52 @@ function random_number_between(x, y) {
   var rand = x + (Math.random() * (y - x));
   return Math.round(rand);
 }
+
+function TextFormatter(settings) {
+  this.config = {
+    text: '',
+    limit: 500,
+    container: null
+  }
+
+  // provide for custom configuration
+  if (settings && typeof(settings) == 'object') {
+    $.extend(this.config, settings);
+  }
+
+  this.config.text = this.config.container.html();
+
+  // regular on click handler wouldn't work
+  // because the element can be created after
+  // the handler
+  // to preserve the reference to `this` within the function
+  // we need to bind it.
+  this.config.container.on('click', 'a.show_more', function() {
+    this.config.container.html(this.full_text());
+  }.bind(this));
+
+  this.config.container.on('click', 'a.show_less', function() {
+    this.config.container.html(this.shortened_text());
+  }.bind(this));
+
+  this.shortened_text = function() {
+    var text = this.config.text;
+    var limit = this.config.limit;
+    shortened = text.substring(0, limit);
+    if(text.length > limit) {
+      shortened += "... ";
+      shortened += '<a href="#" class="show_more">more</a>';
+    }
+    return shortened;
+  }
+
+  this.full_text = function() {
+    var full_text = this.config.text;
+    full_text += '<a href="#" class="show_less">less</a>';
+    return full_text;
+  }
+
+  this.shorten = function() {
+    this.config.container.html(this.shortened_text());
+  }
+}
