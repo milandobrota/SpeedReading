@@ -10,18 +10,30 @@ class FlashReadingTest < ActiveRecord::Base
       )
     end
 
+    def historical_data_for(user)
+      reading_speeds = []
+      word_throughputs = []
+      tests = FlashReadingTest.where(:user_id => user.id).order("id asc").select([:reading_speed, :word_throughput]).all
+      tests.each do |test|
+        reading_speeds << test.reading_speed
+        word_throughputs << test.word_throughput
+      end
+      {:reading_speeds => reading_speeds, :word_throughputs => word_throughputs}
+    end
+
     # TODO: add user specific f-ty
     def chart_for(user)
+      user_data = historical_data_for(user)
       LazyHighCharts::HighChart.new('graph') do |f|
         f.options[:chart][:defaultSeriesType] = 'area'
         f.yAxis([
-          {:title => {:text => 'Speed'}, :max => 100},
+          {:title => {:text => 'Reading Speed'}, :max => 100},
           {:title => {:text => 'Word Throughput'}, :max => 6, :opposite => 'true'}
         ])
         f.xAxis(:title => { :text => 'Test Number'} )
         f.title(:text => 'Flash Reading')
-        f.series(:name => 'Speed', :data => [11, 33, 55, 61, 62, 68, 70, 74, 70, 69, 71, 72, 73, 90, 80, 90], :yAxis => 0 )
-        f.series(:name => 'Word Throughput', :data=> [1, 2, 3, 1, 2, 3, 3, 3,3,3,3,3,4,3,4,4], :yAxis => 1 )
+        f.series(:name => 'Reading Speed', :data => user_data[:reading_speeds], :yAxis => 0 )
+        f.series(:name => 'Word Throughput', :data => user_data[:word_throughputs], :yAxis => 1 )
       end
     end
 
