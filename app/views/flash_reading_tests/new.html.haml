@@ -39,7 +39,7 @@
     iterate: function() {
       var next_chunk = FlashReadingTest.fetch_next_chunk();
       if (next_chunk == undefined) {
-        $('#flash_reading_container').html('Good job! Your reading speed is ' + FlashReadingTest.get_wpm() + ' wpm!');
+        $('#flash_reading_container').html('Your reading speed is ' + FlashReadingTest.get_wpm() + ' wpm!');
         FlashReadingTest.running = false;
         FlashReadingTest.words = #{@flash_reading_test.content.body.split(' ').reverse.to_json};
         FlashReadingTest.save(FlashReadingTest.show_chart);
