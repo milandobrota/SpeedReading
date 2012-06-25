@@ -1,5 +1,3 @@
-= high_chart("my_id", @h)
-
 #speed_slider
 #speed_container
   Speed:
@@ -16,6 +14,8 @@
 #flash_reading_container
   Ready?
 
+#chart_container
+
 :javascript
   var FlashReadingTest = new Object({
 
@@ -28,7 +28,11 @@
       for(var i = 0; i < FlashReadingTest.get_number_of_words(); i++) {
         chunk.push(FlashReadingTest.words.pop());
       }
-      return chunk.join(' ');
+      return chunk[0] == undefined ? undefined : chunk.join(' ');
+    },
+
+    show_chart: function() {
+      $('#chart_container').load('/flash_reading_tests/chart');
     },
 
     // display words
@@ -37,6 +41,7 @@
       if (next_chunk == undefined) {
         FlashReadingTest.running = false;
         FlashReadingTest.words = #{@flash_reading_test.content.body.split(' ').reverse.to_json};
+        FlashReadingTest.show_chart();
         return;
       }
       $('#flash_reading_container').html(next_chunk);
