@@ -7,9 +7,19 @@
     %th
   - @contents.each do |content|
     %tr
-      %td= content.body.first(100) + '...'
+      %td.content_body= content.body
       %td= link_to 'Show', content
       %td= link_to 'Edit', edit_content_path(content)
       %td= link_to 'Destroy', content, confirm: 'Are you sure?', method: :delete
 %br/
 = link_to 'New Content', new_content_path
+
+:javascript
+  $(function() {
+    $(".content_body").each(function(index, element) {
+      new TextFormatter({
+        container: $(element),
+        limit: 300
+      }).shorten();
+    })
+  });
