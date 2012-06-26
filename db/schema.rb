@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120625151950) do
+ActiveRecord::Schema.define(:version => 20120626011503) do
 
   create_table "contents", :force => true do |t|
     t.text     "body"
@@ -19,6 +19,10 @@ ActiveRecord::Schema.define(:version => 20120625151950) do
     t.string   "source_link"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
   end
 
   create_table "flash_reading_tests", :force => true do |t|

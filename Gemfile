@@ -35,6 +35,9 @@ end
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'lazy_high_charts'
+gem "paperclip", "~> 3.0"
+gem 'aws-sdk'
+gem 'aws-s3'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
