@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120626011503) do
+ActiveRecord::Schema.define(:version => 20120627005807) do
 
   create_table "contents", :force => true do |t|
     t.text     "body"
@@ -23,7 +23,10 @@ ActiveRecord::Schema.define(:version => 20120626011503) do
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
+    t.integer  "language_id"
   end
+
+  add_index "contents", ["language_id"], :name => "index_contents_on_language_id"
 
   create_table "flash_reading_tests", :force => true do |t|
     t.integer  "content_id"
@@ -45,6 +48,12 @@ ActiveRecord::Schema.define(:version => 20120626011503) do
   end
 
   add_index "flashing_numbers_tests", ["user_id"], :name => "index_flashing_numbers_tests_on_user_id"
+
+  create_table "languages", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "questions", :force => true do |t|
     t.text     "body"

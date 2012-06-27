@@ -1,5 +1,7 @@
 SpeedReading::Application.routes.draw do
 
+  resources :languages
+
   resources :contents do
     resources :questions
   end

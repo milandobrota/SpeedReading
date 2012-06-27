@@ -12,6 +12,10 @@
     %br/
     = f.text_area :body
   .field
+    = f.label :language
+    %br/
+    = f.select :language_id, Language.all.collect {|lang| [lang.name, lang.id]}
+  .field
     = f.label :source_name
     %br/
     = f.text_field :source_name
