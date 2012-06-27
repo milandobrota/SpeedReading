@@ -1,5 +1,8 @@
 class Content < ActiveRecord::Base
   has_many :questions, :dependent => :delete_all
+  has_many :categorizations
+  has_many :categories, :through => :categorizations
+  belongs_to :language
 
   has_attached_file :photo,
     :storage => :s3,

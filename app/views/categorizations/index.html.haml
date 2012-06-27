@@ -1,0 +1,21 @@
+%h1 Listing categorizations
+
+%table
+  %tr
+    %th Category
+    %th Content
+    %th
+    %th
+    %th
+
+  - @categorizations.each do |categorization|
+    %tr
+      %td= categorization.category_id
+      %td= categorization.content_id
+      %td= link_to 'Show', categorization
+      %td= link_to 'Edit', edit_categorization_path(categorization)
+      %td= link_to 'Destroy', categorization, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Categorization', new_categorization_path

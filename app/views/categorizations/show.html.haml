@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Category:
+  = @categorization.category_id
+%p
+  %b Content:
+  = @categorization.content_id
+
+= link_to 'Edit', edit_categorization_path(@categorization)
+\|
+= link_to 'Back', categorizations_path

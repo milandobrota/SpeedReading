@@ -5,6 +5,12 @@
   %b Body:
   %span#content_body= @content.body
 %p
+  %b Language:
+  = @content.language.try(:name)
+%p
+  %b Categories:
+  = @content.categories.collect(&:name).join(', ')
+%p
   %b Source name:
   = @content.source_name
 %p

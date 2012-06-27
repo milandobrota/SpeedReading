@@ -1,5 +1,9 @@
 SpeedReading::Application.routes.draw do
 
+  resources :categorizations
+
+  resources :categories
+
   resources :languages
 
   resources :contents do

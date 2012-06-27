@@ -16,6 +16,12 @@
     %br/
     = f.select :language_id, Language.all.collect {|lang| [lang.name, lang.id]}
   .field
+    = f.label :categories
+    %br/
+    - Category.order('name asc').all.each do |category|
+      = check_box_tag 'content[category_ids][]', category.id, @content.category_ids.include?(category.id)
+      = category.name
+  .field
     = f.label :source_name
     %br/
     = f.text_field :source_name
