@@ -1,12 +1,14 @@
 %h1 Listing contents
 %table
   %tr
+    %th Name
     %th Body
     %th
     %th
     %th
   - @contents.each do |content|
     %tr
+      %td= content.name
       %td.content_body= content.body
       %td= link_to 'Show', content
       %td= link_to 'Edit', edit_content_path(content)

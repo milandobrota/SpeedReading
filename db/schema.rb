@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120627011951) do
+ActiveRecord::Schema.define(:version => 20120628000357) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20120627011951) do
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
     t.integer  "language_id"
+    t.string   "name"
   end
 
   add_index "contents", ["language_id"], :name => "index_contents_on_language_id"
