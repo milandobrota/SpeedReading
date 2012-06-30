@@ -106,7 +106,7 @@ body {
   height: 350px;
 }
 
-#select_content img {
+#select_content img, .content_image {
   border-style: solid;
   border-width: 1;
 }
