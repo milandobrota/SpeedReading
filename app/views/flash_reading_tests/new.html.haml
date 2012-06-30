@@ -1,20 +1,23 @@
-#select_content
-  #select_content_title
-    Select text
-  #prev_link
-    = link_to 'prev', '#', :id => 'ui-carousel-prev'
-  #carousel
-    .image_container
-      = image_tag 'http://static.freebooks.com/wp-content/themes/FreeBooks/thumbs/books/How-to-Analyze-People-on-Sight-Elsie-Lincoln-Benedict-and-Ralph-Paine-Benedict.jpg', :class => 'selected_image'
-      .title
-        How to Analyze People on Sight
-    - 16.times do
-      .image_container
-        = image_tag 'http://static.freebooks.com/wp-content/themes/FreeBooks/thumbs/books/How-to-Analyze-People-on-Sight-Elsie-Lincoln-Benedict-and-Ralph-Paine-Benedict.jpg'
-        .title
-          How to Analyze People on Sight
-  #next_link
-    = link_to 'next', '#', :id => 'ui-carousel-next'
+- @contents = Content.sorted_by_name
+- @selected = @contents.first
+#content_selection_box
+  #selected_content
+    = image_tag @selected.photo.url, {:id => 'selected_image', :class => 'content_image'}
+    .title
+      = @selected.name
+    = link_to 'Go!', '#', :class => 'button'
+  #select_content
+    #select_content_inner
+      #prev_link
+        = link_to 'prev', '#', :id => 'ui-carousel-prev'
+      #carousel
+        - @contents.each do |content|
+          .image_container
+            = link_to(image_tag(content.photo.url, { :class => 'content_image', :width => 70, :height => 100}), '#')
+            .title
+              = content.name
+      #next_link
+        = link_to 'next', '#', :id => 'ui-carousel-next'
 #speed_slider
 #speed_container
   Speed:
@@ -34,6 +37,7 @@
 #chart_container
 
 :javascript
+  var content_selector;
   var FlashReadingTest = new Object({
 
     // get the words
@@ -178,8 +182,13 @@
     }
 
     $("#carousel").rcarousel({
-      width: 300,
+      visible: 3,
+      width: 200,
       height: 300
     });
 
+    content_selector = new ContentSelector({
+      carousel_container: $("#carousel"),
+      selected_content_container: $("#selected_content")
+    })
   });

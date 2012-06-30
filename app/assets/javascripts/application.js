@@ -78,3 +78,32 @@ function TextFormatter(settings) {
     this.config.container.html(this.shortened_text());
   }
 }
+
+function ContentSelector(settings) {
+  this.config = {}
+
+  // provide for custom configuration
+  if (settings && typeof(settings) == 'object') {
+    $.extend(this.config, settings);
+  }
+
+  // regular on click handler wouldn't work
+  // because the element can be created after
+  // the handler
+  var selector = this;
+  this.config.carousel_container.on('click', 'img.content_image', function() {
+    var image_to_change = selector.config.selected_content_container.find('img.content_image');
+    var text_to_change = selector.config.selected_content_container.find('div.title')
+
+    var clicked_image = $(this);
+    var new_src = clicked_image.attr('src')
+    var new_text = clicked_image.parent().parent().find("div.title").text();
+
+    image_to_change.attr('src', new_src);
+    text_to_change.text(new_text);
+    return false;
+  });
+
+  //this.shortened_text = function() {
+  //}
+}

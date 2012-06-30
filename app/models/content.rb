@@ -24,6 +24,10 @@ class Content < ActiveRecord::Base
     def for_find_the_word_test
       first
     end
+
+    def sorted_by_name
+      Content.order('name asc')
+    end
   end
 
 end
