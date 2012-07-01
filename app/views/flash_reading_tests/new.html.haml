@@ -1,3 +1,5 @@
+- @languages = Language.all
+- @categories = Category.all
 - @contents = Content.sorted_by_name
 - @selected = @contents.first
 #content_selection_box
@@ -5,19 +7,25 @@
     = image_tag @selected.photo.url, {:id => 'selected_image', :class => 'content_image'}
     .title
       = @selected.name
-    = link_to 'Go!', '#', :class => 'button'
+    = link_to 'Select this story!', '#', :class => 'button'
+    %div
+      Or browse other stories: 
   #select_content
+    Language:
+    = select_tag "Language", options_from_collection_for_select(@languages, "id", "name"), :id => 'language_select'
+    Category:
+    = select_tag "Category", options_from_collection_for_select(@categories, "id", "name"), :id => 'category_select'
     #select_content_inner
       #prev_link
         = link_to 'prev', '#', :id => 'ui-carousel-prev'
+      #next_link
+        = link_to 'next', '#', :id => 'ui-carousel-next'
       #carousel
         - @contents.each do |content|
           .image_container
             = link_to(image_tag(content.photo.url, { :class => 'content_image', :width => 70, :height => 100}), '#')
             .title
               = content.name
-      #next_link
-        = link_to 'next', '#', :id => 'ui-carousel-next'
 #speed_slider
 #speed_container
   Speed:
@@ -189,6 +197,8 @@
 
     content_selector = new ContentSelector({
       carousel_container: $("#carousel"),
-      selected_content_container: $("#selected_content")
+      selected_content_container: $("#selected_content"),
+      language_select: $("#language_select"),
+      category_select: $("#category_select")
     })
   });

@@ -2,11 +2,11 @@ class ContentsController < ApplicationController
   # GET /contents
   # GET /contents.json
   def index
-    @contents = Content.all
+    @contents = Content.filter(params).all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @contents }
+      format.json { render json: @contents.to_json(:methods => "photo_url") }
     end
   end
 

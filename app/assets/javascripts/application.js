@@ -87,10 +87,57 @@ function ContentSelector(settings) {
     $.extend(this.config, settings);
   }
 
+  var selector = this;
+
+  this.update_content = function() {
+    var language_id = selector.config.language_select.val();
+    var category_id = selector.config.category_select.val();
+    $.get("/contents.json", {
+        language_id: language_id,
+        category_id: category_id
+      },
+      function(data) {
+        selector.contents = data;
+        var carousel_div = selector.config.carousel_container
+        carousel_div.html('');
+        carousel_div.removeClass('ui-carousel');
+        carousel_div.attr('style', '');
+        for(var i = 0; i < data.length; i++) {
+          var content = data[i];
+          var image_container = $("<div />").addClass("image_container");
+          var image = $("<img />").attr("src", content.photo_url).attr("width", 70).attr("height", 100).addClass('content_image');
+          image_container.append(image);
+          carousel_div.append(image_container);
+        }
+        var widget = $.data(carousel_div[0], "rcarousel")
+        if(widget) widget.destroy();
+
+        var visible = data.length > 2 ? 3 : data.length;
+        var step = data.length > 2 ? 3 : 1;
+        if(visible > 0) {
+          carousel_div.rcarousel({
+            visible: visible,
+            width: 200,
+            height: 300,
+            step: step 
+          });
+        } else {
+          alert('No results');
+        }
+      }
+    );
+  };
+
+  this.config.language_select.change(selector.update_content);
+  this.config.category_select.change(selector.update_content);
+
+  this.config.category_select.change(function() {
+    var category_id = $(this).val();
+  });
+
   // regular on click handler wouldn't work
   // because the element can be created after
   // the handler
-  var selector = this;
   this.config.carousel_container.on('click', 'img.content_image', function() {
     var image_to_change = selector.config.selected_content_container.find('img.content_image');
     var text_to_change = selector.config.selected_content_container.find('div.title')

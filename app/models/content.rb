@@ -12,6 +12,10 @@ class Content < ActiveRecord::Base
       :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
   }
 
+  def photo_url
+    photo.url
+  end
+
   def word_count
     body.scan(/\b/).size / 2
   end
@@ -27,6 +31,17 @@ class Content < ActiveRecord::Base
 
     def sorted_by_name
       Content.order('name asc')
+    end
+
+    def filter(filter)
+      filtered = Content
+      
+      if filter[:category_id]
+        filtered = filtered.includes(:categorizations).where(['categorizations.category_id = ?', filter[:category_id]])
+      end
+
+      filtered = filtered.where(:language_id => filter[:language_id]) if filter[:language_id]
+      filtered
     end
   end
 
