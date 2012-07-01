@@ -107,6 +107,11 @@ function ContentSelector(settings) {
           var image_container = $("<div />").addClass("image_container");
           var image = $("<img />").attr("src", content.photo_url).attr("width", 70).attr("height", 100).addClass('content_image');
           image_container.append(image);
+
+          var title_container = $("<div />").addClass("title");
+          title_container.text(content.name);
+          image_container.append(title_container);
+
           carousel_div.append(image_container);
         }
         var widget = $.data(carousel_div[0], "rcarousel")
@@ -144,7 +149,7 @@ function ContentSelector(settings) {
 
     var clicked_image = $(this);
     var new_src = clicked_image.attr('src')
-    var new_text = clicked_image.parent().parent().find("div.title").text();
+    var new_text = clicked_image.parent().find("div.title").text();
 
     image_to_change.attr('src', new_src);
     text_to_change.text(new_text);
