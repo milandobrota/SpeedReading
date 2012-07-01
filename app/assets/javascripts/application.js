@@ -140,10 +140,12 @@ function ContentSelector(settings) {
 
   this.config.show_popup_button.click(function() {
     selector.config.popup_container.show();
+    selector.config.grayout.css("visibility", "visible");
   });
 
   this.config.close_popup_button.click(function() {
     selector.config.popup_container.hide();
+    selector.config.grayout.css("visibility", "hidden");
   });
 
   this.config.language_select.change(selector.update_content);
