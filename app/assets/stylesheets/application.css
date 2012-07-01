@@ -194,6 +194,7 @@ body {
   border-color: black;
   border-width: 3px;
   border-style: solid;
+  display: none;
 }
 
 a.button {

@@ -105,8 +105,11 @@ function ContentSelector(settings) {
         for(var i = 0; i < data.length; i++) {
           var content = data[i];
           var image_container = $("<div />").addClass("image_container");
-          var image = $("<img />").attr("src", content.photo_url).attr("width", 70).attr("height", 100).addClass('content_image');
-          image_container.append(image);
+          var link = $("<a href='#'></a>");
+          var image = $("<img />").attr("src", content.photo_url).attr("width", 70).attr("height", 100).attr("data-content-id", content.id).addClass('content_image');
+
+          link.append(image);
+          image_container.append(link);
 
           var title_container = $("<div />").addClass("title");
           title_container.text(content.name);
@@ -127,11 +130,21 @@ function ContentSelector(settings) {
             step: step 
           });
         } else {
-          alert('No results');
+          carousel_div.html("<br /><br /><br />No results for this criteria");
         }
       }
     );
   };
+
+  this.update_content();
+
+  this.config.show_popup_button.click(function() {
+    selector.config.popup_container.show();
+  });
+
+  this.config.close_popup_button.click(function() {
+    selector.config.popup_container.hide();
+  });
 
   this.config.language_select.change(selector.update_content);
   this.config.category_select.change(selector.update_content);
@@ -149,10 +162,21 @@ function ContentSelector(settings) {
 
     var clicked_image = $(this);
     var new_src = clicked_image.attr('src')
-    var new_text = clicked_image.parent().find("div.title").text();
+    var new_text = clicked_image.parent().parent().find("div.title").text();
 
     image_to_change.attr('src', new_src);
     text_to_change.text(new_text);
+
+    var selected_content_id = clicked_image.attr('data-content-id');
+    var selected_content;
+    for(var i = 0; i < selector.contents.length; i++) {
+      var temp = selector.contents[i];
+      if(temp.id == selected_content_id) {
+        selected_content = temp;
+        break;
+      }
+    }
+    selector.config.current_test.words = selected_content.body.split(" ").reverse();
     return false;
   });
 
