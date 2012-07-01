@@ -3,27 +3,7 @@
 - @categories = Category.all
 - @selected = Content.first
 
-= link_to 'Select content', '#', :id => 'show_popup'
-#content_selection_box
-  = link_to(image_tag('close.jpg', :alt => 'close', :id => 'close_popup', :class => 'x_button close_popup'), '#')
-  #selected_content
-    = image_tag @selected.photo.url, {:id => 'selected_image', :class => 'content_image'}
-    .title
-      = @selected.name
-    = link_to 'Select this story!', '#', :class => "close_popup button"
-    %div
-      Or browse other stories: 
-  #select_content
-    Language:
-    = select_tag "Language", options_from_collection_for_select(@languages, "id", "name"), :id => 'language_select'
-    Category:
-    = select_tag "Category", options_from_collection_for_select(@categories, "id", "name"), :id => 'category_select'
-    #select_content_inner
-      #prev_link
-        = link_to 'prev', '#', :id => 'ui-carousel-prev'
-      #next_link
-        = link_to 'next', '#', :id => 'ui-carousel-next'
-      #carousel
+= render '/contents/content_selection_popup'
 #speed_slider
 #speed_container
   Speed:
@@ -186,16 +166,4 @@
 
       return Math.round(60000 / delay * word_throughput);
     }
-
-    content_selector = new ContentSelector({
-      popup_container: $("#content_selection_box"),
-      grayout: $("#grayout"),
-      show_popup_button: $("#show_popup"),
-      close_popup_button: $(".close_popup"),
-      carousel_container: $("#carousel"),
-      selected_content_container: $("#selected_content"),
-      language_select: $("#language_select"),
-      category_select: $("#category_select"),
-      current_test: FlashReadingTest //for setting words
-    });
   });
