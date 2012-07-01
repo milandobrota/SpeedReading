@@ -185,35 +185,3 @@ function ContentSelector(settings) {
   //this.shortened_text = function() {
   //}
 }
-
-function scramble_word(word) {
-  var letter_array = [];
-  for(var i = 0; i < word.length; i++) {
-    letter_array.push(word[i]);
-  }
-
-  var scrambled = letter_array.splice(0, 1); // first letter fixed
-  var last_character = letter_array.splice(letter_array.length - 1, 1);
-  var original_letter_array_length = letter_array.length;
-
-  for(var i = 0; i < original_letter_array_length; i++) {
-    scrambled += letter_array.splice(random(letter_array.length), 1);
-  }
-  scrambled += last_character;
-  return scrambled;
-}
-
-function random(limit) {
-  // random between 0 and n - 1
-  return Math.floor(Math.random() * limit);
-}
-
-function scramble_sentence(sentence) {
-  var scrambled = '';
-  var words = sentence.split(' ');
-  for (var i = 0; i < words.length; i++) {
-    scrambled += scramble_word(words[i]);
-    if(i < words.length - 1) scrambled += " ";
-  }
-  return scrambled;
-}

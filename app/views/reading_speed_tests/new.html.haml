@@ -10,17 +10,19 @@ This test will measure your reading speed. Click the start button when you are r
   = f.hidden_field :wpm
 
 :javascript
-  $('#start_reading').click(function() {
-    var text_container = $('#reading_text')
-    text_container.show();
-    window.start_time = new Date();
-  });
+  $(function() {
+    $('#start_reading').click(function() {
+      var text_container = $('#reading_text')
+      text_container.show();
+      window.start_time = new Date();
+    });
 
-  $('#finished_reading').click(function() {
-    var end_time = new Date();
-    var word_count = count_words($('#reading_text').text());
-    var elapsed_time_in_seconds = (end_time - window.start_time) / 1000;
-    var reading_speed = Math.round(word_count * 60 / elapsed_time_in_seconds);
-    $('#reading_speed_test_wpm').val(reading_speed);
-    $('#new_reading_speed_test').submit();
+    $('#finished_reading').click(function() {
+      var end_time = new Date();
+      var word_count = count_words($('#reading_text').text());
+      var elapsed_time_in_seconds = (end_time - window.start_time) / 1000;
+      var reading_speed = Math.round(word_count * 60 / elapsed_time_in_seconds);
+      $('#reading_speed_test_wpm').val(reading_speed);
+      $('#new_reading_speed_test').submit();
+    });
   });
