@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120628000357) do
+ActiveRecord::Schema.define(:version => 20120701041111) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -94,6 +94,18 @@ ActiveRecord::Schema.define(:version => 20120628000357) do
 
   add_index "reading_speed_tests", ["content_id"], :name => "index_reading_speed_tests_on_content_id"
   add_index "reading_speed_tests", ["user_id"], :name => "index_reading_speed_tests_on_user_id"
+
+  create_table "scrambled_word_tests", :force => true do |t|
+    t.integer  "content_id"
+    t.integer  "user_id"
+    t.integer  "wpm"
+    t.integer  "comprehension_rate"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "scrambled_word_tests", ["content_id"], :name => "index_scrambled_word_tests_on_content_id"
+  add_index "scrambled_word_tests", ["user_id"], :name => "index_scrambled_word_tests_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

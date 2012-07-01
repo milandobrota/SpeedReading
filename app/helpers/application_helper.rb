@@ -12,7 +12,24 @@ module ApplicationHelper
   end
 
   def comprehension_rate_or_link_for(reading_test)
-    reading_test.comprehension_rate.blank? ?
-      link_to('Take the test!', new_reading_speed_test_comprehension_test_path(reading_test)) : "#{reading_test.comprehension_rate}%"
+    return "#{reading_test.comprehension_rate}%" if reading_test.comprehension_rate
+    url = case reading_test
+    when ReadingSpeedTest
+      new_reading_speed_test_comprehension_test_path(reading_test)
+    when ScrambledWordTest
+      new_scrambled_word_test_comprehension_test_path(reading_test)
+    end
+
+    link_to('Take the test!', url)
+  end
+
+  def comprehension_test_path_for(reading_test)
+    url = case reading_test
+    when ReadingSpeedTest
+      reading_speed_test_comprehension_tests_path(reading_test)
+    when ScrambledWordTest
+      scrambled_word_test_comprehension_tests_path(reading_test)
+    end
+    url
   end
 end

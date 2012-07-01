@@ -14,6 +14,10 @@ SpeedReading::Application.routes.draw do
     resources :comprehension_tests
   end
 
+  resources :scrambled_word_tests, :only => [:new, :create, :show] do
+    resources :comprehension_tests
+  end
+
   resources :word_search_tests, :only => [:new, :create, :show]
   resources :flashing_numbers_tests, :only => [:new, :create, :show]
   match 'flash_reading_tests/chart' => 'flash_reading_tests#chart'

@@ -1,4 +1,4 @@
-class ReadingSpeedTest < ActiveRecord::Base
+class ScrambledWordTest < ActiveRecord::Base
   belongs_to :user
   belongs_to :content
 

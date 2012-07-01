@@ -1,22 +1,28 @@
 class ComprehensionTestsController < ApplicationController
 
   def new
-    @reading_speed_test = ReadingSpeedTest.find(params[:reading_speed_test_id])
+    set_reading_test
     @comprehension_test = ComprehensionTest.new(
-      :reading_speed_test => @reading_speed_test
+      :reading_test => @reading_test
     )
   end
 
   def create
-    reading_speed_test = ReadingSpeedTest.find(params[:reading_speed_test_id])
+    set_reading_test
     ComprehensionTest.check_user_answers(
-      :reading_speed_test => reading_speed_test,
+      :reading_test => @reading_test,
       :user_answers => params[:user_answers]
     )
-    redirect_to reading_speed_test
+    redirect_to @reading_test
   end
 
   def show
-    # @reading_speed_test = ReadingSpeedTest.find(params[:id])
+    set_reading_test
+  end
+
+  def set_reading_test
+    @reading_test = params[:reading_speed_test_id] ?
+      ReadingSpeedTest.find(params[:reading_speed_test_id]) :
+      ScrambledWordTest.find(params[:scrambled_word_test_id])
   end
 end

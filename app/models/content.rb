@@ -21,8 +21,9 @@ class Content < ActiveRecord::Base
   end
 
   class << self
-    def for_reading_speed_test
-      first
+    def for_reading_test
+      # first
+      where(:id => 2).first
     end
 
     def for_find_the_word_test

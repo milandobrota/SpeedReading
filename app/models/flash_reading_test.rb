@@ -6,7 +6,7 @@ class FlashReadingTest < ActiveRecord::Base
     def setup_for(test_taker)
       new(
         :user => test_taker,
-        :content => Content.for_reading_speed_test
+        :content => Content.for_reading_test
       )
     end
 

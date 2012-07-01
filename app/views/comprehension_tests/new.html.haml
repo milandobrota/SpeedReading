@@ -1,6 +1,6 @@
 %b Comprehension Test
-= form_tag(reading_speed_test_comprehension_tests_path(@reading_speed_test)) do |f|
-  - @reading_speed_test.content.questions.each do |question|
+= form_tag(comprehension_test_path_for(@reading_test)) do |f|
+  - @reading_test.content.questions.each do |question|
     %p
       = question.body
     %p
