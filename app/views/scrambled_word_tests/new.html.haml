@@ -17,6 +17,7 @@ This test will measure your reading speed. Click the start button when you are r
 
 :javascript
   var ScrambledWordTest = new Object({
+    text: #{@scrambled_word_test.content.body.to_json}
   });
 
   $(function() {
