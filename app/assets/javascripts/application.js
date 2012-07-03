@@ -178,10 +178,8 @@ function ContentSelector(settings) {
         break;
       }
     }
-    selector.config.current_test.words = selected_content.body.split(" ").reverse();
+    // selector.config.current_test.words = selected_content.body.split(" ").reverse();
+    selector.config.current_test.text = selected_content.body;
     return false;
   });
-
-  //this.shortened_text = function() {
-  //}
 }

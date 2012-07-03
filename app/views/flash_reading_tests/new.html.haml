@@ -1,7 +1,7 @@
-#grayout
 - @languages = Language.all
 - @categories = Category.all
 - @selected = Content.first
+- @js_test = 'FlashReadingTest'
 
 = render '/contents/content_selection_popup'
 #speed_slider
@@ -26,15 +26,14 @@
   var content_selector;
   var FlashReadingTest = new Object({
 
+    text: #{@flash_reading_test.content.body.to_json},
     // get the words
-    words: #{@flash_reading_test.content.body.split(' ').reverse.to_json},
+    get_words: function() { return this.text.split(' '); },
 
     // get words that need to be displayed
     fetch_next_chunk: function() {
-      var chunk = [];
-      for(var i = 0; i < FlashReadingTest.get_number_of_words(); i++) {
-        chunk.push(FlashReadingTest.words.pop());
-      }
+      this.remaining_words = this.remaining_words || this.get_words();
+      var chunk = this.remaining_words.splice(0, this.get_number_of_words());
       return chunk[0] == undefined ? undefined : chunk.join(' ');
     },
 
@@ -126,6 +125,7 @@
     $('#start_exercise').click(function() {
       if (FlashReadingTest.running) return;
       FlashReadingTest.running = true;
+      FlashReadingTest.remaining_words = undefined;
       FlashReadingTest.iterate();
     });
 
