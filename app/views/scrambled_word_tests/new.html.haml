@@ -21,6 +21,7 @@ This test will measure your reading speed. Click the start button when you are r
   });
 
   $(function() {
+
     ScrambledWordTest.scramble_word = function(word) {
       var letter_array = [];
       for(var i = 0; i < word.length; i++) {
@@ -70,4 +71,5 @@ This test will measure your reading speed. Click the start button when you are r
       $('#scrambled_word_test_wpm').val(reading_speed);
       $('#new_scrambled_word_test').submit();
     });
+
   });

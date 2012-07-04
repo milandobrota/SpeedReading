@@ -225,3 +225,15 @@ a.button {
   top: 10px;
   right: 10px;
 }
+
+#flashing_dots_container {
+  border: 1px gray solid;
+  width: 90%;
+  height: 500px;
+  margin: 0 auto;
+}
+
+.dot {
+  position: relative;
+  font-size: 2em;
+}

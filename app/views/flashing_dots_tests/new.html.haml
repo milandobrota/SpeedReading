@@ -1,0 +1,78 @@
+%button#start_test Start
+#flashing_dots_container
+
+:javascript
+  var FlashingDotsTest = new Object({
+    max_dots: 15,
+    level: 3,
+    streak: 0
+  });
+
+  $(function() {
+
+    FlashingDotsTest.container = $("#flashing_dots_container");
+
+    FlashingDotsTest.show_dots = function() {
+      var dots_low = FlashingDotsTest.level - 2;
+      var dots_high = FlashingDotsTest.level + 2;
+      FlashingDotsTest.number_of_dots = random_number_between(dots_low, dots_high);
+      for(var i = 0; i < FlashingDotsTest.number_of_dots; i++) {
+        var dot = $('<span class="dot">&#8226;</span>');
+        dot.css('top', random_number_between(10, 90) + "%");
+        dot.css('left', random_number_between(10, 90) + "%");
+        FlashingDotsTest.container.append(dot);
+      }
+    };
+
+    FlashingDotsTest.clear = function() {
+      FlashingDotsTest.container.html('');
+    }
+
+    FlashingDotsTest.show_and_clear_dots = function() {
+      FlashingDotsTest.show_dots();
+      setTimeout(FlashingDotsTest.clear, 200);
+    }
+
+    FlashingDotsTest.guess_number_of_dots = function(number) {
+      if (number == FlashingDotsTest.number_of_dots) {
+        FlashingDotsTest.correctly_guessed();
+      } else {
+        FlashingDotsTest.incorrectly_guessed();
+      }
+      setTimeout(FlashingDotsTest.show_and_clear_dots, 3000);
+    }
+
+    FlashingDotsTest.correctly_guessed = function() {
+      if (FlashingDotsTest.streak >= 0) {
+        FlashingDotsTest.streak += 1;
+      } else {
+        FlashingDotsTest.streak = 1;
+      }
+      if(FlashingDotsTest.streak > 4) FlashingDotsTest.level_up();
+      alert('Good job! Streak = ' + FlashingDotsTest.streak);
+    }
+
+    FlashingDotsTest.incorrectly_guessed = function() {
+      if (FlashingDotsTest.streak <= 0) {
+        FlashingDotsTest.streak -= 1;
+      } else {
+        FlashingDotsTest.streak = -1;
+      }
+      if(FlashingDotsTest.streak < -4) FlashingDotsTest.level_down();
+      alert('Nope. Streak = ' + FlashingDotsTest.streak);
+    }
+
+    FlashingDotsTest.level_up = function() {
+      FlashingDotsTest.level += 1;
+      FlashingDotsTest.streak = 0;
+    }
+
+    FlashingDotsTest.level_down = function() {
+      FlashingDotsTest.level -= 1;
+      FlashingDotsTest.streak = 0;
+    }
+
+    $("#start_test").click(function() {
+      FlashingDotsTest.show_and_clear_dots();
+    });
+  });

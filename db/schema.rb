@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120701041111) do
+ActiveRecord::Schema.define(:version => 20120703232749) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -56,6 +56,15 @@ ActiveRecord::Schema.define(:version => 20120701041111) do
 
   add_index "flash_reading_tests", ["content_id"], :name => "index_flash_reading_tests_on_content_id"
   add_index "flash_reading_tests", ["user_id"], :name => "index_flash_reading_tests_on_user_id"
+
+  create_table "flashing_dots_tests", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "level"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "flashing_dots_tests", ["user_id"], :name => "index_flashing_dots_tests_on_user_id"
 
   create_table "flashing_numbers_tests", :force => true do |t|
     t.integer  "user_id"
