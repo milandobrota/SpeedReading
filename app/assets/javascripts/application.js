@@ -186,10 +186,10 @@ function ContentSelector(settings) {
 
 var Countdown = new Object({
   start: function() {
-    this.container = $("#countdown");
-    this.container.show();
-    this.count = 3;
-    this.countdown();
+    Countdown.container = $("#countdown");
+    Countdown.container.show();
+    Countdown.count = 3;
+    Countdown.countdown();
   },
 
   countdown: function() {

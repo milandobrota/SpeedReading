@@ -16,6 +16,8 @@ SpeedReading::Application.routes.draw do
     resources :comprehension_tests
   end
 
+  resources :synonyms_and_antonyms_tests, :only => [:new, :create, :show]
+
   resources :scrambled_word_tests, :only => [:new, :create, :show] do
     resources :comprehension_tests
   end

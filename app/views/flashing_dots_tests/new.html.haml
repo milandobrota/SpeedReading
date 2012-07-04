@@ -122,7 +122,7 @@
     FlashingDotsTest.show_message = function() {
       var div = $("#flashing_dots_notice_container");
       if (!div[0]) { // checking jQuery object
-        div = $('<div id="flashing_dots_notice_container"></div>');
+        div = $('<div id="flashing_dots_notice_container" class="message_notice_container"></div>');
         FlashingDotsTest.container.prepend(div);
       }
       var message = FlashingDotsTest.messages.pop();

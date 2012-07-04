@@ -207,6 +207,10 @@ a.button {
   padding: 3px;
 }
 
+#submit_synonym, #submit_antonym {
+  font-size: 50px;
+}
+
 #grayout {
   position: fixed;
   top: 0px;
@@ -264,7 +268,7 @@ a.button {
   margin: 130px auto;
 }
 
-#flashing_dots_question_container {
+.question_container, #flashing_dots_question_container {
   font-size: 70px;
   text-align: center;
   width: 700px;
@@ -272,7 +276,15 @@ a.button {
   margin: 130px auto;
 }
 
-#flashing_dots_notice_container {
+#word_pair_container {
+  font-size: 100px;
+  text-align: center;
+  width: 700px;
+  height: 300px;
+  margin: 160px auto;
+}
+
+.message_notice_container {
   font-size: 70px;
   text-align: center;
   width: 700px;
