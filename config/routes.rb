@@ -20,7 +20,7 @@ SpeedReading::Application.routes.draw do
 
   resources :word_search_tests, :only => [:new, :create, :show]
   resources :flashing_numbers_tests, :only => [:new, :create, :show]
-  resources :flashing_dots_tests, :only => [:new, :create, :show]
+  resources :flashing_dots_tests, :only => [:new, :create, :update, :show]
 
   match 'flash_reading_tests/chart' => 'flash_reading_tests#chart'
   resources :flash_reading_tests, :only => [:new, :create, :show]

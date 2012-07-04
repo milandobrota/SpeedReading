@@ -75,6 +75,7 @@
       }
       if(FlashingDotsTest.streak > 4) {
         FlashingDotsTest.level_up();
+        FlashingDotsTest.save();
         FlashingDotsTest.messages.push('Level ' + FlashingDotsTest.level);
       } else {
         FlashingDotsTest.messages.push('Good job!<br />Current streak: ' + FlashingDotsTest.streak);
@@ -143,6 +144,33 @@
 
       FlashingDotsTest.messages = ['Ready?', 'Level 1'];
       FlashingDotsTest.iterate();
+    }
+
+    FlashingDotsTest.attributes = function() {
+      return {
+        level: FlashingDotsTest.level
+      }
+    }
+
+    FlashingDotsTest.save = function(callback) {
+      if(FlashingDotsTest.id) {
+        FlashingDotsTest.update(callback);
+      } else {
+        FlashingDotsTest.create(callback);
+      }
+    }
+
+    FlashingDotsTest.create = function(callback) {
+      $.post('/flashing_dots_tests', {flashing_dots_test: FlashingDotsTest.attributes()}, function(data) {
+        FlashingDotsTest.id = parseInt(data.id); // so we can update later
+        if(callback) callback();
+      }, 'json');
+    }
+
+    FlashingDotsTest.update = function(callback) {
+      $.post('/flashing_dots_tests/' + FlashingDotsTest.id, {_method: 'put', flashing_dots_test: FlashingDotsTest.attributes()}, function(data) {
+        if(callback) callback();
+      }, 'json');
     }
 
     $("#start_test").click(function() {
