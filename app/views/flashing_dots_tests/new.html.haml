@@ -46,6 +46,7 @@
     }
 
     FlashingDotsTest.guess_and_continue = function() {
+      if(FlashingDotsTest.aborted) return;
       var div = $("#flashing_dots_question_container");
       var input = $("#flashing_dots_input");
       this.guess_number_of_dots(input.val());
@@ -182,4 +183,9 @@
       $("#grayout").css("visibility", "hidden");
       $(".test_container").hide();
     });
+
+    $(window).bind('beforeunload', function() { 
+      FlashingDotsTest.aborted = true;
+    });
+
   });
