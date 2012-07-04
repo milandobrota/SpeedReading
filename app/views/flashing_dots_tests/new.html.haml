@@ -50,7 +50,7 @@
       var input = $("#flashing_dots_input");
       this.guess_number_of_dots(input.val());
       div.remove();
-      this.start();
+      this.iterate();
     }
 
     FlashingDotsTest.show_and_clear_dots = function() {
@@ -77,7 +77,7 @@
         FlashingDotsTest.level_up();
         FlashingDotsTest.messages.push('Level ' + FlashingDotsTest.level);
       } else {
-        FlashingDotsTest.messages.push('Good job! Current streak: ' + FlashingDotsTest.streak);
+        FlashingDotsTest.messages.push('Good job!<br />Current streak: ' + FlashingDotsTest.streak);
       }
     }
 
@@ -88,7 +88,7 @@
         FlashingDotsTest.streak = -1;
       }
       if(FlashingDotsTest.streak < -4) FlashingDotsTest.level_down();
-      FlashingDotsTest.messages.push('Nope! There was ' + FlashingDotsTest.number_of_dots + '.');
+      FlashingDotsTest.messages.push('Nope!<br />There was ' + FlashingDotsTest.number_of_dots + '.');
     }
 
     FlashingDotsTest.level_up = function() {
@@ -101,10 +101,7 @@
       FlashingDotsTest.streak = 0;
     }
 
-    FlashingDotsTest.start = function() {
-      this.container.show();
-      $("#grayout").css("visibility", "visible");
-
+    FlashingDotsTest.iterate = function() {
       // display all messages
       var timeout = 0;
       for(var i = 0; i < this.messages.length; i++) {
@@ -113,7 +110,7 @@
       }
 
       // destroy the message container
-      setTimeout(FlashingDotsTest.clear_message_text, timeout);
+      setTimeout(FlashingDotsTest.remove_message_container, timeout);
 
       // start the test
       timeout += 1000;
@@ -127,10 +124,10 @@
         FlashingDotsTest.container.prepend(div);
       }
       var message = FlashingDotsTest.messages.pop();
-      div.text(message);
+      div.html(message);
     }
 
-    FlashingDotsTest.clear_message_text = function() {
+    FlashingDotsTest.remove_message_container = function() {
       var div = $("#flashing_dots_notice_container");
       if (div) div.remove();
     }
@@ -140,8 +137,15 @@
       Countdown.start();
     }
 
-    $("#start_test").click(function() {
+    FlashingDotsTest.start = function() {
+      this.container.show();
+      $("#grayout").css("visibility", "visible");
+
       FlashingDotsTest.messages = ['Ready?', 'Level 1'];
+      FlashingDotsTest.iterate();
+    }
+
+    $("#start_test").click(function() {
       FlashingDotsTest.start();
     });
 
