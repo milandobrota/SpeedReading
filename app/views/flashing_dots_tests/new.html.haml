@@ -141,8 +141,9 @@
     FlashingDotsTest.start = function() {
       this.container.show();
       $("#grayout").css("visibility", "visible");
+      $("#flashing_dots_question_container").remove();
 
-      FlashingDotsTest.messages = ['Ready?', 'Level 1'];
+      FlashingDotsTest.messages = ['Ready?', 'Level ' + FlashingDotsTest.level];
       FlashingDotsTest.iterate();
     }
 
