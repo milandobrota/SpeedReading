@@ -2,18 +2,18 @@
 
 :javascript
   var FlashingDotsTest = new Object({
-    max_dots: 15,
-    level: 3,
+    level: 1,
     streak: 0
   });
 
   $(function() {
 
     FlashingDotsTest.container = $(".test_container");
+    FlashingDotsTest.messages = []; // to be displayed
 
     FlashingDotsTest.show_dots = function() {
-      var dots_low = FlashingDotsTest.level - 2;
-      var dots_high = FlashingDotsTest.level + 2;
+      var dots_low = FlashingDotsTest.level;
+      var dots_high = FlashingDotsTest.level + 4;
       FlashingDotsTest.number_of_dots = random_number_between(dots_low, dots_high);
       for(var i = 0; i < FlashingDotsTest.number_of_dots; i++) {
         var dot = $('<span class="dot">&#8226;</span>');
@@ -37,6 +37,7 @@
         FlashingDotsTest.guess_and_continue();
       });
 
+      // prevent multiple submissions by using keyup and checking for focus
       $(document).keyup(function(e) {
         if(e.which == 13 && input.is(":focus")) {
           FlashingDotsTest.guess_and_continue();
@@ -72,8 +73,12 @@
       } else {
         FlashingDotsTest.streak = 1;
       }
-      if(FlashingDotsTest.streak > 4) FlashingDotsTest.level_up();
-      alert('Good job! Streak = ' + FlashingDotsTest.streak);
+      if(FlashingDotsTest.streak > 4) {
+        FlashingDotsTest.level_up();
+        FlashingDotsTest.messages.push('Level ' + FlashingDotsTest.level);
+      } else {
+        FlashingDotsTest.messages.push('Good job! Current streak: ' + FlashingDotsTest.streak);
+      }
     }
 
     FlashingDotsTest.incorrectly_guessed = function() {
@@ -83,7 +88,7 @@
         FlashingDotsTest.streak = -1;
       }
       if(FlashingDotsTest.streak < -4) FlashingDotsTest.level_down();
-      alert('Nope. Streak = ' + FlashingDotsTest.streak);
+      FlashingDotsTest.messages.push('Nope! There was ' + FlashingDotsTest.number_of_dots + '.');
     }
 
     FlashingDotsTest.level_up = function() {
@@ -92,18 +97,51 @@
     }
 
     FlashingDotsTest.level_down = function() {
-      if(FlashingDotsTest.level > 3) FlashingDotsTest.level -= 1;
+      if(FlashingDotsTest.level > 1) FlashingDotsTest.level -= 1;
       FlashingDotsTest.streak = 0;
     }
 
     FlashingDotsTest.start = function() {
       this.container.show();
       $("#grayout").css("visibility", "visible");
+
+      // display all messages
+      var timeout = 0;
+      for(var i = 0; i < this.messages.length; i++) {
+        setTimeout(FlashingDotsTest.show_message, timeout);
+        timeout += 1000;
+      }
+
+      // destroy the message container
+      setTimeout(FlashingDotsTest.clear_message_text, timeout);
+
+      // start the test
+      timeout += 1000;
+      setTimeout(FlashingDotsTest.countdown_and_test, timeout);
+    }
+
+    FlashingDotsTest.show_message = function() {
+      var div = $("#flashing_dots_notice_container");
+      if (!div[0]) { // checking jQuery object
+        div = $('<div id="flashing_dots_notice_container"></div>');
+        FlashingDotsTest.container.prepend(div);
+      }
+      var message = FlashingDotsTest.messages.pop();
+      div.text(message);
+    }
+
+    FlashingDotsTest.clear_message_text = function() {
+      var div = $("#flashing_dots_notice_container");
+      if (div) div.remove();
+    }
+
+    FlashingDotsTest.countdown_and_test = function() {
       Countdown.callback = FlashingDotsTest.show_and_clear_dots;
       Countdown.start();
     }
 
     $("#start_test").click(function() {
+      FlashingDotsTest.messages = ['Ready?', 'Level 1'];
       FlashingDotsTest.start();
     });
 

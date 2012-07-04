@@ -272,6 +272,14 @@ a.button {
   margin: 130px auto;
 }
 
+#flashing_dots_notice_container {
+  font-size: 70px;
+  text-align: center;
+  width: 700px;
+  height: 300px;
+  margin: 200px auto;
+}
+
 #flashing_dots_question_container input{
   font-size: 100%;
   text-align: center;
