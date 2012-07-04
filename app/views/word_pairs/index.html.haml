@@ -1,0 +1,23 @@
+%h1 Listing word pairs
+
+%table
+  %tr
+    %th Word 1
+    %th Word 2
+    %th Relation
+    %th
+    %th
+    %th
+
+  - @word_pairs.each do |word_pair|
+    %tr
+      %td= word_pair.word_1
+      %td= word_pair.word_2
+      %td= word_pair.relation
+      %td= link_to 'Show', word_pair
+      %td= link_to 'Edit', edit_word_pair_path(word_pair)
+      %td= link_to 'Destroy', word_pair, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New word pair', new_word_pair_path

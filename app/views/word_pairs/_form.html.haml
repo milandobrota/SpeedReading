@@ -1,0 +1,22 @@
+= form_for @word_pair do |f|
+  -if @word_pair.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@word_pair.errors.count, "error")} prohibited this word_pair from being saved:"
+      %ul
+        - @word_pair.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :word_1
+    = f.text_field :word_1
+  .field
+    = f.label :word_2
+    = f.text_field :word_2
+  .field
+    = f.label :relation
+    = f.radio_button :relation, 'antonyms'
+    antonyms
+    = f.radio_button :relation, 'synonyms'
+    synonyms
+  .actions
+    = f.submit 'Save'

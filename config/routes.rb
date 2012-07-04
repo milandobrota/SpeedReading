@@ -1,5 +1,7 @@
 SpeedReading::Application.routes.draw do
 
+  resources :word_pairs
+
   resources :categorizations
 
   resources :categories
