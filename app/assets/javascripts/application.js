@@ -183,3 +183,24 @@ function ContentSelector(settings) {
     return false;
   });
 }
+
+var Countdown = new Object({
+  start: function() {
+    this.container = $("#countdown");
+    this.container.show();
+    this.count = 3;
+    this.countdown();
+  },
+
+  countdown: function() {
+    if(Countdown.count <= 0) {
+      Countdown.container.text('');
+      Countdown.container.hide();
+      if(Countdown.callback) Countdown.callback();
+    } else {
+      Countdown.container.text(Countdown.count);
+      Countdown.count = Countdown.count - 1;
+      setTimeout(Countdown.countdown, 1000);
+    }
+  }
+});

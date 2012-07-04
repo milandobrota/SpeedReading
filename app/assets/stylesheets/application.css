@@ -226,14 +226,53 @@ a.button {
   right: 10px;
 }
 
+/*
 #flashing_dots_container {
   border: 1px gray solid;
   width: 90%;
   height: 500px;
   margin: 0 auto;
 }
+*/
 
 .dot {
-  position: relative;
+  position: absolute;
   font-size: 2em;
+}
+
+.test_container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: white;
+  z-index: 100000000000;
+  border-color: black;
+  border-width: 3px;
+  border-style: solid;
+  height: 600px;
+  margin-top: -300px;
+  width: 1000px;
+  margin-left: -500px;
+  display: none;
+}
+
+#countdown {
+  font-size: 250px;
+  text-align: center;
+  width: 300px;
+  height: 300px;
+  margin: 130px auto;
+}
+
+#flashing_dots_question_container {
+  font-size: 70px;
+  text-align: center;
+  width: 700px;
+  height: 300px;
+  margin: 130px auto;
+}
+
+#flashing_dots_question_container input{
+  font-size: 100%;
+  text-align: center;
 }

@@ -1,5 +1,4 @@
 %button#start_test Start
-#flashing_dots_container
 
 :javascript
   var FlashingDotsTest = new Object({
@@ -10,7 +9,7 @@
 
   $(function() {
 
-    FlashingDotsTest.container = $("#flashing_dots_container");
+    FlashingDotsTest.container = $(".test_container");
 
     FlashingDotsTest.show_dots = function() {
       var dots_low = FlashingDotsTest.level - 2;
@@ -18,28 +17,53 @@
       FlashingDotsTest.number_of_dots = random_number_between(dots_low, dots_high);
       for(var i = 0; i < FlashingDotsTest.number_of_dots; i++) {
         var dot = $('<span class="dot">&#8226;</span>');
-        dot.css('top', random_number_between(10, 90) + "%");
-        dot.css('left', random_number_between(10, 90) + "%");
+        dot.css('top', random_number_between(20, 80) + "%");
+        dot.css('left', random_number_between(20, 80) + "%");
         FlashingDotsTest.container.append(dot);
       }
     };
 
-    FlashingDotsTest.clear = function() {
-      FlashingDotsTest.container.html('');
+    FlashingDotsTest.clear_and_ask = function() {
+      FlashingDotsTest.container.find('.dot').remove();
+      FlashingDotsTest.ask();
+    }
+
+    FlashingDotsTest.ask = function() {
+      var div = $('<div id="flashing_dots_question_container">How many dots did you see?<br /><br /><input type=text id="flashing_dots_input" size="3" /><a href="#" class="button" id="submit_answer">OK</a></div>');
+      FlashingDotsTest.container.append(div);
+      var input = $("#flashing_dots_input");
+      input.focus();
+      $("#submit_answer").click(function() {
+        FlashingDotsTest.guess_and_continue();
+      });
+
+      $(document).keyup(function(e) {
+        if(e.which == 13 && input.is(":focus")) {
+          FlashingDotsTest.guess_and_continue();
+        }
+      });
+    }
+
+    FlashingDotsTest.guess_and_continue = function() {
+      var div = $("#flashing_dots_question_container");
+      var input = $("#flashing_dots_input");
+      this.guess_number_of_dots(input.val());
+      div.remove();
+      this.start();
     }
 
     FlashingDotsTest.show_and_clear_dots = function() {
       FlashingDotsTest.show_dots();
-      setTimeout(FlashingDotsTest.clear, 200);
+      setTimeout(FlashingDotsTest.clear_and_ask, 200);
     }
 
     FlashingDotsTest.guess_number_of_dots = function(number) {
+      number = parseInt(number);
       if (number == FlashingDotsTest.number_of_dots) {
         FlashingDotsTest.correctly_guessed();
       } else {
         FlashingDotsTest.incorrectly_guessed();
       }
-      setTimeout(FlashingDotsTest.show_and_clear_dots, 3000);
     }
 
     FlashingDotsTest.correctly_guessed = function() {
@@ -68,11 +92,23 @@
     }
 
     FlashingDotsTest.level_down = function() {
-      FlashingDotsTest.level -= 1;
+      if(FlashingDotsTest.level > 3) FlashingDotsTest.level -= 1;
       FlashingDotsTest.streak = 0;
     }
 
+    FlashingDotsTest.start = function() {
+      this.container.show();
+      $("#grayout").css("visibility", "visible");
+      Countdown.callback = FlashingDotsTest.show_and_clear_dots;
+      Countdown.start();
+    }
+
     $("#start_test").click(function() {
-      FlashingDotsTest.show_and_clear_dots();
+      FlashingDotsTest.start();
+    });
+
+    $("#close_test").click(function() {
+      $("#grayout").css("visibility", "hidden");
+      $(".test_container").hide();
     });
   });

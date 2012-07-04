@@ -23,3 +23,6 @@
       %p.notice= notice
       %p.alert= alert
       = yield
+    .test_container
+      = link_to(image_tag('close.jpg', :alt => 'close', :id => 'close_test', :class => 'x_button close_popup'), '#')
+      #countdown
