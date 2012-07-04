@@ -4,7 +4,9 @@ class SynonymsAndAntonymsTestsController < ApplicationController
   end
 
   def create
-    @synonyms_and_antonyms_test = SynonymsAndAntonymsTest.new(params[:synonyms_and_antonyms_tests])
+    @synonyms_and_antonyms_test = SynonymsAndAntonymsTest.new(params[:synonyms_and_antonyms_test])
+    @synonyms_and_antonyms_test.user = current_user
+
     if @synonyms_and_antonyms_test.save
       redirect_to @synonyms_and_antonyms_test, notice: "Speed: #{@synonyms_and_antonyms_test.speed}, Accuracy #{@synonyms_and_antonyms_test.accuracy}%"
     else

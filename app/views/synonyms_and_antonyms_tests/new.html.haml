@@ -1,6 +1,9 @@
 - @word_pairs = WordPair.all
 
 %button#start_test Start
+= form_for(@synonyms_and_antonyms_test) do |f|
+  = f.hidden_field :speed
+  = f.hidden_field :accuracy
 
 :javascript
 
@@ -41,24 +44,17 @@
 
       // start countdown right after the message container has been removed
       timeout += 10;
-      Countdown.callback = SynonymsAndAntonymsTest.iterate;
+      Countdown.callback = SynonymsAndAntonymsTest.set_start_time_and_iterate;
       setTimeout(Countdown.start, timeout);
     }
 
+    SynonymsAndAntonymsTest.set_start_time_and_iterate = function() {
+      SynonymsAndAntonymsTest.start_time = new Date();
+      SynonymsAndAntonymsTest.iterate();
+    }
+
     SynonymsAndAntonymsTest.iterate = function() {
-      // display all messages
-      var timeout = 0;
-      for(var i = 0; i < SynonymsAndAntonymsTest.messages.length; i++) {
-        setTimeout(SynonymsAndAntonymsTest.show_message, timeout);
-        timeout += 1000;
-      }
-
-      // destroy the message container
-      setTimeout(SynonymsAndAntonymsTest.remove_message_container, timeout);
-
-      // start the test right after the message container has been removed
-      timeout += 10;
-      setTimeout(SynonymsAndAntonymsTest.show_words, timeout);
+      SynonymsAndAntonymsTest.show_words();
     }
 
     SynonymsAndAntonymsTest.show_message = function() {
@@ -96,6 +92,7 @@
       div.html(word_1 + ' ' + word_2 + '<br /><a href="#" class="button" id="submit_synonym">Synonym</a><a href="#" class="button" id="submit_antonym">Antonym</a>');
 
       $("#submit_synonym").click(function() {
+        if(!SynonymsAndAntonymsTest.current_word_pair) return;
         if (SynonymsAndAntonymsTest.last_answered == SynonymsAndAntonymsTest.current_word_pair) return;
         SynonymsAndAntonymsTest.total += 1;
 
@@ -109,6 +106,7 @@
       });
 
       $("#submit_antonym").click(function() {
+        if(!SynonymsAndAntonymsTest.current_word_pair) return;
         if (SynonymsAndAntonymsTest.last_answered == SynonymsAndAntonymsTest.current_word_pair) return;
         SynonymsAndAntonymsTest.total += 1;
 
@@ -123,7 +121,18 @@
     }
 
     SynonymsAndAntonymsTest.finish = function() {
-      alert('finished!' + SynonymsAndAntonymsTest.correct + '/' + SynonymsAndAntonymsTest.total);
+      // set elapsed time
+      SynonymsAndAntonymsTest.end_time = new Date();
+      SynonymsAndAntonymsTest.elapsed_time_in_seconds = (SynonymsAndAntonymsTest.end_time - SynonymsAndAntonymsTest.start_time) / 1000;
+
+      SynonymsAndAntonymsTest.save();
+    }
+
+    // synchronous save
+    SynonymsAndAntonymsTest.save = function(callback) {
+      $('#synonyms_and_antonyms_test_speed').val(SynonymsAndAntonymsTest.total / SynonymsAndAntonymsTest.elapsed_time_in_seconds * 60);
+      $('#synonyms_and_antonyms_test_accuracy').val(SynonymsAndAntonymsTest.correct / SynonymsAndAntonymsTest.total * 100);
+      $('#new_synonyms_and_antonyms_test').submit();
     }
 
   });
