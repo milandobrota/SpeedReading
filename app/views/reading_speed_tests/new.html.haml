@@ -16,6 +16,7 @@ This test will measure your reading speed. Click the start button when you are r
 :javascript
 
   var ReadingSpeedTest = new Object({
+    text: #{@reading_speed_test.content.body.to_json}
   });
 
   $(function() {
@@ -23,7 +24,17 @@ This test will measure your reading speed. Click the start button when you are r
     ReadingSpeedTest.container = $(".test_container");
     ReadingSpeedTest.messages = ['Ready?']; // to be displayed
 
+    $('#start_reading').click(function() {
+      ReadingSpeedTest.start();
+    });
+
+    $("#close_test").click(function() {
+      $("#grayout").css("visibility", "hidden");
+      $(".test_container").hide();
+    });
+
     ReadingSpeedTest.start = function() {
+      $("#reading_text_container").html('');
       ReadingSpeedTest.container.show();
       $("#grayout").css("visibility", "visible");
 
@@ -63,7 +74,9 @@ This test will measure your reading speed. Click the start button when you are r
         div = $('<div id="reading_text_container"></div>');
         ReadingSpeedTest.container.append(div);
       }
-      div.html('<div id="reading_text">' + ReadingSpeedTest.text + '</div>' + '<br /><a href="#" class="button" id="finished_reading">Done</a>');
+      div.html('<div id="scrollbar1"><div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div><div class="viewport"><div class="overview"><div id="reading_text">' + ReadingSpeedTest.text + '</div></div></div></div>' + '<br /><a href="#" class="button" id="finished_reading">Done</a>');
+
+      $('#scrollbar1').tinyscrollbar();
 
       $('#finished_reading').click(function() {
         var end_time = new Date();
@@ -89,10 +102,5 @@ This test will measure your reading speed. Click the start button when you are r
       var div = $("#reading_speed_notice_container");
       if (div) div.remove();
     }
-
-    $('#start_reading').click(function() {
-      ReadingSpeedTest.start();
-    });
-
 
   });
