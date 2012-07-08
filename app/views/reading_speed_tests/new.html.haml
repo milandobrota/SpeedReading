@@ -1,3 +1,10 @@
+- @languages = Language.all
+- @categories = Category.all
+- @selected = Content.first
+- @js_test = 'ReadingSpeedTest'
+
+= render '/contents/content_selection_popup'
+
 This test will measure your reading speed. Click the start button when you are ready and the text will appear below. Click on done when you are finished reading.
 %button#start_reading Start
 %div
@@ -56,7 +63,7 @@ This test will measure your reading speed. Click the start button when you are r
         div = $('<div id="reading_text_container"></div>');
         ReadingSpeedTest.container.append(div);
       }
-      div.html('<div id="reading_text">foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz foo bar baz </div>' + '<br /><a href="#" class="button" id="finished_reading">Done</a>');
+      div.html('<div id="reading_text">' + ReadingSpeedTest.text + '</div>' + '<br /><a href="#" class="button" id="finished_reading">Done</a>');
 
       $('#finished_reading').click(function() {
         var end_time = new Date();

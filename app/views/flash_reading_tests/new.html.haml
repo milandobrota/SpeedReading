@@ -4,6 +4,7 @@
 - @js_test = 'FlashReadingTest'
 
 = render '/contents/content_selection_popup'
+
 #speed_slider
 #speed_container
   Speed:
@@ -23,7 +24,6 @@
 #chart_container
 
 :javascript
-  var content_selector;
   var FlashReadingTest = new Object({
 
     text: #{@flash_reading_test.content.body.to_json},
