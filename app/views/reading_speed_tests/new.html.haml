@@ -55,15 +55,11 @@ This test will measure your reading speed. Click the start button when you are r
     }
 
     ReadingSpeedTest.set_start_time_and_show_text = function() {
-      ReadingSpeedTest.start_time = new Date();
       ReadingSpeedTest.show_text();
+      ReadingSpeedTest.start_time = new Date();
     }
 
     ReadingSpeedTest.show_text = function() {
-      ReadingSpeedTest.show_words();
-    }
-
-    ReadingSpeedTest.show_words = function() {
       var text_container = $('#reading_text')
       text_container.show();
 
@@ -84,6 +80,7 @@ This test will measure your reading speed. Click the start button when you are r
         var elapsed_time_in_seconds = (end_time - ReadingSpeedTest.start_time) / 1000;
         var reading_speed = Math.round(word_count * 60 / elapsed_time_in_seconds);
         $('#reading_speed_test_wpm').val(reading_speed);
+        $('#reading_speed_test_content_id').val(ReadingSpeedTest.content_id);
         $('#new_reading_speed_test').submit();
       });
     }

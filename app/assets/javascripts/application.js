@@ -180,6 +180,7 @@ function ContentSelector(settings) {
     }
     // selector.config.current_test.words = selected_content.body.split(" ").reverse();
     selector.config.current_test.text = selected_content.body;
+    selector.config.current_test.content_id = selected_content.id;
     return false;
   });
 }

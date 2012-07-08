@@ -9,10 +9,8 @@ This test will measure your reading speed. Click the start button when you are r
 %button#start_reading Start
 #reading_text
 %div
-  %button#finished_reading Done
 = form_for(@scrambled_word_test) do |f|
   = f.hidden_field :content_id
-  = f.hidden_field :user_id
   = f.hidden_field :wpm
 
 :javascript
@@ -21,6 +19,86 @@ This test will measure your reading speed. Click the start button when you are r
   });
 
   $(function() {
+
+    ScrambledWordTest.container = $(".test_container");
+    ScrambledWordTest.messages = ['Ready?']; // to be displayed
+
+    $('#start_reading').click(function() {
+      ScrambledWordTest.start();
+    });
+
+    $("#close_test").click(function() {
+      $("#grayout").css("visibility", "hidden");
+      $(".test_container").hide();
+    });
+
+    ScrambledWordTest.start = function() {
+      $("#reading_text_container").html('');
+      ScrambledWordTest.container.show();
+      $("#grayout").css("visibility", "visible");
+
+      // display all messages
+      var timeout = 0;
+      for(var i = 0; i < ScrambledWordTest.messages.length; i++) {
+        setTimeout(ScrambledWordTest.show_message, timeout);
+        timeout += 1000;
+      }
+
+      // destroy the message container
+      setTimeout(ScrambledWordTest.remove_message_container, timeout);
+
+      // start countdown right after the message container has been removed
+      timeout += 10;
+      Countdown.callback = ScrambledWordTest.set_start_time_and_show_text;
+      setTimeout(Countdown.start, timeout);
+    }
+
+    ScrambledWordTest.set_start_time_and_show_text = function() {
+      ScrambledWordTest.show_text();
+      ScrambledWordTest.start_time = new Date();
+    }
+
+    ScrambledWordTest.show_text = function() {
+      var text_container = $('#reading_text')
+      text_container.show();
+
+      var div;
+      if($("#reading_text_container")[0]) {
+        div = $("#reading_text_container")
+      } else {
+        div = $('<div id="reading_text_container"></div>');
+        ScrambledWordTest.container.append(div);
+      }
+      var scrambled_text = ScrambledWordTest.scramble_sentence(ScrambledWordTest.text);
+      div.html('<div id="scrollbar1"><div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div><div class="viewport"><div class="overview"><div id="reading_text">' + scrambled_text + '</div></div></div></div>' + '<br /><a href="#" class="button" id="finished_reading">Done</a>');
+
+      $('#scrollbar1').tinyscrollbar();
+
+      $('#finished_reading').click(function() {
+        var end_time = new Date();
+        var word_count = count_words(ScrambledWordTest.text);
+        var elapsed_time_in_seconds = (end_time - ScrambledWordTest.start_time) / 1000;
+        var reading_speed = Math.round(word_count * 60 / elapsed_time_in_seconds);
+        $('#scrambled_word_test_wpm').val(reading_speed);
+        $('#scrambled_word_test_content_id').val(ScrambledWordTest.content_id);
+        $('#new_scrambled_word_test').submit();
+      });
+    }
+
+    ScrambledWordTest.show_message = function() {
+      var div = $("#reading_speed_notice_container");
+      if (!div[0]) { // checking jQuery object
+        div = $('<div id="reading_speed_notice_container" class="message_notice_container"></div>');
+        ScrambledWordTest.container.prepend(div);
+      }
+      var message = ScrambledWordTest.messages.pop();
+      div.html(message);
+    }
+
+    ScrambledWordTest.remove_message_container = function() {
+      var div = $("#reading_speed_notice_container");
+      if (div) div.remove();
+    }
 
     ScrambledWordTest.scramble_word = function(word) {
       var letter_array = [];
@@ -55,21 +133,5 @@ This test will measure your reading speed. Click the start button when you are r
       }
       return scrambled;
     }
-
-    $('#start_reading').click(function() {
-      var text_container = $('#reading_text')
-      text_container.html(ScrambledWordTest.scramble_sentence(ScrambledWordTest.text));
-      text_container.show();
-      window.start_time = new Date();
-    });
-
-    $('#finished_reading').click(function() {
-      var end_time = new Date();
-      var word_count = count_words(ScrambledWordTest.text);
-      var elapsed_time_in_seconds = (end_time - window.start_time) / 1000;
-      var reading_speed = Math.round(word_count * 60 / elapsed_time_in_seconds);
-      $('#scrambled_word_test_wpm').val(reading_speed);
-      $('#new_scrambled_word_test').submit();
-    });
 
   });

@@ -5,6 +5,8 @@ class ReadingSpeedTestsController < ApplicationController
 
   def create
     @reading_speed_test = ReadingSpeedTest.new(params[:reading_speed_test])
+    @reading_speed_test.user = current_user
+
     if @reading_speed_test.save
       redirect_to @reading_speed_test, notice: "Your reading speed is #{@reading_speed_test.wpm}"
     else
