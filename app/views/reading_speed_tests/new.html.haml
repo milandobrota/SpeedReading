@@ -91,7 +91,7 @@ This test will measure your reading speed. Click the start button when you are r
         div = $('<div id="reading_speed_notice_container" class="message_notice_container"></div>');
         ReadingSpeedTest.container.prepend(div);
       }
-      var message = ReadingSpeedTest.messages.pop();
+      var message = ReadingSpeedTest.messages.shift();
       div.html(message);
     }
 

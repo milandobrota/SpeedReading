@@ -14,6 +14,7 @@ This test will measure your reading speed. Click the start button when you are r
   = f.hidden_field :wpm
 
 :javascript
+
   var ScrambledWordTest = new Object({
     text: #{@scrambled_word_test.content.body.to_json}
   });
@@ -91,7 +92,7 @@ This test will measure your reading speed. Click the start button when you are r
         div = $('<div id="reading_speed_notice_container" class="message_notice_container"></div>');
         ScrambledWordTest.container.prepend(div);
       }
-      var message = ScrambledWordTest.messages.pop();
+      var message = ScrambledWordTest.messages.shift();
       div.html(message);
     }
 

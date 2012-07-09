@@ -125,7 +125,7 @@
         div = $('<div id="flashing_dots_notice_container" class="message_notice_container"></div>');
         FlashingDotsTest.container.prepend(div);
       }
-      var message = FlashingDotsTest.messages.pop();
+      var message = FlashingDotsTest.messages.shift();
       div.html(message);
     }
 

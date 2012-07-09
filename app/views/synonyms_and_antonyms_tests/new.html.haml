@@ -63,7 +63,7 @@
         div = $('<div id="synonyms_and_antonyms_notice_container" class="message_notice_container"></div>');
         SynonymsAndAntonymsTest.container.prepend(div);
       }
-      var message = SynonymsAndAntonymsTest.messages.pop();
+      var message = SynonymsAndAntonymsTest.messages.shift();
       div.html(message);
     }
 

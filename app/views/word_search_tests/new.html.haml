@@ -1,9 +1,15 @@
+- @languages = Language.all
+- @categories = Category.all
+- @selected = Content.first
+- @js_test = 'WordSearchTest'
+
+= render '/contents/content_selection_popup'
+
 This test will measure your ability to find words in the text.
-= "The word is \"#{@word_search_test.word}\"."
 Click the start button when you are ready and the text will appear below. Click on the word when you find it.
 %button#start_reading Start
-#reading_text
-  = @word_search_test.content.body.gsub(/\b\w+\b/, '<span class="clickable">\0</span>').html_safe
+/ #reading_text
+/   = @word_search_test.content.body.gsub(/\b\w+\b/, '<span class="clickable">\0</span>').html_safe
 %div
 
 = form_for(@word_search_test) do |f|
@@ -12,47 +18,112 @@ Click the start button when you are ready and the text will appear below. Click 
   = f.hidden_field :score
 
 :javascript
-  $('#start_reading').click(function() {
-    var text_container = $('#reading_text')
-    text_container.show();
-    window.start_time = new Date();
+
+  var WordSearchTest = new Object({
+    text: #{@word_search_test.content.body.to_json}
   });
 
-  $('.clickable').click(function(e) {
-    var clicked_text = $(this).text();
-    var is_correct = clicked_text == "#{@word_search_test.word}";
-    if (is_correct) {
-      var end_time = new Date();
-      var elapsed_time = (end_time - window.start_time) / 1000;
-      var score = Math.round("#{@word_search_test.content.word_count}" * 100 / elapsed_time);
-      $('#word_search_test_score').val(score);
-      alert("Good job! It took you " + elapsed_time + " seconds! There was #{@word_search_test.content.word_count} words in this text. Your score is " + score);
-      $('#new_word_search_test').submit();
-    } else {
-      alert("Try again");
+  $(function() {
+
+    WordSearchTest.container = $(".test_container");
+    WordSearchTest.messages = ['Ready?']; // to be displayed
+
+    $('#start_reading').click(function() {
+      WordSearchTest.start();
+    });
+
+    $("#close_test").click(function() {
+      $("#grayout").css("visibility", "hidden");
+      $(".test_container").hide();
+    });
+
+    WordSearchTest.start = function() {
+      WordSearchTest.pick_the_word();
+
+      $("#reading_text_container").html('');
+      WordSearchTest.container.show();
+      $("#grayout").css("visibility", "visible");
+
+      // display all messages
+      var timeout = 0;
+      for(var i = 0; i < WordSearchTest.messages.length; i++) {
+        setTimeout(WordSearchTest.show_message, timeout);
+        timeout += 1000;
+      }
+
+      // destroy the message container
+      setTimeout(WordSearchTest.remove_message_container, timeout);
+
+      // start countdown right after the message container has been removed
+      timeout += 10;
+      Countdown.callback = WordSearchTest.set_start_time_and_show_text;
+      setTimeout(Countdown.start, timeout);
+    }
+
+    WordSearchTest.set_start_time_and_show_text = function() {
+      WordSearchTest.show_text();
+      WordSearchTest.start_time = new Date();
+    }
+
+    WordSearchTest.show_text = function() {
+      var text_container = $('#reading_text')
+      text_container.show();
+
+      var div;
+      if($("#reading_text_container")[0]) {
+        div = $("#reading_text_container")
+      } else {
+        div = $('<div id="reading_text_container"></div>');
+        WordSearchTest.container.append(div);
+      }
+      var spanified_text = WordSearchTest.spanify_text(WordSearchTest.text); // break into spans
+      div.html('<div id="scrollbar1"><div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div><div class="viewport"><div class="overview"><div id="reading_text">' + spanified_text + '</div></div></div></div>' + '<br /><a href="#" class="button" id="finished_reading">Done</a>');
+
+      $('#scrollbar1').tinyscrollbar();
+    }
+
+    WordSearchTest.show_message = function() {
+      var div = $("#reading_speed_notice_container");
+      if (!div[0]) { // checking jQuery object
+        div = $('<div id="reading_speed_notice_container" class="message_notice_container"></div>');
+        WordSearchTest.container.prepend(div);
+      }
+      var message = WordSearchTest.messages.shift();
+      div.html(message);
+    }
+
+    WordSearchTest.remove_message_container = function() {
+      var div = $("#reading_speed_notice_container");
+      if (div) div.remove();
+    }
+
+    $("#test_container").on('click', '.clickable', function(e) {
+      var clicked_text = $(this).text();
+      var is_correct = clicked_text.toLowerCase() == WordSearchTest.word.toLowerCase();
+      if (is_correct) {
+        var end_time = new Date();
+        var elapsed_time = (end_time - WordSearchTest.start_time) / 1000;
+        var word_count = WordSearchTest.text.split(' ').length
+        var score = Math.round(word_count * 100 / elapsed_time);
+
+        $('#word_search_test_score').val(score);
+        $('#word_search_test_content_id').val(WordSearchTest.content_id);
+        alert("Good job! It took you " + elapsed_time + " seconds! There was " + word_count + " words in this text. Your score is " + score);
+        $('#new_word_search_test').submit();
+      } else {
+        alert("Try again");
+      }
+    });
+
+    WordSearchTest.spanify_text = function(text) { // break into spans
+      return text.replace(/\b(\w+)\b/g, '<span class="clickable">$1</span>');
+    }
+
+    WordSearchTest.pick_the_word = function() {
+      var words = WordSearchTest.text.match(/\b\w+\b/g);
+      var word = words[random_number_between(0, words.length - 1)].toLowerCase();
+      WordSearchTest.word = word;
+      WordSearchTest.messages = WordSearchTest.messages.concat(["The word is", word, word, word]);
+      return word;
     }
   });
-
-  // $('#reading_text').click(function(e) {
-  //   s = window.getSelection();
-  //   var range = s.getRangeAt(0);
-  //   var node = s.anchorNode;
-  //   while (range.toString().indexOf(' ') != 0) {
-  //     range.setStart(node, (range.startOffset - 1));
-  //   }
-  //   range.setStart(node, range.startOffset + 1);
-  //   do {
-  //     range.setEnd(node, range.endOffset + 1);
-  //   } while (range.toString().indexOf(' ') == -1 && range.toString().trim() != '');
-  //   var str = range.toString().trim();
-  //   alert(str);
-  // });
-
-  // $('#finished_reading').click(function() {
-  //   var end_time = new Date();
-  //   var word_count = count_words($('#reading_text').text());
-  //   var elapsed_time_in_seconds = (end_time - window.start_time) / 1000;
-  //   var reading_speed = Math.round(word_count * 60 / elapsed_time_in_seconds);
-  //   $('#reading_speed_test_wpm').val(reading_speed);
-  //   $('#new_reading_speed_test').submit();
-  // });
