@@ -1,108 +1,183 @@
 %button#start_exercise Start
-#flashing_numbers_container
-  = form_for(@flashing_numbers_test) do |f|
-    = f.hidden_field :user_id
-    #flashing_numbers
-      #flashing_numbers_left
-        = f.text_field :left_number
-        %span#left_number_shown
-          &nbsp; 
-      #flashing_numbers_center
-        x 
-      #flashing_numbers_right
-        %span#right_number_shown
-          &nbsp; 
-        = f.text_field :right_number
-    = f.submit 'Submit', :id => 'submit_numbers'
 
 :javascript
-  $(function() {
-    window.number_of_digits = 1;
-
-    window.left_outer_container = $('#flashing_numbers_left');
-    window.right_outer_container = $('#flashing_numbers_right');
-    window.inner_container = $('#flashing_numbers_center');
-
-    window.initial_outer_width = parseInt(window.left_outer_container.css('width'));
-    window.initial_inner_width = parseInt(window.inner_container.css('width'));
+  var FlashingNumbersTest = new Object({
+    number_of_digits: 1,
+    timeouts: []
   });
 
-  $('#submit_numbers').click(function() {
-    var is_correct = $('#flashing_numbers_test_left_number').val() == window.left && $('#flashing_numbers_test_right_number').val() == window.right;
+  $(function() {
 
-    var outer_width = parseInt(window.left_outer_container.css('width'));
-    var inner_width = parseInt(window.inner_container.css('width'));
+    FlashingNumbersTest.container = $(".test_container");
+    FlashingNumbersTest.messages = []; // to be displayed
 
-    var message = '';
+    FlashingNumbersTest.start = function() {
+      FlashingNumbersTest.inner_width = 20;
+      FlashingNumbersTest.outer_width = (parseInt(FlashingNumbersTest.container.css('width')) - FlashingNumbersTest.inner_width) / 2;
 
-    if (is_correct && outer_width < 100) {
-      var new_outer_width = window.initial_outer_width;
-      var new_inner_width = window.initial_inner_width;
-      message = "Good job! Let's increase the digits";
-      window.number_of_digits = window.number_of_digits + 1;
-    } else if (is_correct) {
-      var new_outer_width = outer_width - 30;
-      var new_inner_width = inner_width + 60;
-      message = "Good job! Let's increase the distance!";
-    } else if (inner_width >= 60 + window.initial_inner_width) {
-      var new_outer_width = outer_width + 30;
-      var new_inner_width = inner_width - 60;
-      message = 'Try again';
+      this.container.show();
+      $("#grayout").css("visibility", "visible");
+      $("#flashing_numbers_container").remove();
+      $("#flashing_numbers_question_container").remove();
+
+      FlashingNumbersTest.messages = ['Ready?'];
+      FlashingNumbersTest.iterate();
     }
 
-    window.left_outer_container.css('width', new_outer_width);
-    window.right_outer_container.css('width', new_outer_width);
-    window.inner_container.css('width', new_inner_width);
+    FlashingNumbersTest.iterate = function() {
+      // display all messages
+      var timeout = 0;
+      for(var i = 0; i < this.messages.length; i++) {
+        FlashingNumbersTest.timeouts.push(setTimeout(FlashingNumbersTest.show_message, timeout));
+        timeout += 1000;
+      }
 
-    hide_fields();
-    alert(message);
+      // destroy the message container
+      FlashingNumbersTest.timeouts.push(setTimeout(FlashingNumbersTest.remove_message_container, timeout));
 
-    run_exercise();
-    return false; // don't submit the form
+      // start the test
+      timeout += 1000;
+      FlashingNumbersTest.timeouts.push(setTimeout(FlashingNumbersTest.countdown_and_test, timeout));
+    }
+
+    FlashingNumbersTest.remove_message_container = function() {
+      var div = $("#flashing_numbers_notice_container");
+      if (div) div.remove();
+    }
+
+    FlashingNumbersTest.show_message = function() {
+      var div = $("#flashing_numbers_notice_container");
+      if (!div[0]) { // checking jQuery object
+        div = $('<div id="flashing_numbers_notice_container" class="message_notice_container"></div>');
+        FlashingNumbersTest.container.prepend(div);
+      }
+      var message = FlashingNumbersTest.messages.shift();
+      div.html(message);
+    }
+
+    FlashingNumbersTest.countdown_and_test = function() {
+      Countdown.callback = FlashingNumbersTest.show_and_hide_numbers;
+      Countdown.start();
+    }
+
+    FlashingNumbersTest.show_and_hide_numbers = function() {
+      FlashingNumbersTest.show_numbers();
+      FlashingNumbersTest.timeouts.push(setTimeout(FlashingNumbersTest.clear_and_ask, 100));
+    }
+
+    FlashingNumbersTest.clear_and_ask = function() {
+      FlashingNumbersTest.ask();
+    }
+
+    FlashingNumbersTest.ask = function() {
+      $('#flashing_numbers_container').remove();
+
+      var div = $('<div id="flashing_numbers_container" class="question_container">' +
+        '  What numbers did you see?<br /><br />' +
+        '  <input type=text id="flashing_numbers_input_left" size="3" />' +
+        '  <input type=text id="flashing_numbers_input_right" size="3" />' +
+        '  <a href="#" class="button" id="submit_answer">OK</a>' +
+        '</div>'
+      );
+      FlashingNumbersTest.container.append(div);
+      var input = $("#flashing_numbers_input_left");
+      input.focus();
+      $("#submit_answer").click(function() {
+        FlashingNumbersTest.guess_and_continue();
+      });
+    };
+
+    FlashingNumbersTest.guess_and_continue = function() {
+      if(FlashingNumbersTest.aborted) return;
+      var div = $("#flashing_numbers_question_container");
+      var left_input = $("#flashing_numbers_input_left").val();
+      var right_input = $("#flashing_numbers_input_right").val();
+      this.guess_numbers(left_input, right_input);
+      div.remove();
+      this.iterate();
+    }
+
+    FlashingNumbersTest.guess_numbers = function(left_input, right_input) {
+      left_input = parseInt(left_input);
+      right_input = parseInt(right_input);
+      if (left_input == FlashingNumbersTest.left && right_input == FlashingNumbersTest.right) {
+        FlashingNumbersTest.correctly_guessed();
+      } else {
+        FlashingNumbersTest.incorrectly_guessed();
+      }
+    }
+
+    FlashingNumbersTest.correctly_guessed = function() {
+      var container_width = parseInt(FlashingNumbersTest.container.css('width'));
+      if (FlashingNumbersTest.inner_width + 80 < container_width - 50) {
+        FlashingNumbersTest.inner_width = FlashingNumbersTest.inner_width + 80;
+        FlashingNumbersTest.messages.push("Good job! Let's increase the distance!");
+      } else {
+        FlashingNumbersTest.inner_width = 80;
+        FlashingNumbersTest.number_of_digits = FlashingNumbersTest.number_of_digits + 1;
+        FlashingNumbersTest.messages.push("Good job! It's time to increase the digits!");
+      }
+      FlashingNumbersTest.outer_width = (container_width - FlashingNumbersTest.inner_width) / 2;
+    }
+
+    FlashingNumbersTest.incorrectly_guessed = function() {
+      var container_width = parseInt(FlashingNumbersTest.container.css('width'));
+      if (FlashingNumbersTest.inner_width - 80 > 80) {
+        FlashingNumbersTest.inner_width = FlashingNumbersTest.inner_width - 80;
+      } else {
+        FlashingNumbersTest.inner_width = 80;
+      }
+      FlashingNumbersTest.messages.push("Try again.");
+      FlashingNumbersTest.outer_width = (container_width - FlashingNumbersTest.inner_width) / 2;
+    }
+
+    FlashingNumbersTest.show_numbers = function() {
+      FlashingNumbersTest.left = random_number_with_digits(FlashingNumbersTest.number_of_digits);
+      FlashingNumbersTest.right = random_number_with_digits(FlashingNumbersTest.number_of_digits);
+
+      $('#flashing_numbers_container').remove();
+      var div = $('<div id="flashing_numbers_container">' +
+        '  <div id="flashing_numbers">' +
+        '    <div id="flashing_numbers_left" style="width:' + FlashingNumbersTest.outer_width + 'px">' +
+        '      <input id="flashing_numbers_test_left_number" name="flashing_numbers_test[left_number]" size="30" type="text" />' +
+        '      <span id="left_number_shown">' +
+        FlashingNumbersTest.left +
+        '      </span>' +
+        '    </div>' +
+        '    <div id="flashing_numbers_center" style="width:' + FlashingNumbersTest.inner_width + 'px">' +
+        '      &nbsp;' +
+        '    </div>' +
+        '    <div id="flashing_numbers_right" style="width:' + FlashingNumbersTest.outer_width + 'px">' +
+        '      <span id="right_number_shown">' +
+        FlashingNumbersTest.right +
+        '      </span>' +
+        '      <input id="flashing_numbers_test_right_number" name="flashing_numbers_test[right_number]" size="30" type="text" />' +
+        '    </div>' +
+        '    <div class="clear">' +
+        '      <input id="submit_numbers" name="commit" type="submit" value="Submit" />' +
+        '    </div>' +
+        '  </div>' +
+        '</div>');
+
+      FlashingNumbersTest.container.append(div);
+    };
+
+    $('#start_exercise').click(function() {
+      FlashingNumbersTest.start();
+    });
+
+    $("#close_test").click(function() {
+      for(var i=0; i < FlashingNumbersTest.timeouts.length; i++) {
+        clearTimeout(FlashingNumbersTest.timeouts[i]);
+      }
+      FlashingNumbersTest.timeouts = [];
+
+      $("#grayout").css("visibility", "hidden");
+      $(".test_container").hide();
+    });
+
+    $(window).bind('beforeunload', function() { 
+      FlashingNumbersTest.aborted = true;
+    });
+
   });
-
-  $('#start_exercise').click(function() {
-    run_exercise();
-  });
-
-  function run_exercise() {
-    hide_fields();
-    set_counter(3);
-    setTimeout("set_counter(2)", 1000);
-    setTimeout("set_counter(1)", 2000);
-    setTimeout("set_counter('x')", 3000);
-    setTimeout("show_numbers()", 3000);
-    setTimeout("hide_numbers()", 3100);
-    setTimeout("show_fields()", 3100);
-  }
-
-  function set_counter(number) {
-    $('#flashing_numbers_center').html(number);
-  }
-
-  function show_numbers() {
-    window.left = random_number_with_digits(window.number_of_digits);
-    window.right = random_number_with_digits(window.number_of_digits);
-    $('#left_number_shown').html(window.left);
-    $('#right_number_shown').html(window.right);
-  }
-
-  function hide_numbers() {
-    $('#left_number_shown').html('&nbsp;');
-    $('#right_number_shown').html('&nbsp;');
-  }
-
-  function show_fields() {
-    $('#flashing_numbers_test_left_number').val('');
-    $('#flashing_numbers_test_right_number').val('');
-    $('#flashing_numbers_test_left_number').show();
-    $('#flashing_numbers_test_right_number').show();
-    $('#submit_numbers').show();
-    $('#flashing_numbers_test_left_number').focus();
-  }
-
-  function hide_fields() {
-    $('#flashing_numbers_test_left_number').hide();
-    $('#flashing_numbers_test_right_number').hide();
-    $('#submit_numbers').hide();
-  }

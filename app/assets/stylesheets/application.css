@@ -50,11 +50,6 @@ body {
   border-color: red;
 }
 
-#flashing_numbers_container {
-  padding-top: 50px;
-  text-align: center;
-}
-
 #flashing_numbers_left {
   float: left;
   width: 47%;
@@ -68,7 +63,7 @@ body {
 
 #flashing_numbers_right {
   float: left;
-  width: 47%;
+  /* width: 47%; */
   text-align: left;
 }
 
@@ -177,6 +172,10 @@ body {
 */
 
 .floater {
+  clear: both;
+}
+
+.clear {
   clear: both;
 }
 
@@ -291,7 +290,14 @@ a.button {
   margin: 200px auto;
 }
 
-#flashing_dots_question_container input{
+#flashing_numbers {
+  font-size: 70px;
+  text-align: center;
+  height: 300px;
+  margin: 250px auto;
+}
+
+.question_container input{
   font-size: 100%;
   text-align: center;
 }
