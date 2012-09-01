@@ -18,17 +18,15 @@
     2
 
 %button#start_exercise Start
-#flash_reading_container
-  Ready?
-
 #chart_container
 
 :javascript
   var FlashReadingTest = new Object({
 
     text: #{@flash_reading_test.content.body.to_json},
+
     // get the words
-    get_words: function() { return this.text.split(' '); },
+    get_words: function() { return this.text.split(/\s/); },
 
     // get words that need to be displayed
     fetch_next_chunk: function() {
@@ -37,27 +35,70 @@
       return chunk[0] == undefined ? undefined : chunk.join(' ');
     },
 
-    show_chart: function() {
-      $('#chart_container').load('/flash_reading_tests/chart');
-    },
+  });
+
+  $(function() {
+
+    FlashReadingTest.container = $(".test_container");
+    FlashReadingTest.messages = ['Ready?']; // to be displayed
+
+    FlashReadingTest.start = function() {
+      FlashReadingTest.remaining_words = undefined;
+
+      FlashReadingTest.container.show();
+      $("#grayout").css("visibility", "visible");
+
+      // display all messages
+      var timeout = 0;
+      for(var i = 0; i < FlashReadingTest.messages.length; i++) {
+        setTimeout(FlashReadingTest.show_message, timeout);
+        timeout += 1000;
+      }
+
+      // destroy the message container
+      setTimeout(FlashReadingTest.remove_message_container, timeout);
+
+      // start countdown right after the message container has been removed
+      timeout += 10;
+      Countdown.callback = FlashReadingTest.start_flashing;
+      setTimeout(Countdown.start, timeout);
+    }
+
+    FlashReadingTest.start_flashing = function() {
+      var div = $('<div id="flash_reading_container"></div>');
+      FlashReadingTest.container.append(div);
+      FlashReadingTest.iterate();
+    }
+
+    FlashReadingTest.show_message = function() {
+      var div = $("#reading_speed_notice_container");
+      if (!div[0]) { // checking jQuery object
+        div = $('<div id="reading_speed_notice_container" class="message_notice_container"></div>');
+        FlashReadingTest.container.prepend(div);
+      }
+      var message = FlashReadingTest.messages.shift();
+      div.html(message);
+    }
+
+    FlashReadingTest.remove_message_container = function() {
+      var div = $("#reading_speed_notice_container");
+      if (div) div.remove();
+    }
 
     // display words
-    iterate: function() {
+    FlashReadingTest.iterate = function() {
       var next_chunk = FlashReadingTest.fetch_next_chunk();
       if (next_chunk == undefined) {
+        clearTimeout(FlashReadingTest.iteratingTimeout);
         $('#flash_reading_container').html('Your reading speed is ' + FlashReadingTest.get_wpm() + ' wpm!');
-        FlashReadingTest.running = false;
-        FlashReadingTest.words = #{@flash_reading_test.content.body.split(' ').reverse.to_json};
+        //FlashReadingTest.words = #{@flash_reading_test.content.body.split(' ').reverse.to_json};
         FlashReadingTest.save(FlashReadingTest.show_chart);
         return;
       }
       $('#flash_reading_container').html(next_chunk);
-      setTimeout('FlashReadingTest.iterate()', FlashReadingTest.get_delay());
+      FlashReadingTest.iteratingTimeout = setTimeout('FlashReadingTest.iterate()', FlashReadingTest.get_delay());
     }
 
-  });
-
-  $(function() {
 
     // instantiate the speed slider
     $("#speed_slider").slider({
@@ -68,6 +109,10 @@
         $("#speed_value").html(ui.value);
       }
     });
+
+    FlashReadingTest.show_chart = function() {
+      $('#chart_container').load('/flash_reading_tests/chart');
+    }
 
     FlashReadingTest.speed_slider = $("#speed_slider");
 
@@ -123,10 +168,7 @@
 
     // handler for clicking on start button
     $('#start_exercise').click(function() {
-      if (FlashReadingTest.running) return;
-      FlashReadingTest.running = true;
-      FlashReadingTest.remaining_words = undefined;
-      FlashReadingTest.iterate();
+      FlashReadingTest.start();
     });
 
     FlashReadingTest.get_number_of_words = function() {
@@ -166,4 +208,10 @@
 
       return Math.round(60000 / delay * word_throughput);
     }
+
+    $("#close_test").click(function() {
+      clearTimeout(FlashReadingTest.iteratingTimeout);
+      $("#grayout").css("visibility", "hidden");
+      FlashReadingTest.container.hide();
+    });
   });

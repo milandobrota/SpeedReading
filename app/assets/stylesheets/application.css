@@ -79,6 +79,7 @@ body {
 #flash_reading_container {
   font-size: 4em;
   text-align: center;
+  margin-top: 250px;
 }
 
 #speed_slider, #number_of_words_slider {
