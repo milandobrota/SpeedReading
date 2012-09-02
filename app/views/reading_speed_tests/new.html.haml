@@ -12,6 +12,8 @@
     = f.hidden_field :content_id
     = f.hidden_field :wpm
 
+  = high_chart("reading_speed_chart", @reading_speed_chart)
+
 :javascript
 
   var ReadingSpeedTest = new Object({

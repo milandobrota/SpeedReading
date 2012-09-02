@@ -12,6 +12,7 @@
   = form_for(@scrambled_word_test) do |f|
     = f.hidden_field :content_id
     = f.hidden_field :wpm
+  = high_chart("scrambled_word_chart", @scrambled_word_chart)
 
 :javascript
 
