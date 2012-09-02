@@ -16,5 +16,6 @@ class SynonymsAndAntonymsTestsController < ApplicationController
 
   def show
     @synonyms_and_antonyms_test = SynonymsAndAntonymsTest.find(params[:id])
+    @synonyms_and_antonyms_chart = SynonymsAndAntonymsTest.chart_for(current_user)
   end
 end

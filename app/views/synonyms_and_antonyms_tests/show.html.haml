@@ -1,8 +1,11 @@
-%b Synonyms/Antonyms Test Info
-%p
-  %b Speed:
-  = @synonyms_and_antonyms_test.speed
-  pairs/min
-%p
-  %b Accuracy:
-  = @synonyms_and_antonyms_test.accuracy.to_s + '%'
+.exercise_description
+  %b Synonyms/Antonyms Test Info
+  %p
+    %b Speed:
+    = @synonyms_and_antonyms_test.speed
+    pairs/min
+  %p
+    %b Accuracy:
+    = @synonyms_and_antonyms_test.accuracy.to_s + '%'
+
+  = high_chart("synonyms_and_antonyms_chart", @synonyms_and_antonyms_chart)

@@ -19,14 +19,14 @@
       this.container.show();
       $("#grayout").css("visibility", "visible");
 
-      $("#flashing_numbers_container").remove();
-      $("#flashing_numbers_question_container").remove();
-
       FlashingNumbersTest.messages = ['Ready?'];
       FlashingNumbersTest.iterate();
     }
 
     FlashingNumbersTest.iterate = function() {
+      $("#flashing_numbers_container").remove();
+      $("#flashing_numbers_question_container").remove();
+
       // display all messages
       var timeout = 0;
       for(var i = 0; i < this.messages.length; i++) {

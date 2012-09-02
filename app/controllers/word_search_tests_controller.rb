@@ -14,5 +14,6 @@ class WordSearchTestsController < ApplicationController
 
   def show
     @word_search_test = WordSearchTest.find(params[:id])
+    @word_search_chart = WordSearchTest.chart_for(current_user)
   end
 end

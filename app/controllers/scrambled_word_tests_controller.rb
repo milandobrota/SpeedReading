@@ -16,5 +16,6 @@ class ScrambledWordTestsController < ApplicationController
 
   def show
     @scrambled_word_test = ScrambledWordTest.find(params[:id])
+    @scrambled_word_chart = ScrambledWordTest.chart_for(current_user)
   end
 end

@@ -16,7 +16,8 @@
 :javascript
 
   var ScrambledWordTest = new Object({
-    text: #{@scrambled_word_test.content.body.to_json}
+    text: #{@scrambled_word_test.content.body.to_json},
+    content_id: #{@scrambled_word_test.content.id}
   });
 
   $(function() {

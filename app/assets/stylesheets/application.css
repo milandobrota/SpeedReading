@@ -306,7 +306,7 @@ a.button {
   margin: 250px auto;
 }
 
-.question_container input{
+#flashing_dots_input, .question_container input{
   font-size: 100%;
   text-align: center;
 }
