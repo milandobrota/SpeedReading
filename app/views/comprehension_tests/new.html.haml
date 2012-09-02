@@ -1,13 +1,14 @@
-%b Comprehension Test
-= form_tag(comprehension_test_path_for(@reading_test)) do |f|
-  - @reading_test.content.questions.each do |question|
-    %p
-      = question.body
-    %p
-      - letter = '@' # predecessor is A
-      - question.answers.each_with_index do |answer, i|
-        .user_answer
-          = radio_button_tag "user_answers[#{question.id}]", i
-          = "#{letter.next!}."
-          = answer
-  = submit_tag 'Finish'
+.exercise_description
+  %b Comprehension Test
+  = form_tag(comprehension_test_path_for(@reading_test)) do |f|
+    - @reading_test.content.questions.each do |question|
+      %p
+        = question.body
+      %p
+        - letter = '@' # predecessor is A
+        - question.answers.each_with_index do |answer, i|
+          .user_answer
+            = radio_button_tag "user_answers[#{question.id}]", i
+            = "#{letter.next!}."
+            = answer
+    = submit_tag 'Finish'

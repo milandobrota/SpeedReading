@@ -1,5 +1,7 @@
 class ComprehensionTest
 
+  attr_accessor :reading_test
+
   def user_answer
   end
   

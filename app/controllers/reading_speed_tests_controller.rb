@@ -8,7 +8,7 @@ class ReadingSpeedTestsController < ApplicationController
     @reading_speed_test.user = current_user
 
     if @reading_speed_test.save
-      redirect_to @reading_speed_test, notice: "Your reading speed is #{@reading_speed_test.wpm}"
+      redirect_to @reading_speed_test, notice: "Your reading speed is #{@reading_speed_test.wpm} wpm!"
     else
       render action: "new"
     end
@@ -16,5 +16,6 @@ class ReadingSpeedTestsController < ApplicationController
 
   def show
     @reading_speed_test = ReadingSpeedTest.find(params[:id])
+    @reading_speed_chart = ReadingSpeedTest.chart_for(current_user)
   end
 end

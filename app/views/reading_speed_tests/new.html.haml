@@ -16,7 +16,8 @@
 :javascript
 
   var ReadingSpeedTest = new Object({
-    text: #{@reading_speed_test.content.body.to_json}
+    text: #{@reading_speed_test.content.body.to_json},
+    content_id: #{@reading_speed_test.content.id}
   });
 
   $(function() {
