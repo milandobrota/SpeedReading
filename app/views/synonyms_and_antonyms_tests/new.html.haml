@@ -1,9 +1,10 @@
 - @word_pairs = WordPair.all
 
-%button#start_test Start
-= form_for(@synonyms_and_antonyms_test) do |f|
-  = f.hidden_field :speed
-  = f.hidden_field :accuracy
+.exercise_description
+  %button#start_test Start
+  = form_for(@synonyms_and_antonyms_test) do |f|
+    = f.hidden_field :speed
+    = f.hidden_field :accuracy
 
 :javascript
 

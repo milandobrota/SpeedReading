@@ -3,22 +3,22 @@
 - @selected = Content.first
 - @js_test = 'FlashReadingTest'
 
-= render '/contents/content_selection_popup'
-
-#speed_slider
-#speed_container
-  Speed:
-  %span#speed_value
-    1
-
-#number_of_words_slider
-#number_of_words_container
-  Number of words:
-  %span#number_of_words_value
-    2
-
-%button#start_exercise Start
-#chart_container
+.exercise_description
+  = render '/contents/content_selection_popup'
+  
+  #speed_slider
+  #speed_container
+    Speed:
+    %span#speed_value
+      1
+  
+  #number_of_words_slider
+  #number_of_words_container
+    Number of words:
+    %span#number_of_words_value
+      2
+  
+  %button#start_exercise Start
 
 :javascript
   var FlashReadingTest = new Object({
@@ -43,6 +43,9 @@
     FlashReadingTest.messages = ['Ready?']; // to be displayed
 
     FlashReadingTest.start = function() {
+      $('#flash_reading_container').remove();
+      $('#chart_container').remove();
+
       FlashReadingTest.remaining_words = undefined;
 
       FlashReadingTest.container.show();
@@ -65,8 +68,12 @@
     }
 
     FlashReadingTest.start_flashing = function() {
-      var div = $('<div id="flash_reading_container"></div>');
-      FlashReadingTest.container.append(div);
+      if (!$('#flash_reading_container')[0]) {
+        var div = $('<div id="flash_reading_container"></div>');
+        FlashReadingTest.container.append(div);
+      }
+      $('#flash_reading_container').css('margin-top', '250px');
+
       FlashReadingTest.iterate();
     }
 
@@ -90,8 +97,10 @@
       var next_chunk = FlashReadingTest.fetch_next_chunk();
       if (next_chunk == undefined) {
         clearTimeout(FlashReadingTest.iteratingTimeout);
+        $('#flash_reading_container').css('margin-top', '100px');
         $('#flash_reading_container').html('Your reading speed is ' + FlashReadingTest.get_wpm() + ' wpm!');
         //FlashReadingTest.words = #{@flash_reading_test.content.body.split(' ').reverse.to_json};
+        if (!$('#chart_container')[0]) $('#flash_reading_container').append($('<div id="chart_container"></div>'));
         FlashReadingTest.save(FlashReadingTest.show_chart);
         return;
       }

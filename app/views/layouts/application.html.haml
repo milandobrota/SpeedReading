@@ -6,22 +6,30 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
   %body
-    #grayout
+    %h1 Speed Reader
     #user_header= user_header
-    #sidebar
-      Exercises:
-      %ul
-        %li= link_to 'Test Reading Speed', new_reading_speed_test_path
-        %li= link_to 'Flash Reading', new_flash_reading_test_path
-        %li= link_to 'Flashing Numbers', new_flashing_numbers_test_path
-        %li= link_to 'Flashing Dots', new_flashing_dots_test_path
-        %li= link_to 'Scrambled Words', new_scrambled_word_test_path
-        %li= link_to 'Word Search', new_word_search_test_path
-        %li= link_to 'Synonyms/Antonyms', new_synonyms_and_antonyms_test_path
-    #content
-      %p.notice= notice
-      %p.alert= alert
-      = yield
-    #test_container.test_container
-      = link_to(image_tag('close.jpg', :alt => 'close', :id => 'close_test', :class => 'x_button close_popup'), '#')
-      #countdown
+    - if current_user
+      #grayout
+      #sidebar
+        Exercises:
+        %ul
+          %li= link_to 'Test Reading Speed', new_reading_speed_test_path
+          %li= link_to 'Flash Reading', new_flash_reading_test_path
+          %li= link_to 'Flashing Numbers', new_flashing_numbers_test_path
+          %li= link_to 'Flashing Dots', new_flashing_dots_test_path
+          %li= link_to 'Scrambled Words', new_scrambled_word_test_path
+          %li= link_to 'Word Search', new_word_search_test_path
+          %li= link_to 'Synonyms/Antonyms', new_synonyms_and_antonyms_test_path
+      #content
+        %p.notice= notice
+        %p.alert= alert
+        = yield
+      #test_container.test_container
+        = link_to(image_tag('close.jpg', :alt => 'close', :id => 'close_test', :class => 'x_button close_popup'), '#')
+        #countdown
+    - else
+      #centered_box
+        = yield
+    #footer
+      Developed by
+      = link_to 'Milan Dobrota', 'http://www.milandobrota.com'

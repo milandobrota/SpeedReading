@@ -3,19 +3,17 @@
 - @selected = Content.first
 - @js_test = 'WordSearchTest'
 
-= render '/contents/content_selection_popup'
-
-This test will measure your ability to find words in the text.
-Click the start button when you are ready and the text will appear below. Click on the word when you find it.
-%button#start_reading Start
-/ #reading_text
-/   = @word_search_test.content.body.gsub(/\b\w+\b/, '<span class="clickable">\0</span>').html_safe
-%div
-
-= form_for(@word_search_test) do |f|
-  = f.hidden_field :content_id
-  = f.hidden_field :user_id
-  = f.hidden_field :score
+.exercise_description
+  = render '/contents/content_selection_popup'
+  
+  This test will measure your ability to find words in the text.
+  Click the start button when you are ready and the text will appear below. Click on the word when you find it.
+  %button#start_reading Start
+  
+  = form_for(@word_search_test) do |f|
+    = f.hidden_field :content_id
+    = f.hidden_field :user_id
+    = f.hidden_field :score
 
 :javascript
 

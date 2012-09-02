@@ -44,6 +44,14 @@ body {
   border-width: 0 0 1px 0;
 }
 
+#footer {
+  margin: 0;
+  padding: 10px;
+  border-style: solid;
+  border-width: 1px 0 0 0;
+  clear: both;
+}
+
 .field_with_errors {
   border-style: solid;
   border-width: 1px;
@@ -313,3 +321,12 @@ a.button {
 #scrollbar1 .thumb { height: 20px; width: 13px; cursor: pointer; overflow: hidden; position: absolute; top: 0; }
 #scrollbar1 .thumb .end { overflow: hidden; height: 5px; width: 13px; }
 #scrollbar1 .disable{ display: none; }
+
+#centered_box {
+  width: 1000px;
+  margin: 50px auto;
+}
+
+.exercise_description {
+  padding: 20px;
+}
