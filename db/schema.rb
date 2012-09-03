@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120704191116) do
+ActiveRecord::Schema.define(:version => 20120903000058) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(:version => 20120704191116) do
     t.integer  "distance"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "number_of_digits"
   end
 
   add_index "flashing_numbers_tests", ["user_id"], :name => "index_flashing_numbers_tests_on_user_id"

@@ -23,7 +23,9 @@ SpeedReading::Application.routes.draw do
   end
 
   resources :word_search_tests, :only => [:new, :create, :show]
-  resources :flashing_numbers_tests, :only => [:new, :create, :show]
+
+  match 'flashing_numbers_tests/chart' => 'flashing_numbers_tests#chart'
+  resources :flashing_numbers_tests, :only => [:new, :create, :update, :show]
   resources :flashing_dots_tests, :only => [:new, :create, :update, :show]
 
   match 'flash_reading_tests/chart' => 'flash_reading_tests#chart'

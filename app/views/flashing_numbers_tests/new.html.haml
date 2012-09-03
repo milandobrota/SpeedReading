@@ -1,9 +1,12 @@
 .exercise_description
   %button#start_exercise Start
 
+  #chart_container
+    = high_chart("flashing_numbers_chart", @flashing_numbers_chart)
+
 :javascript
   var FlashingNumbersTest = new Object({
-    number_of_digits: 1,
+    number_of_digits: #{@flashing_numbers_test.number_of_digits} || 1,
     timeouts: []
   });
 
@@ -13,7 +16,7 @@
     FlashingNumbersTest.messages = []; // to be displayed
 
     FlashingNumbersTest.start = function() {
-      FlashingNumbersTest.inner_width = 20;
+      FlashingNumbersTest.inner_width = #{@flashing_numbers_test.distance.to_json} || 20;
       FlashingNumbersTest.outer_width = (parseInt(FlashingNumbersTest.container.css('width')) - FlashingNumbersTest.inner_width) / 2;
 
       this.container.show();
@@ -107,6 +110,7 @@
       } else {
         FlashingNumbersTest.incorrectly_guessed();
       }
+      FlashingNumbersTest.save();
     }
 
     FlashingNumbersTest.correctly_guessed = function() {
@@ -164,6 +168,38 @@
       FlashingNumbersTest.container.append(div);
     };
 
+    FlashingNumbersTest.attributes = function() {
+      return {
+        distance: FlashingNumbersTest.inner_width,
+        number_of_digits: FlashingNumbersTest.number_of_digits
+      }
+    }
+
+    FlashingNumbersTest.save = function(callback) {
+      if(FlashingNumbersTest.id) {
+        FlashingNumbersTest.update(callback);
+      } else {
+        FlashingNumbersTest.create(callback);
+      }
+    }
+
+    FlashingNumbersTest.create = function(callback) {
+      $.post('/flashing_numbers_tests', {flashing_numbers_test: FlashingNumbersTest.attributes()}, function(data) {
+        FlashingNumbersTest.id = parseInt(data.id); // so we can update later
+        if(callback) callback();
+      }, 'json');
+    }
+
+    FlashingNumbersTest.update = function(callback) {
+      $.post('/flashing_numbers_tests/' + FlashingNumbersTest.id, {_method: 'put', flashing_numbers_test: FlashingNumbersTest.attributes()}, function(data) {
+        if(callback) callback();
+      }, 'json');
+    }
+
+    FlashingNumbersTest.show_chart = function() {
+      $('#chart_container').load('/flashing_numbers_tests/chart');
+    }
+
     $('#start_exercise').click(function() {
       FlashingNumbersTest.start();
     });
@@ -176,6 +212,8 @@
 
       $("#grayout").css("visibility", "hidden");
       $(".test_container").hide();
+      
+      FlashingNumbersTest.show_chart();
     });
 
     $(window).bind('beforeunload', function() { 
