@@ -1,9 +1,12 @@
 .exercise_description
   %button#start_test Start
 
+  #chart_container
+    = high_chart("flashing_dots_chart", @flashing_dots_chart)
+
 :javascript
   var FlashingDotsTest = new Object({
-    level: 1,
+    level: #{@flashing_dots_test.level} || 1,
     streak: 0
   });
 
@@ -176,6 +179,10 @@
       }, 'json');
     }
 
+    FlashingDotsTest.show_chart = function() {
+      $('#chart_container').load('/flashing_dots_tests/chart');
+    }
+
     $("#start_test").click(function() {
       FlashingDotsTest.start();
     });
@@ -183,6 +190,7 @@
     $("#close_test").click(function() {
       $("#grayout").css("visibility", "hidden");
       $(".test_container").hide();
+      FlashingDotsTest.show_chart();
     });
 
     $(window).bind('beforeunload', function() { 

@@ -1,6 +1,7 @@
 class FlashingDotsTestsController < ApplicationController
   def new
     @flashing_dots_test = FlashingDotsTest.setup_for(current_user)
+    @flashing_dots_chart = FlashingDotsTest.chart_for(current_user)
   end
 
   def create
@@ -26,5 +27,10 @@ class FlashingDotsTestsController < ApplicationController
         format.json { render json: @flashing_dots_test.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def chart
+    @flashing_dots_chart = FlashingDotsTest.chart_for(current_user)
+    render :layout => false
   end
 end
