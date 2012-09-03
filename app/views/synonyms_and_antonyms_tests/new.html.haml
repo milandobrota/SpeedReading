@@ -75,6 +75,34 @@
       if (div) div.remove();
     }
 
+    SynonymsAndAntonymsTest.submit_synonym = function() {
+      if(!SynonymsAndAntonymsTest.current_word_pair) return;
+      if (SynonymsAndAntonymsTest.last_answered == SynonymsAndAntonymsTest.current_word_pair) return;
+      SynonymsAndAntonymsTest.total += 1;
+
+      if (SynonymsAndAntonymsTest.current_word_pair.synonyms) {
+        SynonymsAndAntonymsTest.correct += 1;
+      } else {
+        // no good
+      }
+      SynonymsAndAntonymsTest.last_answered = SynonymsAndAntonymsTest.current_word_pair;
+      SynonymsAndAntonymsTest.iterate();
+    }
+
+    SynonymsAndAntonymsTest.submit_antonym = function() {
+      if(!SynonymsAndAntonymsTest.current_word_pair) return;
+      if (SynonymsAndAntonymsTest.last_answered == SynonymsAndAntonymsTest.current_word_pair) return;
+      SynonymsAndAntonymsTest.total += 1;
+
+      if (!SynonymsAndAntonymsTest.current_word_pair.synonyms) {
+        SynonymsAndAntonymsTest.correct += 1;
+      } else {
+        // no good
+      }
+      SynonymsAndAntonymsTest.last_answered = SynonymsAndAntonymsTest.current_word_pair;
+      SynonymsAndAntonymsTest.iterate();
+    }
+
     SynonymsAndAntonymsTest.show_words = function() {
       SynonymsAndAntonymsTest.current_word_pair = SynonymsAndAntonymsTest.word_pairs.pop();
 
@@ -95,31 +123,11 @@
       div.html(word_1 + ' ' + word_2 + '<br /><a href="#" class="button" id="submit_synonym">Synonym</a><a href="#" class="button" id="submit_antonym">Antonym</a>');
 
       $("#submit_synonym").click(function() {
-        if(!SynonymsAndAntonymsTest.current_word_pair) return;
-        if (SynonymsAndAntonymsTest.last_answered == SynonymsAndAntonymsTest.current_word_pair) return;
-        SynonymsAndAntonymsTest.total += 1;
-
-        if (SynonymsAndAntonymsTest.current_word_pair.synonyms) {
-          SynonymsAndAntonymsTest.correct += 1;
-        } else {
-          // no good
-        }
-        SynonymsAndAntonymsTest.last_answered = SynonymsAndAntonymsTest.current_word_pair;
-        SynonymsAndAntonymsTest.iterate();
+        SynonymsAndAntonymsTest.submit_synonym();
       });
 
       $("#submit_antonym").click(function() {
-        if(!SynonymsAndAntonymsTest.current_word_pair) return;
-        if (SynonymsAndAntonymsTest.last_answered == SynonymsAndAntonymsTest.current_word_pair) return;
-        SynonymsAndAntonymsTest.total += 1;
-
-        if (!SynonymsAndAntonymsTest.current_word_pair.synonyms) {
-          SynonymsAndAntonymsTest.correct += 1;
-        } else {
-          // no good
-        }
-        SynonymsAndAntonymsTest.last_answered = SynonymsAndAntonymsTest.current_word_pair;
-        SynonymsAndAntonymsTest.iterate();
+        SynonymsAndAntonymsTest.submit_antonym();
       });
     }
 
@@ -137,5 +145,16 @@
       $('#synonyms_and_antonyms_test_accuracy').val(SynonymsAndAntonymsTest.correct / SynonymsAndAntonymsTest.total * 100);
       $('#new_synonyms_and_antonyms_test').submit();
     }
+
+    // events for <- and ->
+    $(document).keydown(function(e){
+      if (e.keyCode == $.ui.keyCode.LEFT) { 
+        SynonymsAndAntonymsTest.submit_synonym();
+      } else if (e.keyCode == $.ui.keyCode.RIGHT) {
+        SynonymsAndAntonymsTest.submit_antonym();
+      }
+      // prevent the scroll
+      return false;
+    });
 
   });
