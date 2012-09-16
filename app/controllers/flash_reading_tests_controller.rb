@@ -1,4 +1,6 @@
 class FlashReadingTestsController < ApplicationController
+  before_filter :authenticate_user!
+
   def new
     @flash_reading_test = FlashReadingTest.setup_for(current_user)
     @flash_reading_chart = FlashReadingTest.chart_for(current_user)

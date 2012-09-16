@@ -11,22 +11,11 @@
     = f.text_area :body
   .field
     = f.label 'answer', 'Add answers and select the correct one'
-  .field
-    = f.radio_button 'correct_answer', '0'
-    A.
-    = text_field_tag 'question[answers][]', @question.answers[0]
-  .field
-    = f.radio_button 'correct_answer', '1'
-    B.
-    = text_field_tag 'question[answers][]', @question.answers[1]
-  .field
-    = f.radio_button 'correct_answer', '2'
-    C.
-    = text_field_tag 'question[answers][]', @question.answers[2]
-  .field
-    = f.radio_button 'correct_answer', '3'
-    D.
-    = text_field_tag 'question[answers][]', @question.answers[3]
+  - ['A', 'B', 'C', 'D'].each_with_index do |letter, index|
+    .field
+      = f.radio_button 'correct_answer', index
+      = "#{letter}."
+      = text_field_tag 'question[answers][]', @question.answers[index]
   .field
     = f.hidden_field :content_id
   .actions

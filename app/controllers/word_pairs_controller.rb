@@ -1,4 +1,6 @@
 class WordPairsController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /word_pairs
   # GET /word_pairs.json
   def index

@@ -1,4 +1,6 @@
 class FlashingNumbersTestsController < ApplicationController
+  before_filter :authenticate_user!
+
   def new
     @flashing_numbers_test = FlashingNumbersTest.setup_for(current_user)
     @flashing_numbers_chart = FlashingNumbersTest.chart_for(current_user)

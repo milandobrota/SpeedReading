@@ -1,4 +1,6 @@
 class ScrambledWordTestsController < ApplicationController
+  before_filter :authenticate_user!
+
   def new
     @scrambled_word_test = ScrambledWordTest.setup_for(current_user)
     @scrambled_word_chart = ScrambledWordTest.chart_for(current_user)

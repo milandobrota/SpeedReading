@@ -1,4 +1,6 @@
 class ContentsController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /contents
   # GET /contents.json
   def index

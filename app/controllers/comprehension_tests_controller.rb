@@ -1,4 +1,5 @@
 class ComprehensionTestsController < ApplicationController
+  before_filter :authenticate_user!
 
   def new
     set_reading_test

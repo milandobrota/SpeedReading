@@ -1,4 +1,6 @@
 class WordSearchTestsController < ApplicationController
+  before_filter :authenticate_user!
+
   def new
     @word_search_test = WordSearchTest.setup_for(current_user)
     @word_search_chart = WordSearchTest.chart_for(current_user)

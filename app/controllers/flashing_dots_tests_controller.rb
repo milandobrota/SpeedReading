@@ -1,4 +1,6 @@
 class FlashingDotsTestsController < ApplicationController
+  before_filter :authenticate_user!
+
   def new
     @flashing_dots_test = FlashingDotsTest.setup_for(current_user)
     @flashing_dots_chart = FlashingDotsTest.chart_for(current_user)

@@ -1,6 +1,9 @@
-%h1 Editing content
-= render 'form'
-= link_to 'Show', @content
-|
-\#{link_to 'Back', contents_path}
-= render 'questions'
+.exercise_description
+  %h1 Editing content
+  = render 'form'
+  = render 'questions'
+
+  %p
+  = link_to 'Show', @content
+  |
+  \#{link_to 'Back', contents_path}

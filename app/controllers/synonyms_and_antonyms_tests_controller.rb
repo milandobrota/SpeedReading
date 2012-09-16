@@ -1,4 +1,6 @@
 class SynonymsAndAntonymsTestsController < ApplicationController
+  before_filter :authenticate_user!
+
   def new
     @synonyms_and_antonyms_test = SynonymsAndAntonymsTest.setup_for(current_user)
     @synonyms_and_antonyms_chart = SynonymsAndAntonymsTest.chart_for(current_user)
