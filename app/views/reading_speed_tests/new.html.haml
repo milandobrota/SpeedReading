@@ -3,16 +3,15 @@
 - @selected = Content.first
 - @js_test = 'ReadingSpeedTest'
 
-.exercise_description
-  = render '/contents/content_selection_popup'
-  This test will measure your reading speed. Click the start button when you are ready and the text will appear below. Click on done when you are finished reading.
-  %button#start_reading Start
-  %div
-  = form_for(@reading_speed_test) do |f|
-    = f.hidden_field :content_id
-    = f.hidden_field :wpm
+= render '/contents/content_selection_popup'
+This test will measure your reading speed. Click the start button when you are ready and the text will appear below. Click on done when you are finished reading.
+%button#start_reading Start
+%div
+= form_for(@reading_speed_test) do |f|
+  = f.hidden_field :content_id
+  = f.hidden_field :wpm
 
-  = high_chart("reading_speed_chart", @reading_speed_chart)
+= high_chart("reading_speed_chart", @reading_speed_chart)
 
 :javascript
 

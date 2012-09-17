@@ -1,10 +1,9 @@
-.exercise_description
-  %b Reading Speed Test Info
-  %p
-    %b Wpm:
-    = @reading_speed_test.wpm
-  %p
-    %b Comprehension Rate:
-    = comprehension_rate_or_link_for(@reading_speed_test)
+%b Reading Speed Test Info
+%p
+  %b Wpm:
+  = @reading_speed_test.wpm
+%p
+  %b Comprehension Rate:
+  = comprehension_rate_or_link_for(@reading_speed_test)
 
-  = high_chart("reading_speed_chart", @reading_speed_chart)
+= high_chart("reading_speed_chart", @reading_speed_chart)

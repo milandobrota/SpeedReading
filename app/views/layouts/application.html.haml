@@ -11,6 +11,14 @@
     - if current_user
       #grayout
       #sidebar
+        - if current_user && current_user.admin?
+          Admin:
+          %ul
+            %li= link_to 'Users', users_path
+            %li= link_to 'Contents', contents_path
+            %li= link_to 'Word Pairs', word_pairs_path
+            %li= link_to 'Categories', categories_path
+            %li= link_to 'Languages', languages_path
         Exercises:
         %ul
           %li= link_to 'Test Reading Speed', new_reading_speed_test_path
@@ -23,7 +31,8 @@
       #content
         %p.notice= notice
         %p.alert= alert
-        = yield
+        .exercise_description
+          = yield
       #test_container.test_container
         = link_to(image_tag('close.jpg', :alt => 'close', :id => 'close_test', :class => 'x_button close_popup'), '#')
         #countdown

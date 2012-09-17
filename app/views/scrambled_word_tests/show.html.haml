@@ -1,10 +1,9 @@
-.exercise_description
-  %b Scrambled Word Test Info
-  %p
-    %b Wpm:
-    = @scrambled_word_test.wpm
-  %p
-    %b Comprehension Rate:
-    = comprehension_rate_or_link_for(@scrambled_word_test)
+%b Scrambled Word Test Info
+%p
+  %b Wpm:
+  = @scrambled_word_test.wpm
+%p
+  %b Comprehension Rate:
+  = comprehension_rate_or_link_for(@scrambled_word_test)
 
-  = high_chart("scrambled_word_chart", @scrambled_word_chart)
+= high_chart("scrambled_word_chart", @scrambled_word_chart)

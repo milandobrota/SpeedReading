@@ -1,22 +1,21 @@
-.exercise_description
-  %p
-    %b Body:
-    = @question.body
-  %p
-    %b Answers:
-    - ['A', 'B', 'C', 'D'].each_with_index do |letter, index|
-      %br
-      = "#{letter}."
-      - if @question.correct_answer == index
-        %span{:style => 'color:green'}
-          = @question.answers[index]
-      - else
-        %span{:style => 'color:red'}
-          = @question.answers[index]
-  %p
-    %b Content:
-    = @question.content_id
+%p
+  %b Body:
+  = @question.body
+%p
+  %b Answers:
+  - ['A', 'B', 'C', 'D'].each_with_index do |letter, index|
+    %br
+    = "#{letter}."
+    - if @question.correct_answer == index
+      %span{:style => 'color:green'}
+        = @question.answers[index]
+    - else
+      %span{:style => 'color:red'}
+        = @question.answers[index]
+%p
+  %b Content:
+  = @question.content_id
 
-  = link_to 'Edit', edit_content_question_path(@question.content, @question)
-  \|
-  = link_to 'Back', content_path(@question.content)
+= link_to 'Edit', edit_content_question_path(@question.content, @question)
+\|
+= link_to 'Back', content_path(@question.content)

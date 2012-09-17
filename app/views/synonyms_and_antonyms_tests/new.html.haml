@@ -1,12 +1,11 @@
 - @word_pairs = WordPair.all
 
-.exercise_description
-  %button#start_test Start
-  = form_for(@synonyms_and_antonyms_test) do |f|
-    = f.hidden_field :speed
-    = f.hidden_field :accuracy
+%button#start_test Start
+= form_for(@synonyms_and_antonyms_test) do |f|
+  = f.hidden_field :speed
+  = f.hidden_field :accuracy
 
-  = high_chart("synonyms_and_antonyms_chart", @synonyms_and_antonyms_chart)
+= high_chart("synonyms_and_antonyms_chart", @synonyms_and_antonyms_chart)
 
 :javascript
 

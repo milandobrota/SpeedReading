@@ -1,34 +1,33 @@
-.exercise_description
-  %p
-    %b Photo:
-    %br
-    %br
-    = image_tag @content.photo.url, :class => 'content_image'
-  %p
-    %b Name:
-    = @content.name
-  %p
-    %b Body:
-    %span#content_body= @content.body
-  %p
-    %b Language:
-    = @content.language.try(:name)
-  %p
-    %b Categories:
-    = @content.categories.collect(&:name).join(', ')
-  %p
-    %b Source name:
-    = @content.source_name
-  %p
-    %b Source link:
-    = @content.source_link
+%p
+  %b Photo:
+  %br
+  %br
+  = image_tag @content.photo.url, :class => 'content_image'
+%p
+  %b Name:
+  = @content.name
+%p
+  %b Body:
+  %span#content_body= @content.body
+%p
+  %b Language:
+  = @content.language.try(:name)
+%p
+  %b Categories:
+  = @content.categories.collect(&:name).join(', ')
+%p
+  %b Source name:
+  = @content.source_name
+%p
+  %b Source link:
+  = @content.source_link
 
-  = render 'questions'
+= render 'questions'
 
-  %p
-    = link_to 'Edit', edit_content_path(@content)
-    |
-    \#{link_to 'Back', contents_path}
+%p
+  = link_to 'Edit', edit_content_path(@content)
+  |
+  \#{link_to 'Back', contents_path}
 
 :javascript
 
