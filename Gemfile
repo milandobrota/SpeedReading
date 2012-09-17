@@ -30,6 +30,7 @@ end
 group :test, :development do
   gem 'capybara', :require => false
   gem 'rspec-rails', :require => false
+  gem 'debugger'
 end
 
 gem 'jquery-rails'

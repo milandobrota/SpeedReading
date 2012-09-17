@@ -1,0 +1,16 @@
+.exercise_description
+  %h1 Listing users
+
+  %table
+    %tr
+      %th Email
+      %th Role
+      %th
+      %th
+
+    - @users.each do |user|
+      %tr
+        %td= user.email
+        %td= user.role_name
+        %td= link_to 'Edit', edit_user_path(user)
+        %td= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete

@@ -1,4 +1,6 @@
 SpeedReading::Application.routes.draw do
+  resources :users, :only => [:index, :edit, :update, :destroy]
+
   resources :word_pairs
 
   resources :categorizations
