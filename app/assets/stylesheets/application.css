@@ -25,17 +25,18 @@ body {
 
 #sidebar {
   margin: 0;
-  padding: 10px;
-  width: 300px;
-  height: 100%;
-  border-style: solid;
-  border-width: 0 1px 0 0;
-  float: left;
+  padding: 20px;
+  /*height: 100%;*/
+  /*border-style: solid;*/
+  /*border-width: 0 1px 0 0;*/
+  /*float: left;*/
 }
 
+/*
 #content {
   margin-left: 320px;
 }
+*/
 
 #user_header {
   margin: 0;

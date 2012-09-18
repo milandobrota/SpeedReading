@@ -19,6 +19,7 @@ group :assets do
   # gem 'therubyracer'
 
   gem 'uglifier'
+  gem "twitter-bootstrap-rails"
 end
 
 group :development do
