@@ -1,23 +1,22 @@
-%h1 Listing word pairs
+- model_class = WordPair
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize
 
-%table
-  %tr
-    %th Word 1
-    %th Word 2
-    %th Relation
-    %th
-    %th
-    %th
-
-  - @word_pairs.each do |word_pair|
+%table.table.table-striped
+  %thead
     %tr
-      %td= word_pair.word_1
-      %td= word_pair.word_2
-      %td= word_pair.relation
-      %td= link_to 'Show', word_pair
-      %td= link_to 'Edit', edit_word_pair_path(word_pair)
-      %td= link_to 'Destroy', word_pair, :confirm => 'Are you sure?', :method => :delete
+      %th Word 1
+      %th Word 2
+      %th Relation
+      %th=t '.actions', :default => t("helpers.actions")
 
-%br
-
-= link_to 'New word pair', new_word_pair_path
+  %tbody
+    - @word_pairs.each do |word_pair|
+      %tr
+        %td= word_pair.word_1
+        %td= word_pair.word_2
+        %td= word_pair.relation
+        %td
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_word_pair_path(word_pair), :class => 'btn btn-mini'
+          = link_to t('.destroy', :default => t("helpers.links.destroy")), word_pair_path(word_pair), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'
+= link_to t('.new', :default => t("helpers.links.new")), new_word_pair_path, :class => 'btn btn-primary'

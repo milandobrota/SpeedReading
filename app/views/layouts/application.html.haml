@@ -10,7 +10,7 @@
     #user_header= user_header
     - if current_user
       #grayout
-      #sidebar.span3
+      #sidebar.span2
         - if current_user && current_user.admin?
           Admin:
           %ul
@@ -28,7 +28,7 @@
           %li= link_to 'Scrambled Words', new_scrambled_word_test_path
           %li= link_to 'Word Search', new_word_search_test_path
           %li= link_to 'Synonyms/Antonyms', new_synonyms_and_antonyms_test_path
-      #content.span9
+      #content.span10
         -if notice
           %p.notice= notice
         -if alert
