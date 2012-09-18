@@ -6,7 +6,6 @@
   .control-group
     = f.label :role, :class => 'control-label'
     .controls
-      =# f.number_field :role, :class => 'number_field'
       = f.select :role, User::ROLE_NAMES.collect.with_index {|role, i| [role, i]}, :class => 'select'
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'
