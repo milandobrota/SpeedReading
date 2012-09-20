@@ -1,13 +1,21 @@
+- model_class = WordPair
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human
+
 %p
-  %b Word 1:
+  %strong Word 1:
+  %br
   = @word_pair.word_1
 %p
-  %b Word 2:
+  %strong Word 2:
+  %br
   = @word_pair.word_2
 %p
-  %b Synonyms:
-  = @word_pair.synonyms
+  %strong Relation:
+  %br
+  = @word_pair.relation
 
-= link_to 'Edit', edit_word_pair_path(@word_pair)
-\|
-= link_to 'Back', word_pairs_path
+.form-actions
+  = link_to t('.back', :default => t("helpers.links.back")), word_pairs_path, :class => 'btn'
+  = link_to t('.edit', :default => t("helpers.links.edit")), edit_word_pair_path(@language), :class => 'btn'
+  = link_to t('.destroy', :default => t("helpers.links.destroy")), word_pair_path(@language), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'

@@ -1,4 +1,4 @@
-= form_for @word_pair do |f|
+= form_for @word_pair, :html => { :class => 'form-horizontal' } do |f|
   -if @word_pair.errors.any?
     #error_explanation
       %h2= "#{pluralize(@word_pair.errors.count, "error")} prohibited this word_pair from being saved:"
@@ -6,17 +6,21 @@
         - @word_pair.errors.full_messages.each do |msg|
           %li= msg
 
-  .field
-    = f.label :word_1
-    = f.text_field :word_1
-  .field
-    = f.label :word_2
-    = f.text_field :word_2
-  .field
-    = f.label :relation
-    = f.radio_button :relation, 'antonyms'
-    antonyms
-    = f.radio_button :relation, 'synonyms'
-    synonyms
-  .actions
-    = f.submit 'Save'
+  .control-group
+    = f.label :word_1, :class => 'control-label'
+    .controls
+      = f.text_field :word_1, :class => 'text_field'
+  .control-group
+    = f.label :word_2, :class => 'control-label'
+    .controls
+      = f.text_field :word_2, :class => 'text_field'
+  .control-group
+    = f.label :relation, :class => 'control-label'
+    .controls
+      = f.radio_button :relation, 'antonyms', :class => 'radio_button'
+      antonyms
+      = f.radio_button :relation, 'synonyms', :class => 'radio_button'
+      synonyms
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), word_pairs_path, :class => 'btn'

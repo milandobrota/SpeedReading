@@ -1,13 +1,8 @@
-= form_for @language do |f|
-  -if @language.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@language.errors.count, "error")} prohibited this language from being saved:"
-      %ul
-        - @language.errors.full_messages.each do |msg|
-          %li= msg
-
-  .field
-    = f.label :name
-    = f.text_field :name
-  .actions
-    = f.submit 'Save'
+= form_for @language, :html => { :class => 'form-horizontal' } do |f|
+  .control-group
+    = f.label :name, :class => 'control-label'
+    .controls
+      = f.text_field :name, :class => 'text_field'
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), languages_path, :class => 'btn'

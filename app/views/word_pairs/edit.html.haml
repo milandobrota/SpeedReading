@@ -1,7 +1,4 @@
-%h1 Editing word_pair
-
-= render 'form'
-
-= link_to 'Show', @word_pair
-\|
-= link_to 'Back', word_pairs_path
+- model_class = WordPair
+.page-header
+  %h1=t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human, :default => "Edit #{model_class.model_name.human}")
+= render :partial => "form"

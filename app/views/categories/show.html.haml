@@ -1,9 +1,13 @@
-%p#notice= notice
+- model_class = Category
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human
 
 %p
-  %b Name:
+  %strong Name:
+  %br
   = @category.name
 
-= link_to 'Edit', edit_category_path(@category)
-\|
-= link_to 'Back', categories_path
+.form-actions
+  = link_to t('.back', :default => t("helpers.links.back")), categories_path, :class => 'btn'
+  = link_to t('.edit', :default => t("helpers.links.edit")), edit_category_path(@category), :class => 'btn'
+  = link_to t('.destroy', :default => t("helpers.links.destroy")), category_path(@category), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'

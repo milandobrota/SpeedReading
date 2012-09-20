@@ -1,10 +1,16 @@
 %p
-  %b Questions:
-  %table
-    - @content.questions.each do |question|
+  %strong Questions:
+  %table.table.table-striped
+    %thead
       %tr
-        %td= question.body
-        %td= link_to 'Edit', edit_content_question_path(@content, question)
-        %td= link_to 'Destroy', content_question_path(@content, question), :confirm => 'Are you sure?', :method => :delete
+        %th body
+        %th=t '.actions', :default => t("helpers.actions")
+    %tbody
+      - @content.questions.each do |question|
+        %tr
+          %td= question.body
+          %td
+            = link_to t('.edit', :default => t("helpers.links.edit")), edit_content_question_path(@content, question), :class => 'btn btn-mini'
+            = link_to t('.destroy', :default => t("helpers.links.destroy")), content_question_path(@content, question), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'
 
-= link_to 'Add questions', new_content_question_path(@content)
+= link_to 'Add questions', new_content_question_path(@content), :class => 'btn btn-mini'
