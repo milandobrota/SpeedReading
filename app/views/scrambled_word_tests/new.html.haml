@@ -6,7 +6,7 @@
 = render '/contents/content_selection_popup'
 
 This test will measure your reading speed. Click the start button when you are ready and the text will appear below. Click on done when you are finished reading.
-%button#start_reading Start
+%button.btn.btn-primary#start_reading Start
 %div
 = form_for(@scrambled_word_test) do |f|
   = f.hidden_field :content_id
@@ -23,7 +23,7 @@ This test will measure your reading speed. Click the start button when you are r
   $(function() {
 
     ScrambledWordTest.container = $(".test_container");
-    ScrambledWordTest.messages = ['Ready?']; // to be displayed
+    ScrambledWordTest.messages = ['<div style="padding-top: 50px">Ready?</div>']; // to be displayed
 
     $('#start_reading').click(function() {
       ScrambledWordTest.start();
@@ -72,7 +72,7 @@ This test will measure your reading speed. Click the start button when you are r
         ScrambledWordTest.container.append(div);
       }
       var scrambled_text = ScrambledWordTest.scramble_sentence(ScrambledWordTest.text);
-      div.html('<div id="scrollbar1"><div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div><div class="viewport"><div class="overview"><div id="reading_text">' + scrambled_text + '</div></div></div></div>' + '<br /><a href="#" class="button" id="finished_reading">Done</a>');
+      div.html('<div id="scrollbar1"><div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div><div class="viewport"><div class="overview"><div id="reading_text">' + scrambled_text + '</div></div></div></div>' + '<br /><button class="btn btn-primary" id="finished_reading">Done</button>');
 
       $('#scrollbar1').tinyscrollbar();
 

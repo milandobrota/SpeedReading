@@ -1,11 +1,11 @@
-  %button#start_test Start
+%button.btn.btn-primary#start_test Start
 
-  #chart_container
-    = high_chart("flashing_dots_chart", @flashing_dots_chart)
+#chart_container
+  = high_chart("flashing_dots_chart", @flashing_dots_chart)
 
 :javascript
   var FlashingDotsTest = new Object({
-    level: #{@flashing_dots_test.level} || 1,
+    level: #{@flashing_dots_test.level.to_json} || 1,
     streak: 0
   });
 
@@ -32,7 +32,7 @@
     }
 
     FlashingDotsTest.ask = function() {
-      var div = $('<div id="flashing_dots_question_container">How many dots did you see?<br /><br /><input type=text id="flashing_dots_input" size="3" /><a href="#" class="button" id="submit_answer">OK</a></div>');
+      var div = $('<div id="flashing_dots_question_container">How many dots did you see?<br /><br /><input type=text id="flashing_dots_input" size="3" /> <button class="btn btn-primary btn-large" id="submit_answer">OK</button></div>');
       FlashingDotsTest.container.append(div);
       var input = $("#flashing_dots_input");
       input.focus();
@@ -80,7 +80,7 @@
       if(FlashingDotsTest.streak > 4) {
         FlashingDotsTest.level_up();
         FlashingDotsTest.save();
-        FlashingDotsTest.messages.push('Level ' + FlashingDotsTest.level);
+        FlashingDotsTest.messages.push('<div style="padding-top: 50px">Level ' + FlashingDotsTest.level + '</div>');
       } else {
         FlashingDotsTest.messages.push('Good job!<br />Current streak: ' + FlashingDotsTest.streak);
       }
@@ -147,7 +147,7 @@
       $("#grayout").css("visibility", "visible");
       $("#flashing_dots_question_container").remove();
 
-      FlashingDotsTest.messages = ['Ready?', 'Level ' + FlashingDotsTest.level];
+      FlashingDotsTest.messages = ['<div style="padding-top: 50px">Ready?</div>', '<div style="padding-top: 50px">Level ' + FlashingDotsTest.level + '</div>'];
       FlashingDotsTest.iterate();
     }
 

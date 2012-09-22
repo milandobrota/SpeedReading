@@ -86,7 +86,8 @@ body {
 }
 
 #flash_reading_container {
-  font-size: 4em;
+  font-size: 50px;
+  line-height: 50px;
   text-align: center;
   margin-top: 250px;
 }
@@ -266,6 +267,7 @@ a.button {
 
 #countdown {
   font-size: 250px;
+  padding-top: 125px;
   text-align: center;
   width: 300px;
   height: 300px;
@@ -274,6 +276,7 @@ a.button {
 
 .question_container, #flashing_dots_question_container {
   font-size: 70px;
+  line-height: 70px;
   text-align: center;
   width: 700px;
   height: 300px;
@@ -284,20 +287,14 @@ a.button {
   margin: 30px;
 }
 
-#word_pair_container {
-  font-size: 100px;
-  text-align: center;
-  width: 700px;
-  height: 300px;
-  margin: 160px auto;
-}
-
 .message_notice_container {
   font-size: 70px;
+  line-height: 70px;
+  padding-top: 35px;
   text-align: center;
   width: 700px;
-  height: 300px;
-  margin: 200px auto;
+  height: 200px;
+  margin: 150px auto;
 }
 
 #flashing_numbers {
@@ -308,8 +305,11 @@ a.button {
 }
 
 #flashing_dots_input, .question_container input{
-  font-size: 100%;
   text-align: center;
+  height: 30px;
+  margin-bottom: 0;
+  width: 120px;
+  font-size: 20px;
 }
 
 #scrollbar1 { width: 920px; clear: both; margin: 20px 0 10px; }
@@ -335,3 +335,34 @@ a.button {
 .body_column {
   width: 500px;
 }
+
+#flashing_numbers_input_left, #flashing_numbers_input_right {
+  height: 30px;
+  margin-bottom: 0;
+  width: 120px;
+  font-size: 20px;
+}
+
+#left_word_container {
+  width:440px;
+  text-align:right;
+  padding-right: 10px;
+  float:left;
+}
+
+#right_word_container {
+  width:440px;
+  text-align:left;
+  padding-left: 10px;
+  float:left;
+}
+
+#word_pair_container {
+  font-size: 100px;
+  line-height: 100px;
+  text-align: center;
+  width: 900px;
+  height: 300px;
+  margin: 160px auto;
+}
+

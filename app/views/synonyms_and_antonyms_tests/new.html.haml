@@ -1,6 +1,6 @@
 - @word_pairs = WordPair.all
 
-%button#start_test Start
+%button.btn.btn-primary#start_test Start
 = form_for(@synonyms_and_antonyms_test) do |f|
   = f.hidden_field :speed
   = f.hidden_field :accuracy
@@ -16,7 +16,7 @@
   $(function() {
 
     SynonymsAndAntonymsTest.container = $(".test_container");
-    SynonymsAndAntonymsTest.messages = ['Ready?']; // to be displayed
+    SynonymsAndAntonymsTest.messages = ['<div style="padding-top: 50px">Ready?</div>']; // to be displayed
 
     $('#start_test').click(function() {
       SynonymsAndAntonymsTest.start();
@@ -119,7 +119,7 @@
         div = $('<div id="word_pair_container"></div>');
         SynonymsAndAntonymsTest.container.append(div);
       }
-      div.html(word_1 + ' ' + word_2 + '<br /><a href="#" class="button" id="submit_synonym">Synonym</a><a href="#" class="button" id="submit_antonym">Antonym</a>');
+      div.html('<div id="left_word_container">' + word_1 + '</div> <div id="right_word_container">' + word_2 + '</div><br /><button class="btn btn-primary btn-large" id="submit_synonym">Synonym</button> <button class="btn btn-primary btn-large" id="submit_antonym">Antonym</button>');
 
       $("#submit_synonym").click(function() {
         SynonymsAndAntonymsTest.submit_synonym();

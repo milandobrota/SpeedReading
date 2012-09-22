@@ -7,7 +7,7 @@
 
 This test will measure your ability to find words in the text.
 Click the start button when you are ready and the text will appear below. Click on the word when you find it.
-%button#start_reading Start
+%button.btn.btn-primary#start_reading Start
 
 = form_for(@word_search_test) do |f|
   = f.hidden_field :content_id
@@ -25,7 +25,7 @@ Click the start button when you are ready and the text will appear below. Click 
   $(function() {
 
     WordSearchTest.container = $(".test_container");
-    WordSearchTest.messages = ['Ready?']; // to be displayed
+    WordSearchTest.messages = ['<div style="padding-top: 50px">Ready?</div>']; // to be displayed
 
     $('#start_reading').click(function() {
       WordSearchTest.start();
@@ -122,7 +122,8 @@ Click the start button when you are ready and the text will appear below. Click 
       var words = WordSearchTest.text.match(/\b\w+\b/g);
       var word = words[random_number_between(0, words.length - 1)].toLowerCase();
       WordSearchTest.word = word;
-      WordSearchTest.messages = WordSearchTest.messages.concat(["The word is", word, word, word]);
+      var word_message = '<div style="padding-top: 50px">' + word + '</div>'
+      WordSearchTest.messages = WordSearchTest.messages.concat(['<div style="padding-top: 50px">The word is</div>', word_message, word_message, word_message]);
       return word;
     }
   });

@@ -1,11 +1,11 @@
-%button#start_exercise Start
+%button.btn.btn-primary#start_exercise Start
 
 #chart_container
   = high_chart("flashing_numbers_chart", @flashing_numbers_chart)
 
 :javascript
   var FlashingNumbersTest = new Object({
-    number_of_digits: #{@flashing_numbers_test.number_of_digits} || 1,
+    number_of_digits: #{@flashing_numbers_test.number_of_digits.to_json} || 1,
     timeouts: []
   });
 
@@ -21,7 +21,7 @@
       this.container.show();
       $("#grayout").css("visibility", "visible");
 
-      FlashingNumbersTest.messages = ['Ready?'];
+      FlashingNumbersTest.messages = ['<div style="padding-top: 50px">Ready?</div>'];
       FlashingNumbersTest.iterate();
     }
 
@@ -78,9 +78,9 @@
 
       var div = $('<div id="flashing_numbers_container" class="question_container">' +
         '  What numbers did you see?<br /><br />' +
-        '  <input type=text id="flashing_numbers_input_left" size="3" />' +
-        '  <input type=text id="flashing_numbers_input_right" size="3" />' +
-        '  <a href="#" class="button" id="submit_answer">OK</a>' +
+        '  <input type=text id="flashing_numbers_input_left" />' +
+        '  <input type=text id="flashing_numbers_input_right" />' +
+        '  <button class="btn btn-primary btn-large" id="submit_answer">OK</button>' +
         '</div>'
       );
       FlashingNumbersTest.container.append(div);
@@ -132,7 +132,7 @@
       } else {
         FlashingNumbersTest.inner_width = 80;
       }
-      FlashingNumbersTest.messages.push("Try again.");
+      FlashingNumbersTest.messages.push('<div style="padding-top: 50px">Try again.</div>');
       FlashingNumbersTest.outer_width = (container_width - FlashingNumbersTest.inner_width) / 2;
     }
 

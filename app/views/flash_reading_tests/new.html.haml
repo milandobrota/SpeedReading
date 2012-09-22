@@ -17,8 +17,8 @@
   %span#number_of_words_value
     2
 
-%button#start_exercise Start
-= high_chart("flash_reading_chart", @flash_reading_chart)
+%button.btn.btn-primary#start_exercise Start
+= high_chart("flash_reading_chart_on_page", @flash_reading_chart)
 
 :javascript
   var FlashReadingTest = new Object({
@@ -40,7 +40,7 @@
   $(function() {
 
     FlashReadingTest.container = $(".test_container");
-    FlashReadingTest.messages = ['Ready?']; // to be displayed
+    FlashReadingTest.messages = ['<div style="padding-top: 50px">Ready?</div>']; // to be displayed
 
     FlashReadingTest.start = function() {
       $('#flash_reading_container').remove();
@@ -98,8 +98,7 @@
       if (next_chunk == undefined) {
         clearTimeout(FlashReadingTest.iteratingTimeout);
         $('#flash_reading_container').css('margin-top', '100px');
-        $('#flash_reading_container').html('Your reading speed is ' + FlashReadingTest.get_wpm() + ' wpm!');
-        //FlashReadingTest.words = #{@flash_reading_test.content.body.split(' ').reverse.to_json};
+        $('#flash_reading_container').html('<div style="margin-bottom:25px">Your reading speed is ' + FlashReadingTest.get_wpm() + ' wpm!</div>');
         if (!$('#chart_container')[0]) $('#flash_reading_container').append($('<div id="chart_container"></div>'));
         FlashReadingTest.save(FlashReadingTest.show_chart);
         return;
@@ -222,5 +221,6 @@
       clearTimeout(FlashReadingTest.iteratingTimeout);
       $("#grayout").css("visibility", "hidden");
       FlashReadingTest.container.hide();
+      $('#flash_reading_chart_on_page').load('/flash_reading_tests/chart');
     });
   });

@@ -5,7 +5,7 @@
 
 = render '/contents/content_selection_popup'
 This test will measure your reading speed. Click the start button when you are ready and the text will appear below. Click on done when you are finished reading.
-%button#start_reading Start
+%button.btn.btn-primary#start_reading Start
 %div
 = form_for(@reading_speed_test) do |f|
   = f.hidden_field :content_id
@@ -23,7 +23,7 @@ This test will measure your reading speed. Click the start button when you are r
   $(function() {
 
     ReadingSpeedTest.container = $(".test_container");
-    ReadingSpeedTest.messages = ['Ready?']; // to be displayed
+    ReadingSpeedTest.messages = ['<div style="padding-top: 50px">Ready?</div>']; // to be displayed
 
     $('#start_reading').click(function() {
       ReadingSpeedTest.start();
@@ -71,7 +71,7 @@ This test will measure your reading speed. Click the start button when you are r
         div = $('<div id="reading_text_container"></div>');
         ReadingSpeedTest.container.append(div);
       }
-      div.html('<div id="scrollbar1"><div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div><div class="viewport"><div class="overview"><div id="reading_text">' + ReadingSpeedTest.text + '</div></div></div></div>' + '<br /><a href="#" class="button" id="finished_reading">Done</a>');
+      div.html('<div id="scrollbar1"><div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div><div class="viewport"><div class="overview"><div id="reading_text">' + ReadingSpeedTest.text + '</div></div></div></div>' + '<br /><button class="btn btn-primary" id="finished_reading">Done</button>');
 
       $('#scrollbar1').tinyscrollbar();
 
