@@ -11,7 +11,8 @@ class ReadingSpeedTestsController < ApplicationController
     @reading_speed_test.user = current_user
 
     if @reading_speed_test.save
-      redirect_to @reading_speed_test, notice: "Your reading speed is #{@reading_speed_test.wpm} wpm!"
+      flash[:notice] = "Your reading speed is #{@reading_speed_test.wpm} wpm!"
+      redirect_to @reading_speed_test
     else
       render action: "new"
     end

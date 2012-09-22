@@ -11,7 +11,8 @@ class ScrambledWordTestsController < ApplicationController
     @scrambled_word_test.user = current_user
 
     if @scrambled_word_test.save
-      redirect_to @scrambled_word_test, notice: "Your reading speed is #{@scrambled_word_test.wpm}"
+      flash[:notice] = "Your reading speed is #{@scrambled_word_test.wpm}"
+      redirect_to @scrambled_word_test 
     else
       render action: "new"
     end

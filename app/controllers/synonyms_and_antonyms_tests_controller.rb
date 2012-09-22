@@ -11,7 +11,8 @@ class SynonymsAndAntonymsTestsController < ApplicationController
     @synonyms_and_antonyms_test.user = current_user
 
     if @synonyms_and_antonyms_test.save
-      redirect_to @synonyms_and_antonyms_test, notice: "Speed: #{@synonyms_and_antonyms_test.speed}, Accuracy #{@synonyms_and_antonyms_test.accuracy}%"
+      flash[:notice] = "Speed: #{@synonyms_and_antonyms_test.speed}, Accuracy #{@synonyms_and_antonyms_test.accuracy}%"
+      redirect_to @synonyms_and_antonyms_test
     else
       render action: "new"
     end

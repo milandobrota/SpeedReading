@@ -22,7 +22,8 @@ class FlashingDotsTestsController < ApplicationController
     @flashing_dots_test = FlashingDotsTest.find(params[:id])
     respond_to do |format|
       if @flashing_dots_test.update_attributes(params[:flashing_dots_test])
-        format.html { redirect_to @flashing_dots_test, notice: 'Flashing Dots Test was successfully updated.' }
+        flash[:notice] = 'Flashing Dots Test was successfully updated.'
+        format.html { redirect_to @flashing_dots_test }
         format.json { head :ok }
       else
         format.html { render action: "edit" }

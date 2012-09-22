@@ -30,9 +30,9 @@
           %li= link_to 'Synonyms/Antonyms', new_synonyms_and_antonyms_test_path
       #content.span10
         -if notice
-          %p.notice= notice
+          %div.notice.alert.alert-info= notice
         -if alert
-          %p.alert= alert
+          %div.alert.alert-error= alert
         .exercise_description
           = yield
       #test_container.test_container

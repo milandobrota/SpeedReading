@@ -9,7 +9,8 @@ class WordSearchTestsController < ApplicationController
   def create
     @word_search_test = WordSearchTest.new(params[:word_search_test])
     if @word_search_test.save
-      redirect_to @word_search_test, notice: "Your score is #{@word_search_test.score}"
+      flash[:notice] = "Your score is #{@word_search_test.score}"
+      redirect_to @word_search_test
     else
       render action: "new"
     end

@@ -46,7 +46,8 @@ class WordPairsController < ApplicationController
 
     respond_to do |format|
       if @word_pair.save
-        format.html { redirect_to @word_pair, notice: 'Word pair was successfully created.' }
+        flash[:notice] = 'Word pair was successfully created.'
+        format.html { redirect_to @word_pair }
         format.json { render json: @word_pair, status: :created, location: @word_pair }
       else
         format.html { render action: "new" }
@@ -62,7 +63,8 @@ class WordPairsController < ApplicationController
 
     respond_to do |format|
       if @word_pair.update_attributes(params[:word_pair])
-        format.html { redirect_to @word_pair, notice: 'Word pair was successfully updated.' }
+        flash[:notice] = 'Word pair was successfully updated.'
+        format.html { redirect_to @word_pair }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
