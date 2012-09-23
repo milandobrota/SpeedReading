@@ -28,12 +28,15 @@ class Content < ActiveRecord::Base
 
   class << self
     def for_reading_test
-      # first
-      where(:id => 2).first
+      random
     end
 
     def for_find_the_word_test
-      first
+      random
+    end
+
+    def random
+      order('random()').first
     end
 
     def sorted_by_name

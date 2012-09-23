@@ -3,7 +3,7 @@ class FlashReadingTestsController < ApplicationController
 
   def new
     @flash_reading_test = FlashReadingTest.setup_for(current_user)
-    @flash_reading_chart = FlashReadingTest.chart_for(current_user)
+    @flash_reading_chart_on_page = FlashReadingTest.chart_for(current_user)
   end
 
   def create

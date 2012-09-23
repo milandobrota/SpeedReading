@@ -1,6 +1,6 @@
 - @languages = Language.all
 - @categories = Category.all
-- @selected = Content.first
+- @selected = @flash_reading_test.content
 - @js_test = 'FlashReadingTest'
 
 .page-header
@@ -21,7 +21,7 @@
     2
 
 %button.btn.btn-primary#start_exercise Start
-= high_chart("flash_reading_chart_on_page", @flash_reading_chart)
+= high_chart("flash_reading_chart_on_page", @flash_reading_chart_on_page)
 
 :javascript
   var FlashReadingTest = new Object({
