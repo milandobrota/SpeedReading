@@ -16,7 +16,7 @@ class FlashingNumbersTest < ActiveRecord::Base
     def historical_data_for(user)
       distances = []
       numbers_of_digits = []
-      tests = FlashingNumbersTest.where(:user_id => user.id).order("id asc").select([:distance, :number_of_digits]).all
+      tests = FlashingNumbersTest.where(:user_id => user.id).order("id asc").limit(30).select([:distance, :number_of_digits]).all
       tests.each do |test|
         distances << test.distance
         numbers_of_digits << test.number_of_digits

@@ -13,7 +13,7 @@ class ScrambledWordTest < ActiveRecord::Base
     def historical_data_for(user)
       reading_speeds = []
       comprehension = []
-      tests = ScrambledWordTest.where(:user_id => user.id).order("id asc").select([:wpm, :comprehension_rate]).all
+      tests = ScrambledWordTest.where(:user_id => user.id).order("id asc").limit(30).select([:wpm, :comprehension_rate]).all
       tests.each do |test|
         reading_speeds << test.wpm
         comprehension << test.comprehension_rate.to_i

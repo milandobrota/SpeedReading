@@ -20,7 +20,7 @@ class WordSearchTest < ActiveRecord::Base
     end
 
     def historical_data_for(user)
-      scores = WordSearchTest.where(:user_id => user.id).order("id asc").select(:score).all.collect(&:score)
+      scores = WordSearchTest.where(:user_id => user.id).order("id asc").limit(30).select(:score).all.collect(&:score)
       {:scores => scores}
     end
 

@@ -11,7 +11,7 @@ class FlashingDotsTest < ActiveRecord::Base
     end
 
     def historical_data_for(user)
-      levels = FlashingDotsTest.where(:user_id => user.id).order("id asc").select(:level).collect(&:level)
+      levels = FlashingDotsTest.where(:user_id => user.id).order("id asc").limit(30).select(:level).collect(&:level)
       {:levels => levels}
     end
 

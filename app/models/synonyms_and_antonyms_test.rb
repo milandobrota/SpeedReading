@@ -16,7 +16,7 @@ class SynonymsAndAntonymsTest < ActiveRecord::Base
     def historical_data_for(user)
       speeds = []
       accuracies = []
-      tests = SynonymsAndAntonymsTest.where(:user_id => user.id).order("id asc").select([:speed, :accuracy]).all
+      tests = SynonymsAndAntonymsTest.where(:user_id => user.id).order("id asc").limit(30).select([:speed, :accuracy]).all
       tests.each do |test|
         speeds << test.speed
         accuracies << test.accuracy

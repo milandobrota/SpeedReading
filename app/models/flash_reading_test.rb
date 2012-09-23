@@ -13,7 +13,7 @@ class FlashReadingTest < ActiveRecord::Base
     def historical_data_for(user)
       reading_speeds = []
       word_throughputs = []
-      tests = FlashReadingTest.where(:user_id => user.id).order("id asc").select([:reading_speed, :word_throughput]).all
+      tests = FlashReadingTest.where(:user_id => user.id).order("id asc").limit(30).select([:reading_speed, :word_throughput]).all
       tests.each do |test|
         reading_speeds << test.reading_speed
         word_throughputs << test.word_throughput
