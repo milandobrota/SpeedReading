@@ -1,6 +1,4 @@
 SpeedReading::Application.routes.draw do
-  resources :users, :only => [:index, :edit, :update, :destroy]
-
   resources :word_pairs
 
   resources :categories
@@ -33,6 +31,9 @@ SpeedReading::Application.routes.draw do
   resources :flash_reading_tests, :only => [:new, :create, :show]
 
   devise_for :users
+
+  resources :users, :only => [:index, :edit, :update, :destroy]
+
 
   root :to => 'home#index'
 

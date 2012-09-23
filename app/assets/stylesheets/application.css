@@ -390,3 +390,8 @@ a.button {
 textarea.question_text {
   height: 200px;
 }
+
+.other_actions a {
+  float: right;
+  margin-left: 5px;
+}

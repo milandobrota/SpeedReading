@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
     define_method("#{role_name}?") { ROLE_NAMES[role] == role_name }
   end
 
+  before_save :ensure_role_present
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -20,5 +22,9 @@ class User < ActiveRecord::Base
 
   def role_name
     ROLE_NAMES[role]
+  end
+
+  def ensure_role_present
+    self.role ||= ROLE_NAMES.index('member')
   end
 end
