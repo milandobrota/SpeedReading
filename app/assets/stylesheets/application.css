@@ -397,3 +397,7 @@ textarea.question_text {
   float: right;
   margin-left: 5px;
 }
+
+#language_select, #category_select {
+  width: 150px;
+}

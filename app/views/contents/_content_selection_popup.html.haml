@@ -17,16 +17,14 @@
       %br
       %br
       %br
-    = link_to 'Select this story!', '#', :class => "close_popup button", :class => 'btn btn-primary'
+    = link_to 'Select this story!', '#', :class => 'close_popup btn btn-primary'
     %br
     %br
     %br
     %div
       Or browse other stories: 
   #select_content
-    Language:
     = select_tag "Language", options_from_collection_for_select(@languages, "id", "name"), :id => 'language_select'
-    Category:
     = select_tag "Category", options_from_collection_for_select(@categories, "id", "name"), :id => 'category_select'
     #select_content_inner
       #prev_link
