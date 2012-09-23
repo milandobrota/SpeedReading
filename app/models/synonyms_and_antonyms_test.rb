@@ -29,8 +29,8 @@ class SynonymsAndAntonymsTest < ActiveRecord::Base
         ])
         f.xAxis(:title => { :text => 'Test Number'} )
         f.title(:text => 'Synonyms and Antonyms')
-        f.series(:name => 'Speed', :data => user_data[:speeds], :yAxis => 0 )
-        f.series(:name => 'Accuracy', :data => user_data[:accuracies], :yAxis => 1 )
+        f.series(:name => 'Accuracy', :data => user_data[:accuracies], :yAxis => 0 )
+        f.series(:name => 'Speed', :data => user_data[:speeds], :yAxis => 1 )
       end
     end
 

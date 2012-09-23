@@ -79,6 +79,7 @@ class WordPairsController < ApplicationController
     @word_pair = WordPair.find(params[:id])
     @word_pair.destroy
 
+    flash[:notice] = 'Word pair was successfully deleted.'
     respond_to do |format|
       format.html { redirect_to word_pairs_url }
       format.json { head :ok }

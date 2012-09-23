@@ -10,7 +10,7 @@
   %tbody
     - @contents.each do |content|
       %tr
-        %td= content.name
+        %td= link_to content.name, content_path(content)
         %td.content_body= content.body
         %td
           = link_to t('.edit', :default => t("helpers.links.edit")), edit_content_path(content), :class => 'btn btn-mini'

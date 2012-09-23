@@ -12,6 +12,7 @@
     - if current_user
       #grayout
       #sidebar.span2
+        %br
         - if current_user && current_user.admin?
           Admin:
           %ul.nav.nav-pills.nav-stacked

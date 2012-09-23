@@ -1,5 +1,4 @@
-%h1 New question
-
-= render 'form'
-
-= link_to 'Back', content_questions_path(@content)
+- model_class = Question
+.page-header
+  %h1=t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human, :default => "New #{model_class.model_name.human}")
+= render :partial => "form"

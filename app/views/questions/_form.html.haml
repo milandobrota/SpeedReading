@@ -8,15 +8,15 @@
 
   .field
     = f.label :body
-    = f.text_area :body
+    = f.text_area :body, :class => 'span6 question_text'
   .field
     = f.label 'answer', 'Add answers and select the correct one'
   - ['A', 'B', 'C', 'D'].each_with_index do |letter, index|
     .field
       = f.radio_button 'correct_answer', index
       = "#{letter}."
-      = text_field_tag 'question[answers][]', @question.answers[index]
+      = text_field_tag 'question[answers][]', @question.answers[index], :class => 'span6'
   .field
     = f.hidden_field :content_id
-  .actions
-    = f.submit 'Save'
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'

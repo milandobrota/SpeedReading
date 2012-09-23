@@ -81,7 +81,7 @@ class QuestionsController < ApplicationController
     @question.destroy
 
     respond_to do |format|
-      format.html { redirect_to questions_url }
+      format.html { redirect_to content_path(@question.content) }
       format.json { head :ok }
     end
   end
