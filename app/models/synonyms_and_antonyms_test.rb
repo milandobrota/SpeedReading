@@ -1,6 +1,11 @@
 class SynonymsAndAntonymsTest < ActiveRecord::Base
   belongs_to :user
 
+  # random 20
+  def word_pairs
+    @random_pairs ||= WordPair.limit(20).order('random()')
+  end
+
   class << self
     def setup_for(test_taker)
       new(

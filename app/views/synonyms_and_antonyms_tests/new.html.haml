@@ -1,8 +1,6 @@
 .page-header
   %h1 Synonyms/Antonyms
 
-- @word_pairs = WordPair.all
-
 %button.btn.btn-primary#start_test Start
 = form_for(@synonyms_and_antonyms_test) do |f|
   = f.hidden_field :speed
@@ -13,7 +11,7 @@
 :javascript
 
   var SynonymsAndAntonymsTest = new Object({
-    word_pairs: #{@word_pairs.to_json}
+    word_pairs: #{@synonyms_and_antonyms_test.word_pairs.to_json}
   });
 
   $(function() {
