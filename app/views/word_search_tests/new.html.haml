@@ -79,7 +79,7 @@ Click the start button when you are ready and the text will appear below. Click 
         WordSearchTest.container.append(div);
       }
       var spanified_text = WordSearchTest.spanify_text(WordSearchTest.text); // break into spans
-      div.html('<div id="scrollbar1"><div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div><div class="viewport"><div class="overview"><div id="reading_text">' + spanified_text + '</div></div></div></div>' + '<br /><a href="#" class="button" id="finished_reading">Done</a>');
+      div.html('<div id="scrollbar1"><div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div><div class="viewport"><div class="overview"><div id="reading_text">' + spanified_text + '</div></div></div></div>');
 
       $('#scrollbar1').tinyscrollbar();
     }
