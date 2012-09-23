@@ -125,6 +125,8 @@ body {
   border-style: solid;
   border-width: 1px;
   border-color: black;
+  max-width: 200px;
+  max-height: 200px;
 }
 
 #select_content_title {

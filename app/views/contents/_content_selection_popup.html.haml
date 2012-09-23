@@ -1,11 +1,26 @@
-= link_to 'Select content', '#', :id => 'show_popup'
+= link_to 'Select content', '#', :id => 'show_popup', :class => 'btn'
 #content_selection_box
   = link_to(image_tag('close.jpg', :alt => 'close', :id => 'close_popup', :class => 'x_button close_popup'), '#')
   #selected_content
     = image_tag @selected.photo.url, {:id => 'selected_image', :class => 'content_image'}
-    .title
-      = @selected.name
-    = link_to 'Select this story!', '#', :class => "close_popup button"
+    %br
+    %br
+    .content_info
+      %strong Name:
+      %span#content_name= @selected.name
+      %br
+      %strong Credit:
+      %span= link_to @selected.source_name, @selected.source_link, :id => 'content_credit'
+      %br
+      %strong Language:
+      %span#content_language= @selected.language.name
+      %br
+      %br
+      %br
+    = link_to 'Select this story!', '#', :class => "close_popup button", :class => 'btn btn-primary'
+    %br
+    %br
+    %br
     %div
       Or browse other stories: 
   #select_content
