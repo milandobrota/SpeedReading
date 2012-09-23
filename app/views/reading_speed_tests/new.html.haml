@@ -3,6 +3,9 @@
 - @selected = Content.first
 - @js_test = 'ReadingSpeedTest'
 
+.page-header
+  %h1 Test Reading Speed
+
 = render '/contents/content_selection_popup'
 This test will measure your reading speed. Click the start button when you are ready and the text will appear below. Click on done when you are finished reading.
 %button.btn.btn-primary#start_reading Start
