@@ -99,6 +99,8 @@ function ContentSelector(settings) {
       },
       function(data) {
         selector.contents = data;
+
+        // rebuild the carousel
         var carousel_div = selector.config.carousel_container
         carousel_div.html('');
         carousel_div.removeClass('ui-carousel');
@@ -160,15 +162,12 @@ function ContentSelector(settings) {
   // because the element can be created after
   // the handler
   this.config.carousel_container.on('click', 'img.content_image', function() {
-    var image_to_change = selector.config.selected_content_container.find('img.content_image');
-    var text_to_change = selector.config.selected_content_container.find('div.title')
-
     var clicked_image = $(this);
-    var new_src = clicked_image.attr('src')
-    var new_text = clicked_image.parent().parent().find("div.title").text();
 
-    image_to_change.attr('src', new_src);
-    text_to_change.text(new_text);
+    var image_to_change = $("#selected_image");
+    var content_name_container = $("#content_name");
+    var content_credit_link = $("#content_credit");
+    var content_language_container = $("#content_language");
 
     var selected_content_id = clicked_image.attr('data-content-id');
     var selected_content;
@@ -179,6 +178,13 @@ function ContentSelector(settings) {
         break;
       }
     }
+
+    image_to_change.attr('src', selected_content.photo_url);
+    content_name_container.text(selected_content.name);
+    content_credit_link.text(selected_content.source_name);
+    content_credit_link.attr('href', selected_content.source_link);
+    content_language_container.text(selected_content.language_name);
+
     // selector.config.current_test.words = selected_content.body.split(" ").reverse();
     selector.config.current_test.text = selected_content.body;
     selector.config.current_test.content_id = selected_content.id;

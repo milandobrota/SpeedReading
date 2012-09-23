@@ -20,6 +20,10 @@ class Content < ActiveRecord::Base
     body.scan(/\b/).size / 2
   end
 
+  def language_name
+    language.name
+  end
+
   class << self
     def for_reading_test
       # first

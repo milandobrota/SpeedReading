@@ -8,7 +8,7 @@ class ContentsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @contents.to_json(:methods => "photo_url") }
+      format.json { render json: @contents.to_json(:methods => ['photo_url', 'language_name'] ) }
     end
   end
 
