@@ -16,7 +16,7 @@
         - if current_user && current_user.admin?
           Admin:
           %ul.nav.nav-pills.nav-stacked
-            = nav_link 'Users', :controller => 'users', :action => 'index'
+            = nav_link 'Users', :controller => 'registered_users', :action => 'index'
             = nav_link 'Contents', :controller => 'contents', :action => 'index'
             = nav_link 'Word Pairs', :controller => 'word_pairs', :action => 'index'
             = nav_link 'Categories', :controller => 'categories', :action => 'index'

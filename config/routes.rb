@@ -32,7 +32,7 @@ SpeedReading::Application.routes.draw do
 
   devise_for :users
 
-  resources :users, :only => [:index, :edit, :update, :destroy]
+  resources :registered_users, :only => [:index, :edit, :update, :destroy]
 
 
   root :to => 'home#index'

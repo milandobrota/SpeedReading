@@ -1,4 +1,4 @@
-= form_for @user, :html => { :class => 'form-horizontal' } do |f|
+= form_for @user, :url => registered_user_path(@user), :html => { :class => 'form-horizontal' } do |f|
   .control-group
     = f.label :email, :class => 'control-label'
     .controls
@@ -9,4 +9,4 @@
       = f.select :role, User::ROLE_NAMES.collect.with_index {|role, i| [role, i]}, :class => 'select'
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'
-    = link_to t('.cancel', :default => t("helpers.links.cancel")), users_path, :class => 'btn'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), registered_users_path, :class => 'btn'
