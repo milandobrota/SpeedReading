@@ -4,6 +4,8 @@ class Content < ActiveRecord::Base
   has_many :categories, :through => :categorizations
   belongs_to :language
 
+  validates_presence_of :name, :body, :language
+
   has_attached_file :photo,
     :storage => :s3,
     :bucket => ENV['S3_BUCKET_NAME'],

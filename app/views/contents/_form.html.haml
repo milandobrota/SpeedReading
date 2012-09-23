@@ -1,12 +1,5 @@
 = form_for(@content, :html => {:multipart => true, :class => 'form-horizontal' }) do |f|
-  - if @content.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@content.errors.count, "error")
-        prohibited this content from being saved:
-      %ul
-        - @content.errors.full_messages.each do |msg|
-          %li= msg
+  = render :partial => 'layouts/form_errors', :object => @content, :as => :model
   .control-group
     = f.label :name, :class => 'control-label'
     .controls

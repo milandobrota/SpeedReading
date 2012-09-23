@@ -1,4 +1,5 @@
 = form_for @user, :url => registered_user_path(@user), :html => { :class => 'form-horizontal' } do |f|
+  = render :partial => 'layouts/form_errors', :object => @user, :as => :model
   .control-group
     = f.label :email, :class => 'control-label'
     .controls

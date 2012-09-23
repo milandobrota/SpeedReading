@@ -1,11 +1,5 @@
 = form_for @word_pair, :html => { :class => 'form-horizontal' } do |f|
-  -if @word_pair.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@word_pair.errors.count, "error")} prohibited this word_pair from being saved:"
-      %ul
-        - @word_pair.errors.full_messages.each do |msg|
-          %li= msg
-
+  = render :partial => 'layouts/form_errors', :object => @word_pair, :as => :model
   .control-group
     = f.label :word_1, :class => 'control-label'
     .controls

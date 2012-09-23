@@ -1,5 +1,7 @@
 class WordPair < ActiveRecord::Base
 
+  validates_presence_of :word_1, :word_2
+
   def relation
     synonyms ? 'synonyms' : 'antonyms'
   end

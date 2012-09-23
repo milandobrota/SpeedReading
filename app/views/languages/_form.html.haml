@@ -1,4 +1,6 @@
 = form_for @language, :html => { :class => 'form-horizontal' } do |f|
+  = render :partial => 'layouts/form_errors', :object => @language, :as => :model
+
   .control-group
     = f.label :name, :class => 'control-label'
     .controls
