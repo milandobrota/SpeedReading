@@ -1,4 +1,6 @@
-%b Comprehension Test
+.page-header
+  %h1 Comprehension Test
+
 = form_tag(comprehension_test_path_for(@reading_test)) do |f|
   - @reading_test.content.questions.each do |question|
     %p
@@ -10,4 +12,5 @@
           = radio_button_tag "user_answers[#{question.id}]", i
           = "#{letter.next!}."
           = answer
-  = submit_tag 'Finish'
+  .form-actions
+    = submit_tag 'Finish', :class => 'btn btn-primary'
