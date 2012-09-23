@@ -6,28 +6,29 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
   %body
-    %h1 Speed Reader
-    #user_header= user_header
+    #header
+      #user_header= user_header
+      %h1 Speed Reader
     - if current_user
       #grayout
       #sidebar.span2
         - if current_user && current_user.admin?
           Admin:
-          %ul
-            %li= link_to 'Users', users_path
-            %li= link_to 'Contents', contents_path
-            %li= link_to 'Word Pairs', word_pairs_path
-            %li= link_to 'Categories', categories_path
-            %li= link_to 'Languages', languages_path
+          %ul.nav.nav-pills.nav-stacked
+            = nav_link 'Users', :controller => 'users', :action => 'index'
+            = nav_link 'Contents', :controller => 'contents', :action => 'index'
+            = nav_link 'Word Pairs', :controller => 'word_pairs', :action => 'index'
+            = nav_link 'Categories', :controller => 'categories', :action => 'index'
+            = nav_link 'Languages', :controller => 'languages', :action => 'index'
         Exercises:
-        %ul
-          %li= link_to 'Test Reading Speed', new_reading_speed_test_path
-          %li= link_to 'Flash Reading', new_flash_reading_test_path
-          %li= link_to 'Flashing Numbers', new_flashing_numbers_test_path
-          %li= link_to 'Flashing Dots', new_flashing_dots_test_path
-          %li= link_to 'Scrambled Words', new_scrambled_word_test_path
-          %li= link_to 'Word Search', new_word_search_test_path
-          %li= link_to 'Synonyms/Antonyms', new_synonyms_and_antonyms_test_path
+        %ul.nav.nav-pills.nav-stacked
+          = nav_link 'Test Reading Speed', :controller => 'reading_speed_tests', :action => 'new'
+          = nav_link 'Flash Reading', :controller => 'flash_reading_tests', :action => 'new'
+          = nav_link 'Flashing Numbers', :controller => 'flashing_numbers_tests', :action => 'new'
+          = nav_link 'Flashing Dots', :controller => 'flashing_dots_tests', :action => 'new'
+          = nav_link 'Scrambled Words', :controller => 'scrambled_word_tests', :action => 'new'
+          = nav_link 'Word Search', :controller => 'word_search_tests', :action => 'new'
+          = nav_link 'Synonyms/Antonyms', :controller => 'synonyms_and_antonyms_tests', :action => 'new'
       #content.span10
         -if notice
           %div.notice.alert.alert-info= notice

@@ -33,4 +33,13 @@ module ApplicationHelper
     end
     url
   end
+
+  def nav_link(text, opts)
+    destination_controller = opts[:controller]
+    destination_action     = opts[:action]
+    class_name = (params[:controller] == destination_controller) ? 'active' : ''
+    content_tag(:li, :class => class_name) do
+      link_to text, opts
+    end
+  end
 end

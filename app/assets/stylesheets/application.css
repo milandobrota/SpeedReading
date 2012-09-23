@@ -18,8 +18,8 @@ html {
 }
 
 body {
-  margin: 0;
-  padding: 0;
+  margin: 0 !important;
+  padding: 0 !important;
   height: 100%;
 }
 
@@ -39,18 +39,20 @@ body {
 */
 
 #user_header {
+  float: right;
   margin: 0;
-  padding: 10px;
-  border-style: solid;
-  border-width: 0 0 1px 0;
+  padding: 60px 20px 0 0;
 }
 
 #footer {
+  color: white;
+  background-color: black;
+  position: fixed;
+  bottom: 0;
   margin: 0;
   padding: 10px;
-  border-style: solid;
-  border-width: 1px 0 0 0;
   clear: both;
+  width: 100%;
 }
 
 .field_with_errors {
@@ -368,4 +370,19 @@ a.button {
 
 .alert {
   margin-top: 20px;
+}
+
+#header {
+  height: 100px;
+  color: white;
+  background-color: black;
+}
+
+#header a, #footer a {
+  color: white;
+}
+
+#header h1 {
+  margin: 0px;
+  padding: 40px 0 0 20px;
 }
