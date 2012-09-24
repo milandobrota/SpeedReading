@@ -66,4 +66,17 @@ SpeedReading::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   config.action_mailer.default_url_options = { :host => 'speedreading.heroku.com' }
+
+  config.action_mailer.perform_deliveries = true
+
+  ActionMailer::Base.smtp_settings = {  
+    :address              => 'smtp.gmail.com',  
+    :port                 => 587,  
+    :domain               => 'speedreading.heroku.com',  
+    :user_name            => 'speedreadingapp',  
+    :password             => ENV['SPEED_READING_GMAIL_PASS'],  
+    :authentication       => "plain",  
+    :enable_starttls_auto => true  
+  }
+
 end
