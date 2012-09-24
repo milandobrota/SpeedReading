@@ -6,7 +6,7 @@ class FlashingDotsTest < ActiveRecord::Base
       previous_test = FlashingDotsTest.where(:user_id => test_taker.id).order("created_at desc").first
       new(
         :user  => test_taker,
-        :level => previous_test.try(:level)
+        :level => previous_test.try(:level) || 0
       )
     end
 
