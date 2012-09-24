@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.json
   def index
-    @categories = Category.all
+    @categories = Category.paginate(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

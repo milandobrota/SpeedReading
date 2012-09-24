@@ -4,11 +4,14 @@ class ContentsController < ApplicationController
   # GET /contents
   # GET /contents.json
   def index
-    @contents = Content.filter(params).all
-
     respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @contents.to_json(:methods => ['photo_url', 'language_name'] ) }
+      format.html do
+        @contents = Content.paginate(:page => params[:page])
+      end
+      format.json do
+        @contents = Content.filter(params).all
+        render json: @contents.to_json(:methods => ['photo_url', 'language_name'] )
+      end
     end
   end
 

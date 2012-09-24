@@ -4,7 +4,7 @@ class WordPairsController < ApplicationController
   # GET /word_pairs
   # GET /word_pairs.json
   def index
-    @word_pairs = WordPair.all
+    @word_pairs = WordPair.paginate(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
