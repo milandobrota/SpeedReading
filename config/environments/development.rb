@@ -36,4 +36,6 @@ SpeedReading::Application.configure do
   config.assets.debug = true
 
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
+  config.assets.prefix = '/assets_dev'
 end
