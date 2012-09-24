@@ -8,7 +8,8 @@ class ComprehensionTest
   def initialize(attr)
     super if attr.blank?
     @reading_test = attr[:reading_test]
-    @user_answers       = attr[:user_answers] if attr[:user_answers]
+    # make sure the hash is made entirely of integers
+    @user_answers = Hash[*attr[:user_answers].to_a.flatten.collect(&:to_i)] if attr[:user_answers]
   end
 
   def calculate_and_save_comprehension_rate
@@ -18,7 +19,6 @@ class ComprehensionTest
 
   def calculate_comprehension_rate
     correct_answers = Question.find(@user_answers.keys).collect {|q| [q.id, q.correct_answer]}
-    correct_answers = correct_answers.collect {|pair| pair.collect(&:to_s)}
     @comprehension_rate = ((correct_answers & @user_answers.to_a).size.to_f / correct_answers.size) * 100
   end
 
@@ -27,6 +27,8 @@ class ComprehensionTest
   end
 
   class << self
+
+    # params: { :reading_test => test, :user_answers => [question_id => user_answer]}
     def check_user_answers(params)
       new(
         :reading_test => params[:reading_test],
