@@ -16,12 +16,14 @@ class FlashingNumbersTest < ActiveRecord::Base
     def historical_data_for(user)
       distances = []
       numbers_of_digits = []
-      tests = FlashingNumbersTest.where(:user_id => user.id).order("id asc").limit(30).select([:distance, :number_of_digits]).all
+      timestamps = []
+      tests = FlashingNumbersTest.where(:user_id => user.id).order("id asc").where('created_at > ?', 1.month.ago).limit(30).select([:distance, :number_of_digits, :created_at]).all
       tests.each do |test|
         distances << test.distance
         numbers_of_digits << test.number_of_digits
+        timestamps << test.created_at.to_i * 1000
       end
-      {:distances => distances, :numbers_of_digits => numbers_of_digits}
+      {:distances => distances, :numbers_of_digits => numbers_of_digits, :timestamps => timestamps}
     end
 
     # TODO: add user specific f-ty
@@ -33,10 +35,10 @@ class FlashingNumbersTest < ActiveRecord::Base
           {:title => {:text => 'Distance'}},
           {:title => {:text => 'Number of Digits'}, :max => 6, :opposite => 'true'}
         ])
-        f.xAxis(:title => { :text => 'Test Number'} )
+        f.xAxis(:title => { :text => 'Test Taken'}, :type => 'datetime', :maxZoom => 1.day * 1000)
         f.title(:text => 'Flashing Numbers')
-        f.series(:name => 'Distance', :data => user_data[:distances], :yAxis => 0 )
-        f.series(:name => 'Number of Digits', :data => user_data[:numbers_of_digits], :yAxis => 1 )
+        f.series(:name => 'Distance', :data => user_data[:timestamps].zip(user_data[:distances]), :yAxis => 0 )
+        f.series(:name => 'Number of Digits', :data => user_data[:timestamps].zip(user_data[:numbers_of_digits]), :yAxis => 1 )
       end
     end
   end

@@ -20,20 +20,20 @@ class WordSearchTest < ActiveRecord::Base
     end
 
     def historical_data_for(user)
-      scores = WordSearchTest.where(:user_id => user.id).order("id asc").limit(30).select(:score).all.collect(&:score)
-      {:scores => scores}
+      tests = WordSearchTest.where(:user_id => user.id).order("id asc").limit(30).where('created_at > ?', 1.month.ago).select([:score, :created_at])
+      {:scores => tests.collect(&:score), :timestamps => tests.collect {|t| t.created_at.to_i * 1000}}
     end
 
     def chart_for(user)
-      scores = historical_data_for(user)[:scores]
+      user_data = historical_data_for(user)
       LazyHighCharts::HighChart.new('graph') do |f|
         f.options[:chart][:defaultSeriesType] = 'area'
         f.yAxis([
-          {:title => {:text => 'Score'}},
+          {:title => {:text => 'Score'}}
         ])
-        f.xAxis(:title => { :text => 'Test Number'} )
+        f.xAxis(:title => { :text => 'Test Taken'}, :type => 'datetime', :maxZoom => 1.day * 1000)
         f.title(:text => 'Word Search Test')
-        f.series(:name => 'Score', :data => scores, :yAxis => 0 )
+        f.series(:name => 'Score', :data => user_data[:timestamps].zip(user_data[:scores]), :yAxis => 0 )
       end
     end
   end

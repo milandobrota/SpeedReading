@@ -15,12 +15,14 @@ class ReadingSpeedTest < ActiveRecord::Base
     def historical_data_for(user)
       reading_speeds = []
       comprehension = []
-      tests = ReadingSpeedTest.where(:user_id => user.id).order("id asc").limit(30).select([:wpm, :comprehension_rate]).all
+      timestamps = []
+      tests = ReadingSpeedTest.where(:user_id => user.id).order("id asc").limit(30).where('created_at > ?', 1.month.ago).select([:wpm, :comprehension_rate, :created_at]).all
       tests.each do |test|
         reading_speeds << test.wpm
         comprehension << test.comprehension_rate.to_i
+        timestamps << test.created_at.to_i * 1000
       end
-      {:reading_speeds => reading_speeds, :comprehension => comprehension}
+      {:reading_speeds => reading_speeds, :comprehension => comprehension, :timestamps => timestamps}
     end
 
     def chart_for(user)
@@ -31,10 +33,10 @@ class ReadingSpeedTest < ActiveRecord::Base
           {:title => {:text => 'Reading Speed'}},
           {:title => {:text => 'Comprehension Rate'}, :max => 100, :opposite => 'true'}
         ])
-        f.xAxis(:title => { :text => 'Test Number'} )
+        f.xAxis(:title => { :text => 'Test Taken'}, :type => 'datetime', :maxZoom => 1.day * 1000 )
         f.title(:text => 'Speed Reading')
-        f.series(:name => 'Reading Speed', :data => user_data[:reading_speeds], :yAxis => 0 )
-        f.series(:name => 'Comprehension Rate', :data => user_data[:comprehension], :yAxis => 1 )
+        f.series(:name => 'Reading Speed', :data => user_data[:timestamps].zip(user_data[:reading_speeds]), :yAxis => 0 )
+        f.series(:name => 'Comprehension Rate', :data => user_data[:timestamps].zip(user_data[:comprehension]), :yAxis => 1 )
       end
     end
   end
