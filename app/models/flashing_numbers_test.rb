@@ -8,8 +8,8 @@ class FlashingNumbersTest < ActiveRecord::Base
       previous_test = FlashingNumbersTest.where(:user_id => test_taker.id).order("created_at desc").first
       new(
         :user             => test_taker,
-        :distance         => previous_test.try(:distance),
-        :number_of_digits => previous_test.try(:number_of_digits)
+        :distance         => previous_test.try(:distance) || 20,
+        :number_of_digits => previous_test.try(:number_of_digits) || 1
       )
     end
 
