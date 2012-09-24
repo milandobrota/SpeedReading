@@ -12,15 +12,15 @@ class ScrambledWordTest < ActiveRecord::Base
 
     def historical_data_for(user)
       reading_speeds = []
-      comprehension = []
+      comprehension_rates = []
       timestamps = []
       tests = ScrambledWordTest.where(:user_id => user.id).order("id asc").limit(30).where('created_at > ?', 1.month.ago).select([:wpm, :comprehension_rate, :created_at]).all
       tests.each do |test|
         reading_speeds << test.wpm
-        comprehension << test.comprehension_rate.to_i
+        comprehension_rates << test.comprehension_rate.to_i
         timestamps << test.created_at.to_i * 1000
       end
-      {:reading_speeds => reading_speeds, :comprehension => comprehension, :timestamps => timestamps}
+      {:reading_speeds => reading_speeds, :comprehension_rates => comprehension_rates, :timestamps => timestamps}
     end
 
     def chart_for(user)
@@ -34,7 +34,7 @@ class ScrambledWordTest < ActiveRecord::Base
         f.xAxis(:title => { :text => 'Test Taken'}, :type => 'datetime', :maxZoom => 1.day * 1000 )
         f.title(:text => 'Scrambled Word Reading')
         f.series(:name => 'Reading Speed', :data => user_data[:timestamps].zip(user_data[:reading_speeds]), :yAxis => 0 )
-        f.series(:name => 'Comprehension Rate', :data => user_data[:timestamps].zip(user_data[:comprehension]), :yAxis => 1 )
+        f.series(:name => 'Comprehension Rate', :data => user_data[:timestamps].zip(user_data[:comprehension_rates]), :yAxis => 1 )
       end
     end
   end
