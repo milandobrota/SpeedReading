@@ -5,7 +5,7 @@ class WordSearchTest < ActiveRecord::Base
   attr_accessor :word
 
   def pick_a_word!
-    words =  content.body.split(/\b/).select {|w| w =~ /\w/}
+    words = content.body.split(/\b/).select {|w| w =~ /\w/}
     @word = words[rand(words.size)].downcase
   end
 
