@@ -22,7 +22,7 @@ class ReadingSpeedTest < ActiveRecord::Base
         comprehension << test.comprehension_rate.to_i
         timestamps << test.created_at.to_i * 1000
       end
-      {:reading_speeds => reading_speeds, :comprehension => comprehension, :timestamps => timestamps}
+      {:reading_speeds => reading_speeds, :comprehension_rates => comprehension, :timestamps => timestamps}
     end
 
     def chart_for(user)
@@ -36,7 +36,7 @@ class ReadingSpeedTest < ActiveRecord::Base
         f.xAxis(:title => { :text => 'Test Taken'}, :type => 'datetime', :maxZoom => 1.day * 1000 )
         f.title(:text => 'Speed Reading')
         f.series(:name => 'Reading Speed', :data => user_data[:timestamps].zip(user_data[:reading_speeds]), :yAxis => 0 )
-        f.series(:name => 'Comprehension Rate', :data => user_data[:timestamps].zip(user_data[:comprehension]), :yAxis => 1 )
+        f.series(:name => 'Comprehension Rate', :data => user_data[:timestamps].zip(user_data[:comprehension_rates]), :yAxis => 1 )
       end
     end
   end
