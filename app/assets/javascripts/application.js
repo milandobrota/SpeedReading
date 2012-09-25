@@ -64,14 +64,14 @@ function TextFormatter(settings) {
     shortened = text.substring(0, limit);
     if(text.length > limit) {
       shortened += "... ";
-      shortened += '<a href="#" class="show_more">more</a>';
+      shortened += ' <a href="#" class="show_more">more</a>';
     }
     return shortened;
   }
 
   this.full_text = function() {
     var full_text = this.config.text;
-    full_text += '<a href="#" class="show_less">less</a>';
+    full_text += ' <a href="#" class="show_less">less</a>';
     return full_text;
   }
 
