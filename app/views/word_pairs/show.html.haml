@@ -17,5 +17,5 @@
 
 .form-actions
   = link_to t('.back', :default => t("helpers.links.back")), word_pairs_path, :class => 'btn'
-  = link_to t('.edit', :default => t("helpers.links.edit")), edit_word_pair_path(@language), :class => 'btn'
-  = link_to t('.destroy', :default => t("helpers.links.destroy")), word_pair_path(@language), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
+  = link_to t('.edit', :default => t("helpers.links.edit")), edit_word_pair_path(@word_pair), :class => 'btn'
+  = link_to t('.destroy', :default => t("helpers.links.destroy")), word_pair_path(@word_pair), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
