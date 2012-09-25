@@ -1,5 +1,5 @@
 class WordPairsController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_admin!
 
   # GET /word_pairs
   # GET /word_pairs.json

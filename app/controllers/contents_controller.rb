@@ -1,14 +1,16 @@
 class ContentsController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_admin!, :except => 'index'
 
   # GET /contents
   # GET /contents.json
   def index
     respond_to do |format|
       format.html do
+        authenticate_admin!
         @contents = Content.paginate(:page => params[:page])
       end
       format.json do
+        authenticate_user!
         @contents = Content.filter(params).all
         render json: @contents.to_json(:methods => ['photo_url', 'language_name'] )
       end

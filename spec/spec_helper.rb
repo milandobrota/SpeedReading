@@ -52,11 +52,11 @@ def ensure_server_is_running
   system 'rails s -e test -p 3001 -d' unless server_running?
 end
 
-def ensure_logged_in
-  email = 'cucumber@test.com'
+def ensure_logged_in_as(role)
+  email = "#{role}@test.com"
   password = 'foobar'
   user = User.find_by_email(email)
-  user ||= User.create!(:email => email, :password => password)
+  user ||= User.create!(:email => email, :password => password, :role => User::ROLE_NAMES.index(role))
   visit '/'
   if page.current_url =~ /sign_in/
     fill_in 'Email', :with => email
