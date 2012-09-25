@@ -10,7 +10,7 @@
     .field
       = f.radio_button 'correct_answer', index
       = "#{letter}."
-      = text_field_tag 'question[answers][]', @question.answers[index], :class => 'span6'
+      = text_field_tag 'question[answers][]', @question.answers[index], :class => 'span6', :id => "answer_#{letter.downcase}"
   .field
     = f.hidden_field :content_id
   .form-actions
