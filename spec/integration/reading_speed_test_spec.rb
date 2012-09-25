@@ -1,0 +1,71 @@
+require './spec/spec_helper.rb'
+
+describe 'Reading Speed Test' do
+
+  self.use_transactional_fixtures = false
+
+  before :all do
+    ensure_server_is_running
+    DatabaseCleaner.clean
+  end
+
+  after :all do
+    DatabaseCleaner.clean
+  end
+
+  describe 'Reading Test' do
+
+    before :all do
+      @english = Language.create!(:name => 'English')
+      @srpski = Language.create!(:name => 'srpski')
+      @novel = Category.create!(:name => 'Novel')
+      @comedy = Category.create!(:name => 'Comedy')
+      @content = Content.create!(
+        :name => 'Charlie the Unicorn',
+        :body => 'foo bar baz',
+        :language => @english,
+        :categories => [@comedy]
+      )
+    end
+
+    it 'should work with no setup' do
+      ensure_logged_in_as 'member'
+      visit '/reading_speed_tests/new'
+      click_on 'Start'
+      sleep(5) # wait for the countdown
+      body.should =~ /foo bar baz/
+      click_on 'Done'
+      test = ReadingSpeedTest.last
+      body.should =~ /Your reading speed is #{test.wpm} wpm!/
+      body.should =~ /No comprehension test available/
+
+      question = Question.create!(:body => 'question text', :answers => ['foo', 'bar', 'baz', 'qux'], :correct_answer => 3)
+      @content.questions << question
+      @content.save!
+
+      visit(current_url)
+      click_on 'Take the test!'
+      choose "user_answers_#{question.id}_3"
+      click_on 'Finish'
+      body.should =~ /100%/
+    end
+
+    # it 'should work with selecting content' do
+    #   ensure_logged_in_as 'member'
+    #   another_content = Content.create!(
+    #     :name => 'Vasa Ladacki',
+    #     :body => 'Ovo je prica o Vasi Ladackom',
+    #     :language => @srpski,
+    #     :categories => [@novel]
+    #   )
+    #   require 'debugger'; debugger
+    #   visit '/reading_speed_tests/new'
+    #   click_on 'Select content'
+    #   find("#content_name").text.should == 'Charlie the Unicorn'
+    #   select 'srpski', :from => 'language_select'
+    #   select 'Novel', :from => 'category_select'
+    # end
+
+  end
+
+end
