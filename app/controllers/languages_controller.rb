@@ -78,6 +78,7 @@ class LanguagesController < ApplicationController
   def destroy
     @language = Language.find(params[:id])
     @language.destroy
+    flash[:notice] = 'Language was successfully deleted.'
 
     respond_to do |format|
       format.html { redirect_to languages_url }
