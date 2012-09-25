@@ -9,6 +9,8 @@ Capybara.default_driver = :selenium
 Capybara.run_server = false # run our own server
 Capybara.app_host = 'http://localhost:3001'
 
+DatabaseCleaner.strategy = :truncation
+
 # Capybara.register_driver :selenium do |app|
 #   Capybara::Selenium::Driver.new(app, :browser => :chrome)
 # end
@@ -48,4 +50,17 @@ end
 
 def ensure_server_is_running
   system 'rails s -e test -p 3001 -d' unless server_running?
+end
+
+def ensure_logged_in
+  email = 'cucumber@test.com'
+  password = 'foobar'
+  user = User.find_by_email(email)
+  user ||= User.create!(:email => email, :password => password)
+  visit '/'
+  if page.current_url =~ /sign_in/
+    fill_in 'Email', :with => email
+    fill_in 'Password', :with => password
+    find("#user_new").click_on 'Sign in'
+  end
 end

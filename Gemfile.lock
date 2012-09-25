@@ -84,6 +84,7 @@ GEM
     coffee-script-source (1.2.0)
     columnize (0.3.6)
     commonjs (0.2.6)
+    database_cleaner (0.8.0)
     debugger (1.2.0)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.1.1)
@@ -224,6 +225,7 @@ DEPENDENCIES
   bootstrap-will_paginate
   capybara
   coffee-rails
+  database_cleaner
   debugger
   devise (= 2.0.0)
   haml-rails
