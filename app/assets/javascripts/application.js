@@ -166,7 +166,7 @@ function ContentSelector(settings) {
 
     var image_to_change = $("#selected_image");
     var content_name_container = $("#content_name");
-    var content_credit_link = $("#content_credit");
+    var content_credit = $("#content_credit");
     var content_language_container = $("#content_language");
 
     var selected_content_id = clicked_image.attr('data-content-id');
@@ -181,8 +181,11 @@ function ContentSelector(settings) {
 
     image_to_change.attr('src', selected_content.photo_url);
     content_name_container.text(selected_content.name);
-    content_credit_link.text(selected_content.source_name);
-    content_credit_link.attr('href', selected_content.source_link);
+    if(selected_content.source_link) {
+      content_credit.html('<a class="abcdef" href="' + selected_content.source_link + '">' + (selected_content.source_name || selected_content.source_link) + '</a>');
+    } else {
+      content_credit.text('No source');
+    }
     content_language_container.text(selected_content.language_name);
 
     // selector.config.current_test.words = selected_content.body.split(" ").reverse();

@@ -10,7 +10,11 @@
       %span#content_name= @selected.name
       %br
       %strong Credit:
-      %span= link_to @selected.source_name, @selected.source_link, :id => 'content_credit'
+      %span#content_credit
+        - if @selected.source_link
+          = link_to @selected.source_name || @selected.source_link || 'No credit', @selected.source_link
+        - else
+          No source
       %br
       %strong Language:
       %span#content_language= @selected.language.name

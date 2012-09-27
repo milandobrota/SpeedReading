@@ -50,21 +50,31 @@ describe 'Reading Speed Test' do
       body.should =~ /100%/
     end
 
-    # it 'should work with selecting content' do
-    #   ensure_logged_in_as 'member'
-    #   another_content = Content.create!(
-    #     :name => 'Vasa Ladacki',
-    #     :body => 'Ovo je prica o Vasi Ladackom',
-    #     :language => @srpski,
-    #     :categories => [@novel]
-    #   )
-    #   require 'debugger'; debugger
-    #   visit '/reading_speed_tests/new'
-    #   click_on 'Select content'
-    #   find("#content_name").text.should == 'Charlie the Unicorn'
-    #   select 'srpski', :from => 'language_select'
-    #   select 'Novel', :from => 'category_select'
-    # end
+    it 'should work with selecting content' do
+      ensure_logged_in_as 'member'
+      another_content = Content.create!(
+        :name => 'Vasa Ladacki',
+        :body => 'Ovo je prica o Vasi Ladackom',
+        :language => @srpski,
+        :categories => [@novel],
+        :source_name => 'Djordje Balasevic',
+        :source_link => 'www.djb.com'
+      )
+      visit '/reading_speed_tests/new'
+      click_on 'Select content'
+      find('#content_name').text.should == 'Charlie the Unicorn'
+      find('#content_credit').text.should == 'No source'
+      select 'srpski', :from => 'language_select'
+      select 'Novel', :from => 'category_select'
+      find('.image_container .content_image').click
+      find('#content_credit a').text.should == 'Djordje Balasevic'
+      click_on 'Select this story!'
+      click_on 'Start'
+      sleep(5)
+      find('#reading_text').text.should == 'Ovo je prica o Vasi Ladackom'
+      click_on 'Done'
+      body.should =~ /No comprehension test available/
+    end
 
   end
 
