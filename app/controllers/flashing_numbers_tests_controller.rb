@@ -22,7 +22,6 @@ class FlashingNumbersTestsController < ApplicationController
     @flashing_numbers_test = FlashingNumbersTest.find(params[:id])
     respond_to do |format|
       if @flashing_numbers_test.update_attributes(params[:flashing_numbers_test])
-        flash[:notice] = 'Flashing Numbers Test was successfully updated.'
         format.html { redirect_to @flashing_numbers_test }
         format.json { head :ok }
       else

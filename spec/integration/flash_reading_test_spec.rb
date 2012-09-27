@@ -13,7 +13,7 @@ describe 'Flash Reading Test' do
     DatabaseCleaner.clean
   end
 
-  describe 'Reading Test' do
+  describe 'Flash Reading Test' do
 
     before :all do
       @english = Language.create!(:name => 'English')
