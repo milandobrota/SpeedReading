@@ -6,8 +6,9 @@
 .page-header
   %h1 Test Reading Speed
 
+%p
+  This test will measure your reading speed. Select the reading material first if you wish, and then click the start button and the text will appear in a popup. Click on done when you are finished reading.
 = render '/contents/content_selection_popup'
-This test will measure your reading speed. Click the start button when you are ready and the text will appear below. Click on done when you are finished reading.
 %button.btn.btn-primary#start_reading Start
 %div
 = form_for(@reading_speed_test) do |f|

@@ -1,6 +1,8 @@
 .page-header
   %h1 Synonyms/Antonyms
 
+%p
+  This exercise will help you improve the speed with which you process the meaning of words. The pair of words will be shown and you will need to figure out quickly if they are synonyms (same meaning) or antonyms (opposite meaning). You can use the mouse to click on the buttons or use left and right arrow keys, for synonyms and antonyms respectively. Your score will be displayed after you're done.
 %button.btn.btn-primary#start_test Start
 = form_for(@synonyms_and_antonyms_test) do |f|
   = f.hidden_field :speed

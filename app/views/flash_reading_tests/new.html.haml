@@ -6,7 +6,10 @@
 .page-header
   %h1 Flash Reading
 
-= render '/contents/content_selection_popup'
+%p
+  Flash Reading Exercise is one of the best ways to improve the reading speed. The text will flash quickly, showing only a few words at a time. Number of words and speed is configurable. Drag the sliders below to adjust these parameters. You can also use the left and right arrow keys on the keyboard to change the speed and up and down keys to change the number of words now or during the test. Select the reading material if you wish, and then click the start button and the text will appear in a popup. Once you are done, your speed will be displayed.
+%br
+%br
 
 #speed_slider
 #speed_container
@@ -20,6 +23,7 @@
   %span#number_of_words_value
     2
 
+= render '/contents/content_selection_popup'
 %button.btn.btn-primary#start_exercise Start
 = high_chart("flash_reading_chart_on_page", @flash_reading_chart_on_page)
 

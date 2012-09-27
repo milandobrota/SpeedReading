@@ -6,9 +6,10 @@
 .page-header
   %h1 Scrambled Words
 
+%p
+  This test will help with the concentration, which is necessary in order to achieve high reading speeds. The text will be scrambled, making it hard to read. If you get stuck on a word, hovering over it will show the unscrambled word. Select the reading material first if you wish, and then click the start button and the text will appear in a popup. Click on done when you are finished reading.
 = render '/contents/content_selection_popup'
 
-This test will measure your reading speed. Click the start button when you are ready and the text will appear below. Click on done when you are finished reading.
 %button.btn.btn-primary#start_reading Start
 %div
 = form_for(@scrambled_word_test) do |f|

@@ -6,10 +6,10 @@
 .page-header
   %h1 Word Search
 
-= render '/contents/content_selection_popup'
+%p
+  Find the word in the text as fast as you can and then click on it! This test will help you find the relevant information by scanning the text quickly. Select the reading material first if you wish, and then click the start button and the text will appear in a popup. Click on done when you are finished reading.
 
-This test will measure your ability to find words in the text.
-Click the start button when you are ready and the text will appear below. Click on the word when you find it.
+= render '/contents/content_selection_popup'
 %button.btn.btn-primary#start_reading Start
 
 = form_for(@word_search_test) do |f|
