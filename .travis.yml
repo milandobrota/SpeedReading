@@ -1,9 +1,9 @@
 language: ruby
 rvm:
   - 1.9.3
-before_script: "cp config/travis_database.yml config/database.yml"
 before_script:
   - cp config/travis_database.yml config/database.yml
+  - mkdir -p tmp/cache
   - psql -c 'create database speed_reading_test' -U postgres
   - RAILS_ENV=test bundle exec rake --trace db:migrate
   - export DISPLAY=:99.0
