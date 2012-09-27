@@ -1,6 +1,6 @@
 require './spec/spec_helper.rb'
 
-describe 'Reading Speed Test' do
+describe 'Flash Reading Test' do
 
   self.use_transactional_fixtures = false
 
@@ -30,24 +30,10 @@ describe 'Reading Speed Test' do
 
     it 'should work with no setup' do
       ensure_logged_in_as 'member'
-      visit '/reading_speed_tests/new'
+      visit '/flash_reading_tests/new'
       click_on 'Start'
-      sleep(5) # wait for the countdown
-      body.should =~ /foo bar baz/
-      click_on 'Done'
-      test = ReadingSpeedTest.last
-      body.should =~ /Your reading speed is #{test.wpm} wpm!/
-      body.should =~ /No comprehension test available/
-
-      question = Question.create!(:body => 'question text', :answers => ['foo', 'bar', 'baz', 'qux'], :correct_answer => 3)
-      @content.questions << question
-      @content.save!
-
-      visit(current_url)
-      click_on 'Take the test!'
-      choose "user_answers_#{question.id}_3"
-      click_on 'Finish'
-      body.should =~ /100%/
+      sleep(6) # wait for the countdown
+      body.should =~ /Your reading speed is/
     end
 
     it 'should work with selecting content' do
@@ -60,7 +46,7 @@ describe 'Reading Speed Test' do
         :source_name => 'Djordje Balasevic',
         :source_link => 'www.djb.com'
       )
-      visit '/reading_speed_tests/new'
+      visit '/flash_reading_tests/new'
       click_on 'Select content'
       select 'srpski', :from => 'language_select'
       select 'Novel', :from => 'category_select'
@@ -68,10 +54,8 @@ describe 'Reading Speed Test' do
       find('#content_credit a').text.should == 'Djordje Balasevic'
       click_on 'Select this story!'
       click_on 'Start'
-      sleep(5)
-      find('#reading_text').text.should == 'Ovo je prica o Vasi Ladackom'
-      click_on 'Done'
-      body.should =~ /No comprehension test available/
+      sleep(6)
+      body.should =~ /Your reading speed is/
     end
 
   end
