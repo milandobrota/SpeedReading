@@ -6,6 +6,9 @@ class Content < ActiveRecord::Base
 
   validates_presence_of :name, :body, :language
 
+  before_save :expire_cache
+  before_destroy :expire_cache
+
   has_attached_file :photo,
     :storage => :s3,
     :bucket => ENV['S3_BUCKET_NAME'],
@@ -26,6 +29,10 @@ class Content < ActiveRecord::Base
     language.name
   end
 
+  def expire_cache
+    Rails.cache.clear
+  end
+
   class << self
     def for_reading_test
       random
@@ -41,6 +48,12 @@ class Content < ActiveRecord::Base
 
     def sorted_by_name
       Content.order('name asc')
+    end
+
+    def cached_filter(filter)
+      Rails.cache.fetch("content_with_category_id_#{filter[:category_id]}_and_language_id_#{filter[:language_id]}") do
+        filter(filter)
+      end
     end
 
     def filter(filter)

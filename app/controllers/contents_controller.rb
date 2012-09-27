@@ -11,7 +11,7 @@ class ContentsController < ApplicationController
       end
       format.json do
         authenticate_user!
-        @contents = Content.filter(params).all
+        @contents = Content.cached_filter(params).all
         render json: @contents.to_json(:methods => ['photo_url', 'language_name'] )
       end
     end
