@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe ComprehensionTest do
 
-  let(:question1) { Question.create(:correct_answer => 1) }
-  let(:question2) { Question.create(:correct_answer => 2) }
+  let(:question1) { Question.create!(:body => 'foo', :answers => %w(a b c d), :correct_answer => 1) }
+  let(:question2) { Question.create!(:body => 'bar', :answers => %w(A B C D), :correct_answer => 2) }
 
   it 'should know how to calculate comprehension rate with integers' do
     reading_test = ReadingSpeedTest.create
