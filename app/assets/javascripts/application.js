@@ -182,7 +182,7 @@ function ContentSelector(settings) {
     image_to_change.attr('src', selected_content.photo_url);
     content_name_container.text(selected_content.name);
     if(selected_content.source_link) {
-      content_credit.html('<a class="abcdef" href="' + selected_content.source_link + '">' + (selected_content.source_name || selected_content.source_link) + '</a>');
+      content_credit.html('<a href="' + selected_content.source_link + '">' + (selected_content.source_name || selected_content.source_link) + '</a>');
     } else {
       content_credit.text('No source');
     }
